@@ -30,3 +30,4 @@ coverage
 # custom
 /fluxis-wiki
 package-lock.json
+/src/config.json
