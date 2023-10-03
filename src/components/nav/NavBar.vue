@@ -37,7 +37,7 @@ function onProfileClick(e) {
                     </div>
                 </RouterLink>
 
-                <NavLink to="/" text="Home"
+                <NavLink to="/" text="Home" icon="home"
                     :dropdown="[
                         {
                             text: 'News',
@@ -57,7 +57,7 @@ function onProfileClick(e) {
                         }
                     ]"/>
 
-                <NavLink to="/maps" text="Maps"
+                <NavLink to="/maps" text="Maps" icon="map"
                     :dropdown="[
                         {
                             text: 'Map Listing',
@@ -69,7 +69,7 @@ function onProfileClick(e) {
                         }
                     ]"/>
 
-                <NavLink to="/rankings/overall" text="Rankings"
+                <NavLink to="/rankings/overall" text="Rankings" icon="trophy"
                     :dropdown="[
                         {
                             text: 'Overall Rating',
@@ -89,7 +89,7 @@ function onProfileClick(e) {
                         }
                     ]"/>
 
-                <NavLink to="/wiki/Home" text="Wiki" />
+                <NavLink to="/wiki/Home" text="Wiki" icon="book"/>
             </div>
             <div class="nav-user">
                 <div class="icon" onclick="openSearchOverlay()">

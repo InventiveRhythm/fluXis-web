@@ -4,6 +4,10 @@ const props = defineProps({
         type: String,
         required: true
     },
+    icon: {
+        type: String,
+        required: true
+    },
     text: {
         type: String,
         required: true
@@ -17,7 +21,10 @@ const props = defineProps({
 
 <template>
     <div class="nav-link">
-        <RouterLink :to="to">{{ text }}</RouterLink>
+        <RouterLink :to="to">
+            <i :class="'fa fa-' + icon"></i>
+            {{ text }}
+        </RouterLink>
         <div class="dropdown" v-if="dropdown && dropdown.length > 0">
             <div class="dropdown-list" >
                 <RouterLink v-for="link in dropdown" :key="link.to" :to="link.to">{{ link.text }}</RouterLink>
@@ -35,6 +42,10 @@ const props = defineProps({
     transition: background-color .3s;
     border-radius: calc(var(--border) / 2); 
     position: relative;
+
+    i {
+        margin-right: 5px;
+    }
 
     @media screen and (max-width: 700px) {
         display: none;
