@@ -1,4 +1,5 @@
 <script setup>
+import Config from "@/config.json";
 import { reactive } from 'vue';
 import Axios from 'axios';
 
@@ -12,7 +13,7 @@ var react = reactive({
 const onLogin = async () => {
     if (username.length > 0 && password.length > 0) {
         try {
-            let ax = await Axios.get('https://api.fluxis.foxes4life.net/account/login', {
+            let ax = await Axios.get(Config.apiUrl + '/account/login', {
                 headers: {
                     'Content-Type': 'application/json',
                     Username: username,
@@ -44,8 +45,8 @@ const onLogin = async () => {
         <div class="login-form">
             <h3>Login to fluXis</h3>
             <p class="error" v-if="react.error">{{ react.error }}</p>
-            <input class="username" type="text" v-model="username" placeholder="Username">
-            <input class="password" type="password" v-model="password" placeholder="Password">
+            <input class="username" type="text" v-model="username" placeholder="Username"/>
+            <input class="password" type="password" v-model="password" placeholder="Password"/>
             <div class="btns">
                 <div class="login-btn" @click="onLogin">Login</div>
             </div>

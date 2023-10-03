@@ -1,6 +1,6 @@
 <script setup>
+import Config from "@/config.json";
 import { RouterLink, useRouter } from 'vue-router'
-import FluXisIcon from '../../assets/images/icon.png';
 import FluXisText from '../../assets/images/logo-text.png';
 import { reactive } from 'vue';
 import NavLink from './NavLink.vue';
@@ -97,9 +97,9 @@ function onProfileClick(e) {
                 </div>
                 
                 <div @mousedown="onProfileClick" class="user" >
-                    <img v-if="react.user" :src="'https://api.fluxis.foxes4life.net/assets/avatar/' + react.user.id"
+                    <img v-if="react.user" :src="Config.apiUrl + '/assets/avatar/' + react.user.id"
                         class="future loadFade" alt="user avatar">
-                    <img v-else src="https://api.fluxis.foxes4life.net/assets/avatar/-1" class="future loadFade" alt="logged out user avatar" >
+                    <img v-else :src="Config.apiUrl + '/assets/avatar/-1'" class="future loadFade" alt="logged out user avatar" >
                 </div>
             </div>
         </div>

@@ -1,4 +1,5 @@
 <script setup>
+import Config from "@/config.json";
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -27,12 +28,12 @@ function userClick(e) {
             <div class="wrapper">
                 <div class="overlay-content">
                     <div class="user" :onclick=userClick>
-                        <img v-if="react.user" :src="'https://api.fluxis.foxes4life.net/assets/banner/' + react.user.id" alt="" class="banner">
-                        <img v-else src="https://api.fluxis.foxes4life.net/assets/banner/-1" alt="" class="banner">
+                        <img v-if="react.user" :src="Config.apiUrl + '/assets/banner/' + react.user.id" alt="" class="banner">
+                        <img v-else :src="Config.apiUrl + '/assets/banner/-1'" alt="" class="banner">
                         <div class="banner-dim"></div>
                         <div class="info">
-                            <img v-if="react.user" :src="'https://api.fluxis.foxes4life.net/assets/avatar/' + react.user.id" alt="" class="avatar">
-                            <img v-else src="https://api.fluxis.foxes4life.net/assets/avatar/-1" alt="" class="avatar">
+                            <img v-if="react.user" :src="Config.apiUrl + '/assets/avatar/' + react.user.id" alt="" class="avatar">
+                            <img v-else :src="Config.apiUrl + 'assets/avatar/-1'" alt="" class="avatar">
 
                             <p v-if="react.user" class="name">{{ react.user.username }}</p>
                             <p v-else class="name">Not Logged in</p>
