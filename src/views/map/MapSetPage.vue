@@ -103,7 +103,7 @@ fetch(`${Config.apiUrl}/mapset/${id}`).then(res => res.json()).then(data => {
     width: 100%;
 
     .info-box {
-        height: 400px;
+        height: 440px;
         display: grid;
         width: 100%;
         border-radius: 20px;

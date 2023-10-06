@@ -34,7 +34,7 @@ import { Transition, Suspense } from 'vue';
 
 <style lang="scss">
   .content {
-    width: 1350px;
+    width: 1320px;
     max-width: calc(100vw - 40px);
     margin: 100px auto 30px auto;
     text-align: center;

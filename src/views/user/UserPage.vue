@@ -391,7 +391,7 @@ function getRoleIcon() {
     }
 
     .info-box {
-        height: 400px;
+        height: 440px;
         overflow: hidden;
         display: grid;
         width: 100%;
