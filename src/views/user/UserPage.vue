@@ -1,17 +1,9 @@
 <script setup>
 import Config from '@/config.json';
 import TimeUtils from '../../utils/TimeUtils';
-import Score from '../../types/Score.ts';
-import User from '../../types/User.ts';
-
-import IconTwitter from '@/assets/images/socials/twitter.png';
-import IconYoutube from '@/assets/images/socials/youtube.png';
-import IconTwitch from '@/assets/images/socials/twitch.png';
-import IconDiscord from '@/assets/images/socials/discord.png';
-
 import MapSet from '../../components/map/MapSet.vue';
-import ScoreCard from '../../components/score/ScoreCard.vue';
 
+import ScoreCard from '../../components/score/ScoreCard.vue';
 import { useRoute } from 'vue-router';
 import { reactive } from 'vue';
 
@@ -32,12 +24,11 @@ fetch(`${Config.apiUrl}/user/${id}`).then(res => res.json()).then(data => {
         react.loading = false;
         return;
     }
-
     react['user'] = data.data;
-    // react.user = new User(data.data);
-    
+
     setTitle(react.user.username + " - user info");
     stopLoading();
+
     react.loading = false;
     react.user.lastloginString = TimeUtils.formatAgo(react.user.lastlogin);
 }).catch(err => {
@@ -70,6 +61,28 @@ function formatScore(score) {
 function formatAccuracy(accuracy) {
     return accuracy.toFixed(2) + "%";
 }
+
+function getCountryName() {
+    const names = new Intl.DisplayNames(['en'], { type: 'region' });
+    return names.of(react.user.country);
+}
+
+function getRoleIcon() {
+    switch (react.user.role) {
+        case 1: // featured artist
+            return "fas fa-star";
+        case 2: // purifier
+            return "fas fa-diamond";
+        case 3: // moderator
+            return "fas fa-shield-halved";
+        case 4: // admin
+            return "fas fa-user-shield";
+        case 5: // fluxel
+            return "fas fa-user-astronaut";
+        default:
+            return "";
+    }
+}
 </script>
 
 <template>
@@ -79,49 +92,79 @@ function formatAccuracy(accuracy) {
     </div>
 
     <div class="user-content" v-if=react.user>
-        <div class="info-box">
-            <img :src="Config.apiUrl + '/assets/banner/' + id" class="banner future loadFade" alt="user banner">
-            <div class="darken"></div>
-            <div class="info">
-                <div class="user">
-                    <img :src="Config.apiUrl + '/assets/avatar/' + id" class="avatar future loadFade" alt="user avatar">
-                    <div class="text">
-                        <div class="names">
-                            <span :class="'fi fi-' + react.user.country + ' flag'" v-if="react.user.country"></span>
-                            <h1 v-if="react.user.displayname" class="name" :style="'color: var(--tag-role-' + getRoleTag(react.user.role) + ')'">{{ react.user.displayname }}</h1>
-                            <h1 v-else class="name" :style="'color: var(--tag-role-' + getRoleTag(react.user.role) + ')'">{{ react.user.username }}</h1>
-                            <h3 v-if="react.user.displayname"  class="actual-name">{{ react.user.username }}</h3>
-                        </div>
-                        <h4 v-if="react.user.is_online"><span class="online"></span>Online</h4>
-                        <h4 v-else-if="react.user.lastlogin && react.user.lastlogin !== 0">Last online {{ react.user.lastloginString }}</h4>
-                        <div class="socials">
-                            <a v-if=react.user.social.twitter :href="'https://twitter.com/' + react.user.social.twitter"
-                                target="_blank">
-                                <div class="twitter" style="background-color: #1da1f288;">
-                                    <img :src=IconTwitter class="social">
-                                    <p>{{ react.user.social.twitter }}</p>
-                                </div>
-                            </a>
-                            <a v-if=react.user.social.youtube
-                                :href="'https://youtube.com/@' + react.user.social.youtube" target="_blank">
-                                <div class="youtube" style="background-color: #ff000088;">
-                                    <img :src=IconYoutube class="social">
-                                    <p>{{ react.user.social.youtube }}</p>
-                                </div>
-                            </a>
-                            <a v-if=react.user.social.twitch :href="'https://twitch.tv/' + react.user.social.twitch"
-                                target="_blank">
-                                <div class="twitch" style="background-color: #6441a588;">
-                                    <img :src=IconTwitch class="social">
-                                    <p>{{ react.user.social.twitch }}</p>
-                                </div>
-                            </a>
-                            <div v-if=react.user.social.discord class="discord" style="background-color: #7289da88;">
-                                <img :src=IconDiscord class="social">
-                                <p>{{ react.user.social.discord }}</p>
+        <div class="header">
+            <div class="info-box">
+                <img :src="Config.apiUrl + '/assets/banner/' + id" class="banner future loadFade" alt="user banner">
+                <div class="darken"></div>
+                <div class="info">
+                    <div class="user">
+                        <img :src="Config.apiUrl + '/assets/avatar/' + id" class="avatar future loadFade"
+                            alt="user avatar">
+                        <div class="text">
+                            <div class="names" :style="'color: var(--tag-role-' + getRoleTag(react.user.role) + ')'">
+                                <i v-if="react.user.role != 0" :class="getRoleIcon()"></i>
+                                <h1 v-if="react.user.displayname" class="name">
+                                    {{ react.user.displayname }}
+                                </h1>
+                                <h1 v-else class="name">
+                                    {{ react.user.username }}
+                                </h1>
+                                <h3 v-if="react.user.displayname" class="actual-name">
+                                    {{ react.user.username }}
+                                </h3>
+                            </div>
+                            <h4 v-if="react.user.is_online">
+                                <span class="online"></span>
+                                Online
+                            </h4>
+                            <h4 v-else-if="react.user.lastlogin && react.user.lastlogin !== 0">
+                                Last online {{ react.user.lastloginString }}
+                            </h4>
+                            <div class="country" v-if="react.user.country">
+                                <span :class="'fi fi-' + react.user.country + ' flag'"></span>
+                                <h4>{{ getCountryName() }}</h4>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="socials">
+                <a v-if=react.user.social.twitter :href="'https://twitter.com/' + react.user.social.twitter"
+                    target="_blank">
+                    <div class="twitter social hoverable">
+                        <div class="social-id" style="color: #00aaff;">
+                            <i class="fab fa-twitter"></i>
+                            <h4>Twitter</h4>
+                        </div>
+                        <p>{{ react.user.social.twitter }}</p>
+                    </div>
+                </a>
+                <a v-if=react.user.social.youtube :href="'https://youtube.com/@' + react.user.social.youtube"
+                    target="_blank">
+                    <div class="youtube social hoverable">
+                        <div class="social-id" style="color: #ff4d4d;">
+                            <i class="fab fa-youtube"></i>
+                            <h4>YouTube</h4>
+                        </div>
+                        <p>{{ react.user.social.youtube }}</p>
+                    </div>
+                </a>
+                <a v-if=react.user.social.twitch :href="'https://twitch.tv/' + react.user.social.twitch"
+                    target="_blank">
+                    <div class="twitch social hoverable">
+                        <div class="social-id" style="color: #9966ff;">
+                            <i class="fab fa-twitch"></i>
+                            <h4>Twitch</h4>
+                        </div>
+                        <p>{{ react.user.social.twitch }}</p>
+                    </div>
+                </a>
+                <div v-if=react.user.social.discord class="discord social">
+                    <div class="social-id" style="color: #6e85f7;">
+                        <i class="fab fa-discord"></i>
+                        <h4>Discord</h4>
+                    </div>
+                    <p>{{ react.user.social.discord }}</p>
                 </div>
             </div>
         </div>
@@ -153,31 +196,31 @@ function formatAccuracy(accuracy) {
                 <div class="stats-row">
                     <div>
                         <h4>Global Rank</h4>
-                        <p class="subtext" v-if="react.user.rank">#{{ react.user.rank }}</p>
-                        <p class="subtext" v-else>#---</p>
+                        <p v-if="react.user.rank">#{{ react.user.rank }}</p>
+                        <p v-else>#---</p>
                     </div>
                     <div>
                         <h4>Country Rank</h4>
-                        <p class="subtext" v-if="react.user.country_rank">#{{ react.user.country_rank }}</p>
-                        <p class="subtext" v-else>#---</p>
+                        <p v-if="react.user.country_rank">#{{ react.user.country_rank }}</p>
+                        <p v-else>#---</p>
                     </div>
                 </div>
 
                 <div class="stats-row">
                     <div>
                         <h4>Overall Rating</h4>
-                        <p class="subtext" v-if="react.user.ovr">{{ react.user.ovr }}</p>
-                        <p class="subtext" v-else>--.--</p>
+                        <p v-if="react.user.ovr">{{ react.user.ovr }}</p>
+                        <p v-else>--.--</p>
                     </div>
                     <div>
                         <h4>Potential Rating</h4>
-                        <p class="subtext" v-if="react.user.ptr">{{ react.user.ptr }}</p>
-                        <p class="subtext" v-else>--.--</p>
+                        <p v-if="react.user.ptr">{{ react.user.ptr }}</p>
+                        <p v-else>--.--</p>
                     </div>
                     <div>
                         <h4>Accuracy</h4>
-                        <p class="subtext" v-if="react.user.ova">{{ formatAccuracy(react.user.ova) }}</p>
-                        <p class="subtext" v-else>--.--%</p>
+                        <p v-if="react.user.ova">{{ formatAccuracy(react.user.ova) }}</p>
+                        <p v-else>--.--%</p>
                     </div>
                 </div>
 
@@ -188,13 +231,13 @@ function formatAccuracy(accuracy) {
                     </div> -->
                     <div>
                         <h4>Ranked Score</h4>
-                        <p class="subtext" v-if="react.user.ranked_score">{{ formatScore(react.user.ranked_score) }}</p>
-                        <p class="subtext" v-else>---,---</p>
+                        <p v-if="react.user.ranked_score">{{ formatScore(react.user.ranked_score) }}</p>
+                        <p v-else>---,---</p>
                     </div>
                     <div>
                         <h4>Max Combo</h4>
-                        <p class="subtext" v-if="react.user.max_combo">{{ react.user.max_combo }}x</p>
-                        <p class="subtext" v-else>---x</p>
+                        <p v-if="react.user.max_combo">{{ react.user.max_combo }}x</p>
+                        <p v-else>---x</p>
                     </div>
                 </div>
             </div>
@@ -246,7 +289,7 @@ function formatAccuracy(accuracy) {
             </div>
         </div>
     </div>
-    <div v-else>
+    <div v-else-if="!react.loading">
         <h1>User not found.</h1>
         <h5>
             We couldn't find the user you were looking for.
@@ -270,7 +313,7 @@ function formatAccuracy(accuracy) {
         left: 0;
         z-index: -3;
         display: grid;
-        
+
         img {
             width: 100%;
             height: 100%;
@@ -297,6 +340,54 @@ function formatAccuracy(accuracy) {
         border-radius: 20px;
         overflow: hidden;
         width: 100%;
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.25);
+            border-radius: 20px;
+            text-shadow: var(--text-shadow);
+
+            .socials {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+                min-height: 60px;
+                padding: 10px 0;
+
+                .social {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 10px;
+                    padding: 5px;
+                    border-radius: 5px;
+                    width: 100px;
+                    transition: background-color .2s;
+
+                    .social-id {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: .8rem;
+
+                        i {
+                            margin-right: 5px;
+                        }
+                    }
+
+                    &.hoverable:hover {
+                        background-color: rgba(255, 255, 255, 0.2);
+                        transition-duration: 50ms;
+                    }
+                }
+            }
+        }
     }
 
     .info-box {
@@ -347,6 +438,19 @@ function formatAccuracy(accuracy) {
         justify-content: left;
         margin-left: 40px;
         text-align: left;
+
+        .country {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+
+            .flag {
+                width: 30px;
+                aspect-ratio: 4/3;
+                margin-right: 5px;
+                box-shadow: var(--box-shadow-5);
+            }
+        }
     }
 
     .info-box .user .avatar {
@@ -362,16 +466,15 @@ function formatAccuracy(accuracy) {
         display: flex;
         align-items: center;
 
+        i {
+            font-size: 1.4rem;
+            margin-right: 5px;
+        }
+
         .actual-name {
             margin-left: 10px;
             margin-top: 5px;
             color: var(--text-color-secondary);
-        }
-
-        .flag {
-            width: 36px;
-            margin-right: 5px;
-            box-shadow: var(--box-shadow-5);
         }
     }
 
@@ -452,7 +555,7 @@ function formatAccuracy(accuracy) {
     }
 
     .maps {
-        > h3 {
+        >h3 {
             margin-top: 10px;
         }
 
@@ -476,7 +579,12 @@ function formatAccuracy(accuracy) {
         margin: 10px;
         flex-wrap: wrap;
 
-        > div {
+        h4 {
+            color: var(--text-color-secondary);
+            font-size: .8rem;
+        }
+
+        >div {
             width: 200px;
             margin: 0 10px;
         }
