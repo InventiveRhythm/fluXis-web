@@ -77,7 +77,7 @@ function downloadSong(album, track) {
 <template>
 <div v-if="react.artist" class="artist-content">
     <div class="artist-sidebar">
-        <img :src="'/featured-artist/' + react.artist.id + '/icon.png'" alt="Artist Image">
+        <img :src="'/featured-artist/' + react.artist.id + '/icon.png'" alt="Artist Image" class="future loadFade">
         <div class="socials">
 
         </div>
@@ -91,12 +91,12 @@ function downloadSong(album, track) {
             <div class="album" v-for="album in react.artist.albums"
                 :style="'--album-accent:' + album.colors.accent + '; --album-text:' + album.colors.text + '; --album-text2:' + album.colors.text2 + '; --album-bg:' + album.colors.bg + '; --album-bg2:' + album.colors.bg2 + '; ' ">
                 <div class="header">
-                    <img :src="'/featured-artist/' + react.artist.id + '/' + album.id + '/cover.png'" alt="" class="album-background">
+                    <img :src="'/featured-artist/' + react.artist.id + '/' + album.id + '/cover.png'" alt="" class="album-background future loadFade">
                     <div class="blur"></div>
                     <div class="dim"></div>
                     <div class="color-dim"></div>
                     <div class="album-info">
-                        <img :src="'/featured-artist/' + react.artist.id + '/' + album.id + '/cover.png'" alt="" class="cover">
+                        <img :src="'/featured-artist/' + react.artist.id + '/' + album.id + '/cover.png'" alt="" class="cover future loadFade">
                         <div class="text">
                             <h2>{{ album.name }}</h2>
                             <p>{{ album.tracks.length }} songs</p>

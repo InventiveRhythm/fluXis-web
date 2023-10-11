@@ -55,7 +55,7 @@ function getSongCount(id) {
     <div class="list" v-if="react.data">
         <RouterLink :to="'/maps/artists/' + artist.id" v-for="artist in react.data">
             <div class="artist">
-                <img :src="'/featured-artist/' + artist.id + '/icon.png'" :alt="artist.name" width="200" height="200" />
+                <img class="future loadFade" :src="'/featured-artist/' + artist.id + '/icon.png'" :alt="artist.name" width="200" height="200" />
                 <div class="text">
                     <h3>{{ artist.name }}</h3>
                     <p>{{ getSongCount(artist.id) }} songs</p>
