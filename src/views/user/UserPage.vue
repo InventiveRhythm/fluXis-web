@@ -13,6 +13,10 @@ const id = route.params.id;
 let react = reactive({
     loading: true,
     user: null,
+    mapsLoaded: false,
+    maps: null,
+    scoresLoaded: false,
+    scores: null
 });
 
 startLoading();
@@ -31,6 +35,9 @@ fetch(`${Config.apiUrl}/user/${id}`).then(res => res.json()).then(data => {
 
     react.loading = false;
     react.user.lastloginString = TimeUtils.formatAgo(react.user.lastlogin);
+
+    loadMaps();
+    loadScores();
 }).catch(err => {
     console.error(err);
     stopLoading();
@@ -82,6 +89,30 @@ function getRoleIcon() {
         default:
             return "";
     }
+}
+
+function loadMaps() {
+    fetch(`${Config.apiUrl}/user/${id}/maps`).then(res => res.json()).then(data => {
+        console.log(data.data);
+        if (!data.data) return;
+        react['maps'] = data.data;
+    }).catch(err => {
+        console.error(err);
+    }).finally(() => {
+        react.mapsLoaded = true;
+    })
+}
+
+function loadScores() {
+    fetch(`${Config.apiUrl}/user/${id}/scores`).then(res => res.json()).then(data => {
+        console.log(data.data);
+        if (!data.data) return;
+        react['scores'] = data.data;
+    }).catch(err => {
+        console.error(err);
+    }).finally(() => {
+        react.scoresLoaded = true;
+    })
 }
 </script>
 
@@ -253,32 +284,32 @@ function getRoleIcon() {
                 <p class="subtext">Nothing important here yet...</p>
             </div>
 
-            <div class="profile-section">
+            <div class="profile-section" v-if="react.scoresLoaded">
                 <h1 id="scores">Best Scores</h1>
-                <div v-if="react.user.best_scores && react.user.best_scores.length > 0" class="score-list">
-                    <ScoreCard v-for="score in react.user.best_scores" :score=score></ScoreCard>
+                <div v-if="react.scores.best_scores && react.scores.best_scores.length > 0" class="score-list">
+                    <ScoreCard v-for="score in react.scores.best_scores" :score=score></ScoreCard>
                 </div>
                 <p class="subtext" v-else>User hasn't set any scores yet...</p>
             </div>
 
-            <div class="profile-section maps">
+            <div class="profile-section maps" v-if="react.mapsLoaded">
                 <h1 id="maps">Maps</h1>
 
                 <h3>Pure Maps</h3>
-                <div v-if="react.user.ranked_maps && react.user.ranked_maps.length > 0" class="mapset-list">
-                    <MapSet v-for="set in react.user.ranked_maps" :mapset=set></MapSet>
+                <div v-if="react.maps.ranked && react.maps.ranked.length > 0" class="mapset-list">
+                    <MapSet v-for="set in react.maps.ranked" :mapset=set></MapSet>
                 </div>
                 <p v-else class="subtext">This user doesn't have any pure maps...</p>
 
                 <h3>Impure/Unsubmitted Maps</h3>
-                <div v-if="react.user.unranked_maps && react.user.unranked_maps.length > 0" class="mapset-list">
-                    <MapSet v-for="set in react.user.unranked_maps" :mapset=set></MapSet>
+                <div v-if="react.maps.unranked && react.maps.unranked.length > 0" class="mapset-list">
+                    <MapSet v-for="set in react.maps.unranked" :mapset=set></MapSet>
                 </div>
                 <p v-else class="subtext">This user doesn't have any impure/unsubmitted maps...</p>
 
                 <h3>Guest Difficulties</h3>
-                <div v-if="react.user.guest_diffs && react.user.guest_diffs.length > 0" class="mapset-list">
-                    <MapSet v-for="set in react.user.guest_diffs" :mapset=set></MapSet>
+                <div v-if="react.maps.guest_diffs && react.maps.guest_diffs.length > 0" class="mapset-list">
+                    <MapSet v-for="set in react.maps.guest_diffs" :mapset=set></MapSet>
                 </div>
                 <p v-else class="subtext">This user doesn't have any guest difficulties...</p>
             </div>
