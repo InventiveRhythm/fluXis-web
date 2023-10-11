@@ -9,6 +9,16 @@ const router = createRouter({
       component: () => import('../views/HomeView.vue')
     },
     {
+      path: '/maps/artists/:id',
+      name: 'featured-artist',
+      component: () => import('../views/fa/FeaturedArtist.vue')
+    },
+    {
+      path: '/maps/artists',
+      name: 'featured-artists',
+      component: () => import('../views/fa/FeaturedArtistList.vue')
+    },
+    {
       path: '/maps',
       name: 'maps',
       component: () => import('../views/WorkInProgress.vue')
