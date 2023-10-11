@@ -1,3 +1,5 @@
+import UserSocials from "./UserSocials";
+
 export default class User {
     public id: number;
     public username: string;

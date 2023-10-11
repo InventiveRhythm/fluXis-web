@@ -1,3 +1,5 @@
+import MapShort from "./MapShort";
+
 export default class Score {
     public id: number;
     public user: number;

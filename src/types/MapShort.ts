@@ -1,4 +1,6 @@
-class MapShort {
+import UserShort from "./UserShort";
+
+export default class MapShort {
     public id: number;
     public mapset: number;
     public hash: number;
