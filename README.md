@@ -1,5 +1,5 @@
 # fluXis-web
-The website for [fluXis](https://fluXis.foxes4life.net).
+The website for [fluXis](https://fluXis.flux.moe).
 
 ## Development
 
