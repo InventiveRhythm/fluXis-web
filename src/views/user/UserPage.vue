@@ -88,6 +88,23 @@ function getRoleIcon() {
     }
 }
 
+function createClubGradient() {
+    if (!react.user.club) return;
+    const colors = react.user.club.colors;
+
+    let gradient = "linear-gradient(90deg";
+
+    colors.forEach(el => {
+        let color = el.color; 
+        let position = el.position;
+
+        gradient += `, ${color} ${position * 100}%`;
+    });
+
+    gradient += ")";
+    return gradient;
+}
+
 function loadScores() {
     fetch(`${Config.apiUrl}/user/${id}/scores`).then(res => res.json()).then(data => {
         console.log(data.data);
@@ -119,15 +136,17 @@ function loadScores() {
                         <div class="text">
                             <div class="names" :style="'color: var(--tag-role-' + getRoleTag(react.user.role) + ')'">
                                 <i v-if="react.user.role != 0" :class="getRoleIcon()"></i>
-                                <h1 v-if="react.user.displayname" class="name">
-                                    {{ react.user.displayname }}
+
+                                <h1 class="club" v-if="react.user.club">
+                                    <span class="color" :style="'background-image: ' + createClubGradient()">
+                                        {{ react.user.club.tag }}
+                                    </span>
                                 </h1>
-                                <h1 v-else class="name">
-                                    {{ react.user.username }}
-                                </h1>
-                                <h3 v-if="react.user.displayname" class="actual-name">
-                                    {{ react.user.username }}
-                                </h3>
+
+                                <h1 v-if="react.user.displayname" class="name">{{ react.user.displayname }}</h1>
+                                <h1 v-else class="name">{{ react.user.username }}</h1>
+
+                                <h3 v-if="react.user.displayname" class="actual-name">{{ react.user.username }}</h3>
                             </div>
                             <h4 v-if="react.user.is_online">
                                 <span class="online"></span>
@@ -465,6 +484,25 @@ function loadScores() {
         i {
             font-size: 1.4rem;
             margin-right: 5px;
+        }
+
+        .club {
+            color: white;
+
+            &::before {
+                content: '[';
+            }
+
+            .color {
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+            }
+
+            &::after {
+                content: ']';
+                margin-right: 5px;
+            }
         }
 
         .actual-name {
