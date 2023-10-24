@@ -1,39 +1,15 @@
 <script setup>
-    import {
-        RouterLink
-    } from 'vue-router';
+import { RouterLink } from 'vue-router';
 import Config from '@/config.json';
 
-    defineProps({
-        mapset: {
-            title: String,
-            artist: String,
-            creator: {
-                username: String
-            },
-            status: Number,
-            id: Number,
-            maps: Array
-        }
-    });
+const props = defineProps({
+    mapset: Object
+});
 
-    function getMapsetStatus(status) {
-        switch (status) {
-            case 0:
-                return 'unsubmitted';
-            case 1:
-                return 'pending';
-            case 2:
-                return 'impure';
-            case 3:
-                return 'pure';
-        }
-    }
-
-function lowestKeyMode(mapset) { 
+function lowestKeyMode() { 
     let lowest = -1;
 
-    mapset.maps.forEach(element => {
+    props.mapset.maps.forEach(element => {
         if (lowest == -1)
             lowest = element.mode;
 
@@ -44,10 +20,10 @@ function lowestKeyMode(mapset) {
     return lowest;
 }
 
-function highestKeyMode(mapset) {
+function highestKeyMode() {
     let highest = 0;
 
-    mapset.maps.forEach(element => {
+    props.mapset.maps.forEach(element => {
         if (element.mode > highest)
             highest = element.mode;
     });
@@ -55,29 +31,46 @@ function highestKeyMode(mapset) {
     return highest;
 }
 
-function keyModeString(mapset) {
-    let lowest = lowestKeyMode(mapset);
-    let highest = highestKeyMode(mapset);
+function keyModeString() {
+    let lowest = lowestKeyMode();
+    let highest = highestKeyMode();
 
     if (lowest == highest)
         return lowest;
 
     return lowest + '-' + highest;
 }
+
+function getStatusString() {
+    switch (props.mapset.status) {
+        case 0:
+            return 'unsubmitted';
+        case 1:
+            return 'pending';
+        case 2:
+            return 'impure';
+        case 3:
+            return 'pure';
+        default:
+            return 'unknown';
+    }
+}
 </script>
 
 <template>
-    <RouterLink :to="'/mapset/' + mapset.id" class="mapset-link">
+    <RouterLink :to="'/mapset/' + mapset.id" class="mapset-link" v-if="mapset">
         <div class="mapset-info">
-            <img :src="Config.apiUrl + '/assets/background/' + mapset.id"
-                class="mapset-background future loadFade">
+            <img :src="Config.apiUrl + '/assets/background/' + mapset.id" class="mapset-background future loadFade">
             <div class="mapset-metadata">
-                <h3 class="mapset-title">{{ mapset.title }}</h3>
-                <h5 class="mapset-artist">by {{ mapset.artist }}</h5>
-                <h5 class="mapset-creator">mapped by {{ mapset.creator.username }}</h5>
-                <div class="status-keymode">
-                    <h5 :class="'mapset-status status-' + getMapsetStatus(mapset.status)">{{ getMapsetStatus(mapset.status).toUpperCase() }}</h5>
-                    <h5 :class="'mapset-keymode mode-min-' + lowestKeyMode(mapset) + ' mode-max-' + highestKeyMode(mapset)">{{ keyModeString(mapset) }}K</h5>
+                <img :src="Config.apiUrl + '/assets/cover/' + mapset.id" class="cover">
+                <div class="text">
+                    <span class="title">{{ mapset.title }}</span>
+                    <span class="artist">by {{ mapset.artist }}</span>
+                    <span class="mapper">mapped by {{ mapset.creator.username }}</span>
+                    <div class="status-mode">
+                        <span class="status" :style="'background-color: var(--tag-status-' + getStatusString() + ')'">{{ getStatusString() }}</span>
+                        <span :class="'mode mode-min-' + lowestKeyMode() + ' mode-max-' + highestKeyMode()">{{ keyModeString() }}K</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -97,114 +90,96 @@ function keyModeString(mapset) {
             position: relative;
             display: grid;
             overflow: hidden;
-            border-radius: var(--border);
-            background-color: rgba(0, 0, 0, 0.5);
-            transition-property: transform, box-shadow;
-            transition-duration: 0.4s;
-            transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-            z-index: 1;
-
-            &:hover {
-                // transform: scale(1.03);
-                box-shadow: 0 0 10px #000;
-                z-index: 2;
-
-                .mapset-metadata {
-                background-color: rgba(0, 0, 0, .3);
-                }
-            }
+            border-radius: 20px;
+            background-color: var(--bg-triary);
 
             .mapset-background {
                 width: 100%;
                 height: 100%;
-                background-color: #000;
-                z-index: 1;
                 object-fit: cover;
-                grid-row: 1;
-                grid-column: 1;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 1;
             }
 
             .mapset-metadata {
-                z-index: 2;
+                display: flex;
+                flex-direction: row;
                 padding: 10px;
-                grid-row: 1;
-                grid-column: 1;
-                background-color: rgba(0, 0, 0, .4);
-                backdrop-filter: var(--blur-2);
-                text-align: left;
-                text-shadow: 0 0 5px #000;
-                transition: background-color .2s;
+                z-index: 2;
+                background-color: rgba($color: #000000, $alpha: .5);
 
-                .mapset-title {
-                    font-size: 1rem;
+                .cover {
+                    width: 80px;
+                    height: 80px;
+                    object-fit: cover;
+                    border-radius: 10px;
+                    box-shadow: var(--box-shadow-5);
                 }
 
-                .mapset-artist {
-                    font-size: 0.8rem;
-                }
-
-                .mapset-creator {
-                    font-size: 0.7rem;
-                }
-
-                .status-keymode {
+                .text {
                     display: flex;
-                    justify-content: space-between;
-                    align-items: center;
+                    flex-grow: 1;
+                    flex-direction: column;
+                    justify-content: center;
+                    margin-left: 10px;
+                    text-align: left;
+                    color: var(--text-primary);
+                    line-height: 1.2;
+                    text-shadow: var(--text-shadow-2);
 
-                    h5 {
-                        color: var(--text-color);
-                        border-radius: 5px;
-                        padding: 1px 5px;
-                        font-size: 0.6rem;
-                        width: max-content;
-                        margin-top: 3px;
-                        box-shadow: 0 0 5px #000;
+                    .title {
+                        font-size: 20px;
+                    }
+
+                    .artist, .mapper {
+                        font-size: 12px;
+                    }
+
+                    .status-mode {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        font-size: 12px;
+                        font-weight: 100;
+                        margin-top: 5px;
                         text-shadow: none;
-                    }
+                        color: rgba($color: #000000, $alpha: .75);
 
-                    .mapset-status {
-                        &.status-pending {
-                            background-color: var(--tag-status-pending);
+                        .status {
+                            box-shadow: var(--box-shadow-5);
+                            padding: 2px 5px;
+                            text-transform: uppercase;
+                            border-radius: 20px;
                         }
 
-                        &.status-pure {
-                            background-color: var(--tag-status-pure);
+                        .mode {
+                            box-shadow: var(--box-shadow-5);
+                            padding: 2px 5px;
+                            background: linear-gradient(90deg, var(--tag-keymode-min) 0%, var(--tag-keymode-max) 100%);
+                            border-radius: 20px;
                         }
-
-                        &.status-impure {
-                            background-color: var(--tag-status-impure);
-                        }
-
-                        &.status-unsubmitted {
-                            background-color: var(--tag-status-unsubmitted);
-                        }
-                    }
-
-                    .mapset-keymode {
-                        background: linear-gradient(90deg, var(--tag-keymode-min) 0%, var(--tag-keymode-max) 100%);
-                        color: var(--text-color-dark);
                     }
                 }
             }
         }
 
-        @media screen and (max-width: 500px) {
-            width: 100%;
+        @media screen and (max-width: 800px) {
+            height: max-content;
 
-            .mapset-info {
-                .mapset-metadata {
-                    padding: 5px 10px;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
+            .mapset-info .mapset-metadata {
+                flex-direction: column !important;
+                
+                align-items: center;
+
+                .text {
+                    width: 100%;
                     text-align: center;
 
-                    .status-keymode {
-                        .mapset-keymode {
-                            margin-left: 10px;
-                        }
+                    .status-mode {
+                        justify-content: center;
+                        gap: 10px;
                     }
                 }
             }

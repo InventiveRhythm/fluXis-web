@@ -1,10 +1,9 @@
 <script setup>
-import Score from '../../types/Score.ts';
 import TimeUtils from '../../utils/TimeUtils';
 
 const props = defineProps({
   score: {
-    type: Score,
+    type: Object,
     required: true,
   }
 });
