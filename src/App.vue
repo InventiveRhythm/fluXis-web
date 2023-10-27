@@ -46,8 +46,8 @@ import { Transition, Suspense } from 'vue';
   }
 
   .content .router-page {
-    width: 100%;
-    max-width: 1320px;
+    width: inherit;
+    max-width: inherit;
     height: min-content;
     grid-row: 1;
     grid-column: 1;
