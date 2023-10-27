@@ -19,6 +19,47 @@ function userClick(e) {
 
     closeUserOverlay();
 }
+
+function getRoleTag(roleid) {
+    switch (roleid) {
+        case 1:
+            return "featured-artist";
+        case 2:
+            return "purifier";
+        case 3:
+            return "moderator";
+        case 4:
+            return "admin";
+        case 5:
+            return "fluxel";
+        default:
+            return "";
+    }
+}
+
+function getRoleIcon() {
+    switch (react.user.role) {
+        case 1: // featured artist
+            return "fas fa-star";
+        case 2: // purifier
+            return "fas fa-diamond";
+        case 3: // moderator
+            return "fas fa-shield-halved";
+        case 4: // admin
+            return "fas fa-user-shield";
+        case 5: // fluxel
+            return "fas fa-user-astronaut";
+        default:
+            return "";
+    }
+}
+
+function getColor() {
+    if (react.user)
+        return "--color: var(--tag-role-" + getRoleTag(react.user.role) + ")";
+
+    return "";
+}
 </script>
 
 <template>
@@ -31,12 +72,19 @@ function userClick(e) {
                         <img v-if="react.user" :src="Config.apiUrl + '/assets/banner/' + react.user.id" alt="" class="banner">
                         <img v-else :src="Config.apiUrl + '/assets/banner/-1'" alt="" class="banner">
                         <div class="banner-dim"></div>
-                        <div class="info">
+                        <div class="info" :style=getColor()>
                             <img v-if="react.user" :src="Config.apiUrl + '/assets/avatar/' + react.user.id" alt="" class="avatar">
-                            <img v-else :src="Config.apiUrl + 'assets/avatar/-1'" alt="" class="avatar">
+                            <img v-else :src="Config.apiUrl + '/assets/avatar/-1'" alt="" class="avatar">
 
-                            <p v-if="react.user" class="name">{{ react.user.username }}</p>
-                            <p v-else class="name">Not Logged in</p>
+                            <div class="name-flex">
+                                <i v-if="react.user" :class=getRoleIcon()></i>
+
+                                <p v-if="react.user && react.user.displayname" class="name">{{ react.user.displayname }}</p>
+                                <p v-else-if="react.user" class="name">{{ react.user.username }}</p>
+                                <p v-else class="name">Not Logged in</p>
+                            </div>
+
+                            <p v-if="react.user && react.user.displayname" class="username">{{ react.user.username }}</p>
                         </div>
                     </div>
                     <div class="links" v-if="react.user">
@@ -90,6 +138,7 @@ function userClick(e) {
             border-radius: 20px;
             padding: 10px;
             transition: transform .2s;
+            box-shadow: var(--box-shadow);
 
             .user {
                 height: 150px;
@@ -97,6 +146,7 @@ function userClick(e) {
                 overflow: hidden;
                 display: grid;
                 cursor: pointer;
+                text-shadow: var(--text-shadow-2);
 
                 .banner {
                     width: 100%;
@@ -129,6 +179,19 @@ function userClick(e) {
                         object-fit: cover;
                         margin-bottom: 5px;
                         border-radius: 5px;
+                        box-shadow: var(--box-shadow-5);
+                    }
+
+                    .name-flex {
+                        display: flex;
+                        align-items: center;
+                        color: var(--color);
+                        gap: 5px;
+                    }
+
+                    .username {
+                        font-size: 12px;
+                        color: var(--text-color-secondary);
                     }
                 }
 
