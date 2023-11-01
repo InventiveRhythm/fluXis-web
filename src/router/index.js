@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { startLoading, stopLoading } from '../utils/loading.js'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -97,6 +98,10 @@ const router = createRouter({
   ]
 })
 
+router.beforeEach((to, from) => {
+  startLoading();
+})
+
 router.afterEach((to, from) => {
   const toDepth = to.path.split('/').length
   const fromDepth = from.path.split('/').length
@@ -106,6 +111,8 @@ router.afterEach((to, from) => {
     transitionName = 'slide-left';
   }
   to.meta.transition = transitionName;
+
+  stopLoading();
 })
 
 export default router

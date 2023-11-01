@@ -1,11 +1,12 @@
 <script setup>
+import { useRoute } from 'vue-router';
+import { reactive } from 'vue';
+
 import Config from '@/config.json';
 import TimeUtils from '../../utils/TimeUtils';
 
 import ScoreCard from '../../components/score/ScoreCard.vue';
 import UserPageMaps from './sections/UserPageMaps.vue';
-import { useRoute } from 'vue-router';
-import { reactive } from 'vue';
 
 const route = useRoute();
 const id = parseInt(route.params.id);
@@ -17,29 +18,21 @@ let react = reactive({
     scores: null
 });
 
-startLoading();
 setTitle("Loading...");
 
-fetch(`${Config.apiUrl}/user/${id}`).then(res => res.json()).then(data => {
-    if (!data.data) {
-        stopLoading();
-        react.loading = false;
-        return;
-    }
+await fetch(`${Config.apiUrl}/user/${id}`).then(res => res.json()).then(data => {
+    if (!data.data) return;
+
     react['user'] = data.data;
-
-    setTitle(react.user.username + " - user info");
-    stopLoading();
-
-    react.loading = false;
     react.user.lastloginString = TimeUtils.formatAgo(react.user.lastlogin);
 
+    setTitle(react.user.username + " - user info");
     loadScores();
 }).catch(err => {
     console.error(err);
-    stopLoading();
+}).finally(() => {
     react.loading = false;
-});
+})
 
 function getRoleTag(roleid) {
     switch (roleid) {

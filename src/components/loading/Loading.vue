@@ -1,3 +1,15 @@
+<script setup>
+import { registerEvent } from '@/utils/Events';
+registerEvent('loading', (status) => {
+    const loading = document.getElementById('loading');
+    if (status) {
+        loading.classList.add('loading');
+    } else {
+        loading.classList.remove('loading');
+    }
+});
+</script>
+
 <template>
     <div class="load-wrapper" id="loading">
         <svg class="circular-loader" viewBox="25 25 50 50">
@@ -18,6 +30,7 @@
     display: flex;
     place-items: center;
     justify-content: center;
+    align-items: center;
     backdrop-filter: var(--blur);
 
     opacity: 0;
@@ -37,7 +50,6 @@
 
     animation: rotate 2s linear infinite;
     transform-origin: center center;
-    margin: auto;
 }
 
 .load-wrapper svg circle {
