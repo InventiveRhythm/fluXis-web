@@ -60,6 +60,11 @@ const router = createRouter({
       component: () => import('../views/user/UserPage.vue')
     },
     {
+      path: '/@:handle+',
+      name: 'user-details-handle',
+      component: () => import('../views/user/UserPage.vue')
+    },
+    {
       path: '/mapset/:id',
       name: 'mapset-details',
       component: () => import('../views/map/MapSetPage.vue')

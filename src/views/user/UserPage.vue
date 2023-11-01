@@ -9,7 +9,20 @@ import ScoreCard from '../../components/score/ScoreCard.vue';
 import UserPageMaps from './sections/UserPageMaps.vue';
 
 const route = useRoute();
-const id = parseInt(route.params.id);
+let id = -1;
+
+if (route.params.handle) {
+    var username = route.params.handle[0];
+
+    await fetch(`${Config.apiUrl}/user/@${username}`).then(res => res.json()).then(data => {
+        if (!data.data) return;
+        id = data.data.id;
+    }).catch(err => {
+        console.error(err);
+    });
+} else {
+    id = parseInt(route.params.id);
+}
 
 let react = reactive({
     loading: true,
@@ -18,21 +31,26 @@ let react = reactive({
     scores: null
 });
 
-setTitle("Loading...");
+if (id != -1) {
+    setTitle("Loading...");
 
-await fetch(`${Config.apiUrl}/user/${id}`).then(res => res.json()).then(data => {
-    if (!data.data) return;
+    await fetch(`${Config.apiUrl}/user/${id}`).then(res => res.json()).then(data => {
+        if (!data.data) return;
 
-    react['user'] = data.data;
-    react.user.lastloginString = TimeUtils.formatAgo(react.user.lastlogin);
+        react['user'] = data.data;
+        react.user.lastloginString = TimeUtils.formatAgo(react.user.lastlogin);
 
-    setTitle(react.user.username + " - user info");
-    loadScores();
-}).catch(err => {
-    console.error(err);
-}).finally(() => {
+        setTitle(react.user.username + " - user info");
+        loadScores();
+    }).catch(err => {
+        console.error(err);
+    }).finally(() => {
+        react.loading = false;
+    })
+} else {
     react.loading = false;
-})
+}
+
 
 function getRoleTag(roleid) {
     switch (roleid) {

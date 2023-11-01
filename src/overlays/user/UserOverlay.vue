@@ -9,9 +9,9 @@ let react = reactive({
     user: $cookies.get('user')
 });
 
-function userClick(e) {
+function userClick() {
     if (react.user) {
-        router.push('/user/' + react.user.id);
+        router.push('/@' + react.user.username.toLowerCase());
     }
     else {
         router.push('/login');
