@@ -4,6 +4,7 @@ import { RouterLink, useRouter } from 'vue-router'
 import FluXisText from '../../assets/images/logo-text.png';
 import { reactive } from 'vue';
 import NavLink from './NavLink.vue';
+import NavProfile from "./NavProfile.vue";
     
 const router = useRouter();
 
@@ -91,17 +92,7 @@ function onProfileClick(e) {
 
                 <NavLink to="/wiki/Home" text="Wiki" icon="book"/>
             </div>
-            <div class="nav-user">
-                <div class="icon" onclick="openSearchOverlay()">
-                    <i class="fa fa-search"></i>
-                </div>
-                
-                <div @mousedown="onProfileClick" class="user" >
-                    <img v-if="react.user" :src="Config.apiUrl + '/assets/avatar/' + react.user.id"
-                        class="future loadFade" alt="user avatar">
-                    <img v-else :src="Config.apiUrl + '/assets/avatar/-1'" class="future loadFade" alt="logged out user avatar" >
-                </div>
-            </div>
+            <NavProfile/>
         </div>
     </nav>
 </template>
@@ -115,18 +106,18 @@ nav {
     z-index: 100;
 
     .nav-wrapper {
-        width: 1500px;
+        width: 100%;
         height: 80px;
         margin: 0 auto;
         display: flex;
-        padding: 0 10px;
-        border-radius: 0 0 20px 20px;
+        // border-radius: 0 0 20px 20px;
         transition: border-radius .3s;
         justify-content: space-between;
         align-items: center;
-        background-color: var(--bg-secondary-opaque);
-        backdrop-filter: var(--blur-10);
-        z-index: inherit;
+        background-color: var(--bg-secondary);
+        box-shadow: var(--box-shadow-no-offset);
+        position: relative;
+        z-index: 100;
 
         @media screen and (max-width: 1540px) {
             width: 100%;
@@ -137,6 +128,7 @@ nav {
             display: flex;
             align-items: center;
             z-index: inherit;
+            padding: 0 10px;
 
             .nav-title {
                 display: flex;
@@ -155,40 +147,6 @@ nav {
                     display: flex;
                     align-items: center;
                 }
-            }
-        }
-
-        .nav-user {
-            display: flex;
-            align-items: center;
-            z-index: inherit;
-            text-align: right;
-
-            .icon {
-                padding: 10px;
-                margin-right: 10px;
-            }
-
-            div {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                padding: 5px;
-                border-radius: 10px;
-                transition: background-color .3s;
-                cursor: pointer;
-
-                &:hover {
-                    background-color: var(--bg-hover);
-                }
-            }
-
-            img {
-                width: 50px;
-                height: 50px;
-                border-radius: 5px;
-                // margin-left: 10px;
-                object-fit: cover;
             }
         }
 

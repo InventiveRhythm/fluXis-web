@@ -28,6 +28,9 @@
   --box-shadow-5: 0 2px 5px rgba(0, 0, 0, 0.2);
   --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   --box-shadow-20: 0 4px 20px rgba(0, 0, 0, 0.2);
+  --box-shadow-5-no-offset: 0 2px 5px rgba(0, 0, 0, 0.2);
+  --box-shadow-no-offset: 0 2px 10px rgba(0, 0, 0, 0.2);
+  --box-shadow-20-no-offset: 0 4px 20px rgba(0, 0, 0, 0.2);
   --text-shadow: var(--text-shadow-1);
 
   @for $i from 1 through 4 {

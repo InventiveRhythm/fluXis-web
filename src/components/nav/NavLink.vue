@@ -65,7 +65,7 @@ const props = defineProps({
     min-height: 80px;
     padding: 70px 20px 20px 20px;
     visibility: hidden;
-    background-color: var(--bg-secondary-opaque);
+    background-color: var(--bg-secondary);
     z-index: -10;
     border-radius: 0 0 20px 20px;
     backdrop-filter: var(--blur-10);

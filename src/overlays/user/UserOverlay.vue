@@ -113,11 +113,11 @@ function getColor() {
         position: absolute;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(0, 0, 0, 0);
     }
 
     .width-wrapper {
-        width: 1500px;
+        width: 100vw;
         position: relative;
         margin: 0 auto;
 
@@ -129,16 +129,18 @@ function getColor() {
     .wrapper {
         position: absolute;
         right: 0;
-        margin: 20px;
+        // margin: 20px;
         margin-top: 80px;
 
         .overlay-content {
             width: 300px;
             background-color: var(--bg);
-            border-radius: 20px;
-            padding: 10px;
+            border-radius: 0 0 0 20px;
+            padding: 15px 10px 10px 10px;
             transition: transform .2s;
             box-shadow: var(--box-shadow);
+            position: relative;
+            z-index: 80;
 
             .user {
                 height: 150px;
@@ -227,7 +229,7 @@ function getColor() {
         opacity: 0;
 
         .wrapper .overlay-content {
-            transform: scale(1.1);
+            transform: translateY(-10px);
         }
     }
 }

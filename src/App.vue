@@ -9,8 +9,6 @@ import { Transition, Suspense } from 'vue';
 </script>
 
 <template>
-  <NavBar />
-
   <div class="content">
     <RouterView v-slot="{ Component, route }">
       <Transition :name=route.meta.transition>
@@ -27,9 +25,10 @@ import { Transition, Suspense } from 'vue';
 
   <div class="overlays">
     <UserOverlay />
-    <SearchOverlay />
     <Loading />
   </div>
+
+  <NavBar />
 </template>
 
 <style lang="scss">
@@ -65,7 +64,7 @@ import { Transition, Suspense } from 'vue';
     width: 100vw;
     height: 100vh;
     pointer-events: none;
-    z-index: 150;
+    z-index: 50;
   }
 
   /* transition shid */
