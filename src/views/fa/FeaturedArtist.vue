@@ -91,7 +91,7 @@ function downloadSong(album, track) {
         </div>
         <div class="artist-album-list">
             <div class="album" v-for="album in react.artist.albums"
-                :style="'--album-accent:' + album.colors.accent + '; --album-text:' + album.colors.text + '; --album-text2:' + album.colors.text2 + '; --album-bg:' + album.colors.bg + '; --album-bg2:' + album.colors.bg2 + '; ' ">
+                :style="'--album-accent:' + album.colors.accent + '; --album-accent-opaque:' + album.colors.accent + '88; --album-text:' + album.colors.text + '; --album-text2:' + album.colors.text2 + '; --album-bg:' + album.colors.bg + '; --album-bg2:' + album.colors.bg2 + '; ' ">
                 <div class="header">
                     <img :src="'/featured-artist/' + react.artist.id + '/' + album.id + '/cover.png'" alt="" class="album-background future loadFade">
                     <div class="blur"></div>
@@ -201,7 +201,7 @@ function downloadSong(album, track) {
 
                 .header {
                     width: 100%;
-                    height: 80px;
+                    height: 100px;
                     overflow: hidden;
                     border-radius: 20px;
                     display: grid;
@@ -239,22 +239,21 @@ function downloadSong(album, track) {
                         grid-column: 1;
                         z-index: 2;
                         opacity: 0.5;
-                        background: linear-gradient(90deg, var(--album-accent) 0%, var(--album-accent) 20%, rgba(0, 0, 0, 0) 100%);
+                        background: linear-gradient(90deg, var(--album-accent) 0%, var(--album-accent) 20%, var(--album-accent-opaque) 100%);
                     }
 
                     .album-info {
-                        padding: 10px;
                         display: flex;
-                        height: 80px;
+                        height: 100px;
                         grid-row: 1;
                         grid-column: 1;
                         z-index: 2;
-                        gap: 10px;
+                        gap: 15px;
 
                         .cover {
-                            border-radius: 10px;
-                            width: 60px;
-                            height: 60px;
+                            border-radius: 20px;
+                            width: 100px;
+                            height: 100px;
                             object-fit: cover;
                             box-shadow: var(--box-shadow);
                         }
