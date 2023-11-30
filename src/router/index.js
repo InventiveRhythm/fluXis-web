@@ -92,7 +92,7 @@ const router = createRouter({
     },
     {
       path: '/stats/registrations',
-      name: 'team',
+      name: 'registration-stats',
       component: () => import('../views/stats/users/CreationStats.vue')
     },
     {
