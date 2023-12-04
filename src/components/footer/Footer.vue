@@ -1,5 +1,15 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+
+function toggleBlur() {
+    config.blur = !config.blur;
+    saveConfig();
+
+    if (config.blur)
+        enableBlur();
+    else
+        disableBlur();
+}
 </script>
 
 <template>
@@ -13,7 +23,7 @@ import { RouterLink } from 'vue-router'
             <a href="https://youtube.com/@fluXisGame" target="_blank">YouTube</a>
         </div>
         TeamFluXis 2023
-        <div onclick="disableBlur()" class="blur-disable">Disable Blur</div>
+        <div @click="toggleBlur" class="blur-disable">Toggle Blur</div>
     </div>
 </template>
 

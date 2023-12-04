@@ -8,7 +8,7 @@ function loadConfig() {
         json = JSON.parse(json);
     } else {
         json = {
-            disableBlur: false
+            blur: true
         };
     }
 
@@ -22,7 +22,7 @@ function saveConfig() {
 function loadSettings() {
     if (!config) return;
 
-    if (config.disableBlur) disableBlur();
+    if (!config.blur) disableBlur();
 }
 
 function enableBlur() {
