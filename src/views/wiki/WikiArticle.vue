@@ -82,6 +82,15 @@ function replaceLinks() {
         });
     });
 }
+
+function edit() {
+    const repo = "https://github.com/TeamFluXis/fluXis-wiki";
+
+    const path = route.path.split('/').slice(2).join('/').toLowerCase();
+    const url = repo + "/edit/main/" + path + ".md";
+
+    window.open(url, '_blank');
+}
 </script>
 
 <template>
@@ -97,9 +106,8 @@ function replaceLinks() {
                     </span>
                 </p>
             </div>
-            <a onclick="alert('The wiki isn\'t open-source yet!')">
+            <a @click="edit">
                 <div class="edit">
-                <!-- <a :href="'https://github.com/TeamFluXis/fluXis-wiki/' + path" target="_blank"> -->
                     <i class="fa fa-github"></i>
                     Edit this page
                 </div>
@@ -161,8 +169,7 @@ function replaceLinks() {
             border-radius: 10px 20px 10px 10px;
             word-wrap: normal;
             width: max-content;
-            opacity: .6;
-            cursor: not-allowed;
+            cursor: pointer;
 
             i {
                 margin-right: 5px;
@@ -296,6 +303,10 @@ function replaceLinks() {
             .nav {
                 display: none;
             }
+
+            .article {
+                border-radius: 10px 10px 20px 20px;
+            }
         }
     } 
 }
@@ -306,12 +317,15 @@ function replaceLinks() {
             flex-direction: column;
 
             .wiki-path {
-                margin-bottom: 10px;
+                border-radius: 20px 20px 10px 10px;
             }
 
             .edit {
-                width: 100%;
-                text-align: center;
+                display: none;
+            }
+
+            .article {
+                border-radius: 10px 10px 20px 20px;
             }
         }
     } 
