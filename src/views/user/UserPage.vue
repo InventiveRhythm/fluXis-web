@@ -390,9 +390,9 @@ function loadScores() {
                     align-items: center;
                     justify-content: center;
                     margin: 0 10px;
-                    padding: 5px;
+                    padding: 5px 10px;
                     border-radius: 5px;
-                    width: 100px;
+                    min-width: 100px;
                     transition: background-color .2s;
 
                     .social-id {
