@@ -25,9 +25,9 @@ const router = createRouter({
       component: () => import('../views/WorkInProgress.vue')
     },
     {
-      path: '/rankings',
+      path: '/rankings/overall',
       name: 'rankings',
-      component: () => import('../views/WorkInProgress.vue')
+      component: () => import('../views/rankings/OverallRating.vue')
     },
     {
       path: '/about',
