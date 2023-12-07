@@ -1,5 +1,6 @@
 <script setup>
 import Config from '@/config.json';
+import { RouterLink } from 'vue-router';
 
 const props = defineProps({
     user: Object
@@ -35,58 +36,65 @@ function createClubGradient(club) {
 </script>
 
 <template>
-    <div class="ranking-user-card">
-        <img :src="Config.apiUrl + '/assets/banner/' + user.id + '.png'" class="banner future loadFade">
-        <div class="dim"></div>
-        <div class="data">
-            <div class="rank">
-                <span>
-                    #{{ user.rank }}
-                </span>
-            </div>
-            <img :src="Config.apiUrl + '/assets/avatar/' + user.id + '.png'" class="avatar future loadFade">
-            <div class="info">
-                <div class="names">
-                    <span class="club" v-if="user.club">
-                        <span class="color" :style="'background-image: ' + createClubGradient(user.club)">
-                            {{ user.club.tag }}
+    <RouterLink :to="'/@' + user.username" class="ranking-user-card-link">
+        <div class="ranking-user-card">
+            <img :src="Config.apiUrl + '/assets/banner/' + user.id + '.png'" class="banner future loadFade">
+            <div class="dim"></div>
+            <div class="data">
+                <div class="rank">
+                    <span>
+                        #{{ user.rank }}
+                    </span>
+                </div>
+                <img :src="Config.apiUrl + '/assets/avatar/' + user.id + '.png'" class="avatar future loadFade">
+                <div class="info">
+                    <div class="names">
+                        <span class="club" v-if="user.club">
+                            <span class="color" :style="'background-image: ' + createClubGradient(user.club)">
+                                {{ user.club.tag }}
+                            </span>
                         </span>
-                    </span>
 
-                    <span v-if="user.displayname">
-                        {{ user.displayname }}
-                    </span>
-                    <span v-else>
-                        {{ user.username }}
-                    </span>
-                    <span class="username" v-if="user.displayname">
-                        {{ user.username }}
-                    </span>
+                        <span v-if="user.displayname">
+                            {{ user.displayname }}
+                        </span>
+                        <span v-else>
+                            {{ user.username }}
+                        </span>
+                        <span class="username" v-if="user.displayname">
+                            {{ user.username }}
+                        </span>
+                    </div>
+                    <div class="country">
+                        <span :class="'fi fi-' + user.country + ' flag'"></span>
+                        <span>{{ getCountryName(user.country) }}</span>
+                    </div>
                 </div>
-                <div class="country">
-                    <span :class="'fi fi-' + user.country + ' flag'"></span>
-                    <span>{{ getCountryName(user.country) }}</span>
-                </div>
-            </div>
-            <div class="spacer"></div>
-            <div class="stats">
-                <span class="main-stat">
-                    {{ user.ovr }} OVR
-                </span>
-                <div class="additional">
-                    <span>
-                        {{ user.ptr }} PR
+                <div class="spacer"></div>
+                <div class="stats">
+                    <span class="main-stat">
+                        {{ user.ovr }} OVR
                     </span>
-                    <span>
-                        {{ formatAccuracy(user.ova) }}
-                    </span>
+                    <div class="additional">
+                        <span>
+                            {{ user.ptr }} PR
+                        </span>
+                        <span>
+                            {{ formatAccuracy(user.ova) }}
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </RouterLink>
 </template>
 
 <style lang="scss">
+.ranking-user-card-link {
+    width: 100%;
+
+}
+
 .ranking-user-card {
     width: 100%;
     height: 100px;
