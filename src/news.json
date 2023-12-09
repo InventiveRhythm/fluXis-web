@@ -3,17 +3,17 @@
     "title": "An interesting title",
     "content": "very cool content thats extremely long so i can test line wrappings. css sucks i wish there was a better way to do this shit",
     "date": "8th June 1984",
-    "author": "Flustix"
+    "type": "NEWS"
 },{
     "image": "https://cdn.discordapp.com/attachments/960593225117237269/1105558139060887663/IMG_2089.jpg",
     "title": "certified hashbrown moment",
     "content": "pretent i put lorem ipsum in here. too lazy to actually generate some",
     "date": "1st November 1987",
-    "author": "Flustix"
+    "type": "NEWS"
 },{
     "image": "https://cdn.discordapp.com/attachments/960593225117237269/1105558144769335437/IMG_2090.jpg",
     "title": "i am going insane",
     "content": "i'm running out of ideas for this",
     "date": "7th March 2023",
-    "author": "Flustix"
+    "type": "NOTICE"
 }]

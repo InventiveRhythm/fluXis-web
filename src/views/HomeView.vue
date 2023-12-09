@@ -12,7 +12,6 @@ const stats = reactive({
     mapsets: undefined
 });
 
-const news = News;
 setTitle("Home");
 
 function getStats() {
@@ -60,13 +59,7 @@ getStats();
         </div>
     </div>
     <div class="news">
-        <NewsCard v-for="entry in news" 
-            :title="entry.title" 
-            :image="entry.image" 
-            :content="entry.content" 
-            :date="entry.date" 
-            :author="entry.author">
-        </NewsCard>
+        <NewsCard v-for="entry in News" :data="entry"/>
     </div>
 </template>
 
