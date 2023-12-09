@@ -19,7 +19,7 @@ const props = defineProps({
         </div>
         <div class="news-card-content">
             <h3>{{ data.title }}</h3>
-            <p class="content">{{ data.content }}</p>
+            <p>{{ data.content }}</p>
         </div>
     </div>
 </template>
@@ -97,7 +97,7 @@ const props = defineProps({
             text-align: left;
         }
 
-        .content {
+        > p {
             font-size: 14px;
             margin: 0;
             text-align: left;

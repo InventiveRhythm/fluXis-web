@@ -35,7 +35,8 @@ import { Transition, Suspense } from 'vue';
   .content {
     width: 1320px;
     max-width: calc(100vw - 40px);
-    margin: 100px auto 30px auto;
+    padding: 100px 0 120px 0;
+    margin: 0 auto 0 auto;
     text-align: center;
     height: min-content;
     position: relative;

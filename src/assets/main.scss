@@ -102,6 +102,11 @@ html {
   height: 100%;
 }
 
+#app {
+  position: relative;
+  min-height: 100vh;
+}
+
 .blur-enabled {
   --blur: var(--blur-5);
   @for $i from 1 through 10 {
