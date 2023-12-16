@@ -10,7 +10,7 @@ if (navigator.getEnvironmentIntegrity !== undefined) {
 }
 else {
     const app = createApp(App)
-    app.use(VueCookies, { expireTimes: '7d' })
+    app.use(VueCookies, { expires: '30d' })
     app.use(router)
     app.mount('#app')
 }
