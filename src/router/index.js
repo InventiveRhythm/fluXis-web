@@ -65,6 +65,11 @@ const router = createRouter({
       component: () => import('../views/user/UserPage.vue')
     },
     {
+      path: '/u/:id',
+      name: 'user-details-v2',
+      component: () => import('../views/user-v2/UserPage.vue')
+    },
+    {
       path: '/@:handle+',
       name: 'user-details-handle',
       component: () => import('../views/user/UserPage.vue')

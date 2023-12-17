@@ -26,8 +26,8 @@ const onLogin = async () => {
             if (data.status != 200) {
                 react.error = data.message;
             } else {
-                $cookies.set('user', data.data);
-                // $cookies.set('token', data.data.token);
+                $cookies.set('user', data.data.user);
+                $cookies.set('token', data.data.token);
                 location = '/';
             }
         } catch (error) {
