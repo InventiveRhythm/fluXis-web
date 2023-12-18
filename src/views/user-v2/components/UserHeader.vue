@@ -1,5 +1,5 @@
 <script setup>
-import Config from '@/config.json';
+import Assets from '@/utils/Assets';
 
 import { RouterLink } from 'vue-router';
 import UserHeaderRole from './header/UserHeaderRole.vue';
@@ -28,12 +28,12 @@ function createClubGradient() {
 
 <template>
     <div class="user-header">
-        <img :src="Config.assetsUrl + '/banner/' + user.id" alt="" class="banner">
+        <img :src="Assets.banner(user.id)" class="banner" animated-load>
         <div class="dim"></div>
         <div class="wrapper">
             <div class="data">
                 <div class="info">
-                    <img :src="Config.assetsUrl + '/avatar/' + user.id" alt="" class="avatar">
+                    <img :src="Assets.avatar(user.id)" class="avatar" animated-load>
                     <div class="text">
                         <div class="top">
                             <UserHeaderRole :role="user.role" />

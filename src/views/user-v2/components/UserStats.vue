@@ -1,15 +1,9 @@
 <script setup>
+import { formatAccuracy, formatScore } from '@/utils/formatting';
+
 const props = defineProps({
     user: Object
 });
-
-function formatScore(score) {
-    return score.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
-function formatAccuracy(accuracy) {
-    return accuracy.toFixed(2) + "%";
-}
 </script>
 
 <template>

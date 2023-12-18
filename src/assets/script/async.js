@@ -3,11 +3,10 @@ document.addEventListener('DOMNodeInserted', loadStuff);
 document.addEventListener('DOMNodeRemoved', loadStuff);
 
 function loadStuff() {
-    document.querySelectorAll('.future').forEach(function (el) {
+    document.querySelectorAll('[animated-load]').forEach(function (el) {
         let elInterv = setInterval(function () {
             if (el.completed || el.complete || el.readyState === 4) {
-                el.classList.add('loaded');
-                el.classList.remove('future');
+                el.setAttribute('loaded', '');
                 el.removeAttribute('onload');
                 clearInterval(elInterv);
             }

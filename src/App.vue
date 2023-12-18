@@ -1,25 +1,24 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 import NavBar from './components/nav/NavBar.vue';
 import Footer from './components/footer/Footer.vue';
 import Loading from './components/loading/Loading.vue';
 import UserOverlay from './overlays/user/UserOverlay.vue';
-import SearchOverlay from './overlays/search/SearchOverlay.vue';
 import { Transition, Suspense } from 'vue';
 </script>
 
 <template>
-  <div class="content">
-    <RouterView v-slot="{ Component, route }">
-      <Transition :name=route.meta.transition>
-        <div :key="route.path" class="router-page">
-          <Suspense>
+  <Suspense>
+    <div class="content">
+      <RouterView v-slot="{ Component, route }">
+        <Transition :name=route.meta.transition>
+          <div :key="route.path" class="router-page">
             <component :is="Component" />
-          </Suspense>
-        </div>
-      </Transition>
-    </RouterView>
-  </div>
+          </div>
+        </Transition>
+      </RouterView>
+    </div>
+  </Suspense>
 
   <Footer></Footer >
 

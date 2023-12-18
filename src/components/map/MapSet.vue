@@ -66,7 +66,7 @@ function getStatusString() {
                 <div class="text">
                     <span class="title">{{ mapset.title }}</span>
                     <span class="artist">by {{ mapset.artist }}</span>
-                    <span class="mapper">mapped by {{ mapset.creator.username }}</span>
+                    <span class="mapper">uploaded by {{ mapset.creator.username }}</span>
                     <div class="status-mode">
                         <span class="status" :style="'background-color: var(--tag-status-' + getStatusString() + ')'">{{ getStatusString() }}</span>
                         <span :class="'mode mode-min-' + lowestKeyMode() + ' mode-max-' + highestKeyMode()">{{ keyModeString() }}K</span>
@@ -79,10 +79,9 @@ function getStatusString() {
 
 <style lang="scss">
     .mapset-link {
-        flex: 1 1 500px;
+        width: 480px;
         height: 100px;
         display: block;
-        margin: 10px;
 
         .mapset-info {
             width: 100%;
@@ -106,15 +105,14 @@ function getStatusString() {
             .mapset-metadata {
                 display: flex;
                 flex-direction: row;
-                padding: 10px;
                 z-index: 2;
                 background-color: rgba($color: #000000, $alpha: .5);
 
                 .cover {
-                    width: 80px;
-                    height: 80px;
+                    width: 100px;
+                    height: 100px;
                     object-fit: cover;
-                    border-radius: 10px;
+                    border-radius: 20px;
                     box-shadow: var(--box-shadow-5);
                 }
 
@@ -123,11 +121,19 @@ function getStatusString() {
                     flex-grow: 1;
                     flex-direction: column;
                     justify-content: center;
-                    margin-left: 10px;
+                    padding: 10px;
                     text-align: left;
                     color: var(--text-primary);
                     line-height: 1.2;
-                    text-shadow: var(--text-shadow-2);
+                    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .25));
+
+                    > span {
+                        overflow: hidden;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        text-overflow: ellipsis;
+                    }
 
                     .title {
                         font-size: 20px;

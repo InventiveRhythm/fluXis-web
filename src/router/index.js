@@ -1,6 +1,27 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { startLoading, stopLoading } from '../utils/Loading.js'
 
+/*
+  future page mapping:
+  / - Home (for not logged in users)
+  /artist/:id - Featured Artist
+  /artists - Featured Artists
+  /changelog - Changelog
+  /download - Download
+  /home - Home (logged in) (shows news, feed, etc.)
+  /login - Login
+  /logout - Logout
+  /m/:id - Map
+  /n/:id - News
+  /ranking - Ranking
+  /ranking/c/:code - Country Ranking
+  /s - MapSet Search
+  /s/:id - MapSet
+  /team - Team
+  /u/:id - User
+  /wiki/:path - Wiki Page
+*/
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [

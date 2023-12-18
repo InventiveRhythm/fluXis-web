@@ -31,11 +31,7 @@
   --box-shadow-5-no-offset: 0 2px 5px rgba(0, 0, 0, 0.2);
   --box-shadow-no-offset: 0 2px 10px rgba(0, 0, 0, 0.2);
   --box-shadow-20-no-offset: 0 4px 20px rgba(0, 0, 0, 0.2);
-  --text-shadow: var(--text-shadow-1);
-
-  @for $i from 1 through 4 {
-    --text-shadow-#{$i}: 0 #{$i}px 2px rgba(0, 0, 0, 0.2);
-  }
+  --text-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 
   --bg-hover: rgba(255, 255, 255, 0.2);
   --bg-click: rgba(255, 255, 255, 0.4);
@@ -71,6 +67,15 @@
   --tag-keymode-8: #7ae9e9;
   --tag-keymode-9: #f7c5bb;
   --tag-keymode-10: #8c4451;
+
+  --rank-x: #a9a9a9;
+  --rank-ss: #ce9b3d;
+  --rank-s: #ffc14a;
+  --rank-aa: #69ca5a;
+  --rank-a: #84ff70;
+  --rank-b: #70d7ff;
+  --rank-c: #ff70ff;
+  --rank-d: #ff686b;
 }
 
 * {
@@ -121,15 +126,13 @@ html {
     align-items: center;
 }
 
-.loadFade {
+[animated-load] {
+    transition: opacity .4s, filter .8s;
     opacity: 0;
-    transition: opacity .4s, scale .8s cubic-bezier(0.22, 1, 0.36, 1);
-    scale: 1.05;
 }
 
-.loadFade.loaded {
+[animated-load][loaded] {
     opacity: 1;
-    scale: 1;
 }
 
 .flag {
@@ -139,3 +142,9 @@ html {
 
 @import './mode-min-max.scss';
 @import './name-gradients.scss';
+
+@media screen and (max-width: 1300px) {
+  [hide-mobile] {
+    display: none !important;
+  }
+}

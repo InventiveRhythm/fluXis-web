@@ -36,7 +36,7 @@ function createClubGradient(club) {
 </script>
 
 <template>
-    <RouterLink :to="'/@' + user.username" class="ranking-user-card-link">
+    <RouterLink :to="'/u/' + user.id" class="ranking-user-card-link">
         <div class="ranking-user-card">
             <img :src="Config.apiUrl + '/assets/banner/' + user.id + '.png'" class="banner future loadFade">
             <div class="dim"></div>

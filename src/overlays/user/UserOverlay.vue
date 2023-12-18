@@ -11,7 +11,7 @@ let react = reactive({
 
 function userClick() {
     if (react.user) {
-        router.push('/@' + react.user.username.toLowerCase());
+        router.push('/u/' + react.user.id);
     }
     else {
         router.push('/login');
