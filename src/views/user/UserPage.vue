@@ -498,7 +498,7 @@ function loadScores() {
         }
 
         .club {
-            color: white;
+            color: var(--text-color);
 
             &::before {
                 content: '[';

@@ -172,7 +172,7 @@ function createClubGradient() {
                         gap: 10px;
 
                         .club {
-                            color: white;
+                            color: var(--text-color);
                             font-size: 32px;
 
                             &::before {

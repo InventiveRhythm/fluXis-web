@@ -88,7 +88,7 @@ input {
     border-radius: 5px;
     padding-left: 10px;
     background-color: var(--bg-triary);
-    color: white;
+    color: var(--text-color);
     transition: all .2s;
 }
 
@@ -108,7 +108,7 @@ input:focus-visible {
     width: 100px;
     height: 30px;
     background-color: var(--bg-triary);
-    color: white;
+    color: var(--text-color);
     border: none;
     border-radius: 5px;
     transition: all .2s;
@@ -127,7 +127,7 @@ input:focus-visible {
     width: 100px;
     height: 30px;
     background-color: var(--bg-triary);
-    color: white;
+    color: var(--text-color);
     border: none;
     border-radius: 15px;
     transition: all .2s;

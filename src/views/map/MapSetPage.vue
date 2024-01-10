@@ -170,7 +170,7 @@ fetch(`${Config.apiUrl}/mapset/${id}`).then(res => res.json()).then(data => {
                     h1 {
                         font-size: 30px;
                         font-weight: 500;
-                        color: white;
+                        color: var(--text-color);
                         line-height: 1;
                     }
 
@@ -202,7 +202,7 @@ fetch(`${Config.apiUrl}/mapset/${id}`).then(res => res.json()).then(data => {
                             h3 {
                                 font-size: 12px;
                                 font-weight: 500;
-                                color: white;
+                                color: var(--text-color);
                                 margin: 0;
                                 padding: 0;
 

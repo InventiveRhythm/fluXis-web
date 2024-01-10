@@ -170,7 +170,7 @@ function createClubGradient(club) {
                 font-size: 28px;
 
                 .club {
-                    color: white;
+                    color: var(--text-color);
                 
                     &::before {
                         content: '[';
