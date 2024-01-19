@@ -1,13 +1,11 @@
 @font-face {
-  font-family: 'Renogare';
+  font-family: "Renogare";
   src: url("font/Renogare.otf");
 }
-
 @font-face {
-  font-family: 'Renogare Soft';
+  font-family: "Renogare Soft";
   src: url("font/RenogareSoft.ttf");
 }
-
 :root {
   --bg: hsl(240, 10%, 10%);
   --bg-secondary: hsl(240, 10%, 15%);
@@ -16,15 +14,11 @@
   --bg-quaternary: hsl(240, 10%, 25%);
   --bg-quinary: hsl(240, 10%, 30%);
   --bg-senary: hsl(240, 10%, 35%);
-
   --fg: hsl(240, 10%, 60%);
-
   --highlight: hsl(240, 100%, 70%);
-
   --text-color: rgb(255, 255, 255);
   --text-color-secondary: rgb(200, 200, 200);
   --text-color-dark: var(--bg-secondary);
-
   --box-shadow-5: 0 2px 5px rgba(0, 0, 0, 0.2);
   --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   --box-shadow-20: 0 4px 20px rgba(0, 0, 0, 0.2);
@@ -32,31 +26,25 @@
   --box-shadow-no-offset: 0 2px 10px rgba(0, 0, 0, 0.2);
   --box-shadow-20-no-offset: 0 4px 20px rgba(0, 0, 0, 0.2);
   --text-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-
   --bg-hover: rgba(255, 255, 255, 0.2);
   --bg-click: rgba(255, 255, 255, 0.4);
-
   --accent-primary: #3650eb;
   --accent-secondary: #4846d5;
   --accent-tertiary: #533ec3;
   --accent-quaternary: #5f30a7;
-
   --border: 10px;
   --border-secondary: 5px;
   --border-color: rgba(255, 255, 255, 0.2);
-
   --tag-role-fluxel: #1f1e33;
   --tag-role-admin: #f7b373;
   --tag-role-moderator: #73d173;
   --tag-role-purifier: #55b2ff;
   --tag-role-featured-artist: #FF7B74;
   --tag-role-user: #AA99FF;
-
   --tag-status-pure: #55b2ff;
   --tag-status-impure: #FF7B74;
   --tag-status-pending: #f7b373;
   --tag-status-unsubmitted: #888;
-
   --tag-keymode-1: #333346;
   --tag-keymode-2: #a53541;
   --tag-keymode-3: #ff7a5a;
@@ -67,7 +55,6 @@
   --tag-keymode-8: #7ae9e9;
   --tag-keymode-9: #f7c5bb;
   --tag-keymode-10: #8c4451;
-
   --rank-x: #a9a9a9;
   --rank-ss: #ce9b3d;
   --rank-s: #ffc14a;
@@ -82,7 +69,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Renogare Soft';
+  font-family: "Renogare Soft";
   font-weight: 100;
   scroll-margin-top: 100px;
 }
@@ -115,25 +102,32 @@ html {
 
 .blur-enabled {
   --blur: var(--blur-5);
-  @for $i from 1 through 10 {
-    --blur-#{$i}: blur(#{$i}px);
-  }
+  --blur-1: blur(1px);
+  --blur-2: blur(2px);
+  --blur-3: blur(3px);
+  --blur-4: blur(4px);
+  --blur-5: blur(5px);
+  --blur-6: blur(6px);
+  --blur-7: blur(7px);
+  --blur-8: blur(8px);
+  --blur-9: blur(9px);
+  --blur-10: blur(10px);
 }
 
 .mapset-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
 [animated-load] {
-    transition: opacity .4s, filter .8s;
-    opacity: 0;
+  transition: opacity 0.4s, filter 0.8s;
+  opacity: 0;
 }
 
 [animated-load][loaded] {
-    opacity: 1;
+  opacity: 1;
 }
 
 .flag {
@@ -141,11 +135,98 @@ html {
   aspect-ratio: 4/3;
 }
 
-@import './mode-min-max.scss';
-@import './name-gradients.scss';
+.mode-min-1 {
+  --tag-keymode-min: var(--tag-keymode-1);
+}
+
+.mode-min-2 {
+  --tag-keymode-min: var(--tag-keymode-2);
+}
+
+.mode-min-3 {
+  --tag-keymode-min: var(--tag-keymode-3);
+}
+
+.mode-min-4 {
+  --tag-keymode-min: var(--tag-keymode-4);
+}
+
+.mode-min-5 {
+  --tag-keymode-min: var(--tag-keymode-5);
+}
+
+.mode-min-6 {
+  --tag-keymode-min: var(--tag-keymode-6);
+}
+
+.mode-min-7 {
+  --tag-keymode-min: var(--tag-keymode-7);
+}
+
+.mode-min-8 {
+  --tag-keymode-min: var(--tag-keymode-8);
+}
+
+.mode-min-9 {
+  --tag-keymode-min: var(--tag-keymode-9);
+}
+
+.mode-min-10 {
+  --tag-keymode-min: var(--tag-keymode-10);
+}
+
+.mode-max-1 {
+  --tag-keymode-max: var(--tag-keymode-1);
+}
+
+.mode-max-2 {
+  --tag-keymode-max: var(--tag-keymode-2);
+}
+
+.mode-max-3 {
+  --tag-keymode-max: var(--tag-keymode-3);
+}
+
+.mode-max-4 {
+  --tag-keymode-max: var(--tag-keymode-4);
+}
+
+.mode-max-5 {
+  --tag-keymode-max: var(--tag-keymode-5);
+}
+
+.mode-max-6 {
+  --tag-keymode-max: var(--tag-keymode-6);
+}
+
+.mode-max-7 {
+  --tag-keymode-max: var(--tag-keymode-7);
+}
+
+.mode-max-8 {
+  --tag-keymode-max: var(--tag-keymode-8);
+}
+
+.mode-max-9 {
+  --tag-keymode-max: var(--tag-keymode-9);
+}
+
+.mode-max-10 {
+  --tag-keymode-max: var(--tag-keymode-10);
+}
+
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-1 {
+  background-image: linear-gradient(135deg, rgb(247, 179, 115) 0%, rgb(247, 179, 115) 33%, rgb(195, 143, 94) 33%, rgb(195, 143, 94) 66%, rgb(247, 179, 115) 66%, rgb(247, 179, 115) 100%);
+}
 
 @media screen and (max-width: 1300px) {
   [hide-mobile] {
     display: none !important;
   }
-}
+}/*# sourceMappingURL=main.css.map */

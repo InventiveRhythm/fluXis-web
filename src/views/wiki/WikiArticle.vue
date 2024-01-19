@@ -46,15 +46,17 @@ function render(data) {
         react.path[react.path.length - 1].title = title[1];
     }
 
-    let sections = data.split("\n").filter(line => line.startsWith("## "));
+    let sections = data.split("\n").filter(line => line.startsWith("## ") || line.startsWith("### "));
     if (sections) {
         react.contents = sections.map(section => {
-            let link = section.replace("## ", '').toLowerCase().replaceAll(" ", '-');
-            let title = section.replace("## ", '');
+            console.log(section);
+            const link = section.replaceAll("#", '').toLowerCase().trim().replaceAll(" ", '-');
+            const title = section.replaceAll("#", '').trim();
 
             return {
                 link: link,
-                title: title
+                title: title,
+                isH3: section.startsWith("### ")
             }
         });
     }
@@ -117,7 +119,7 @@ function edit() {
             <div class="nav">
                 <h3>Contents</h3>
                 <a v-for="content in react.contents" :href="'#' + content.link">
-                    <p>{{ content.title }}</p>
+                    <p :class="content.isH3 ? 'sub-section' : ''">{{ content.title }}</p>
                 </a>
             </div>
             <div class="article">
@@ -127,8 +129,7 @@ function edit() {
     </div>
 </template>
 
-<style lang="scss">
-.wiki {
+<style lang="scss">.wiki {
     width: 100%;
     background-color: var(--bg-secondary);
     border-radius: 30px;
@@ -201,6 +202,10 @@ function edit() {
 
                 &:hover {
                     color: var(--highlight);
+                }
+
+                .sub-section {
+                    padding-left: 20px;
                 }
             }
         }
