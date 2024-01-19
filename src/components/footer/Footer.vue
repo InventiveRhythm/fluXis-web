@@ -31,6 +31,7 @@ function toggleBlur() {
         <div class="links">
             <RouterLink to="/wiki/legal/terms">Terms</RouterLink>
             <RouterLink to="/wiki/legal/privacy">Privacy</RouterLink>
+            <RouterLink to="/wiki/legal/dmca">DMCA</RouterLink>
         </div>
         <span>
             Copyright © 2022-2023 <a href="https://flux.moe" target="_blank">Flustix</a>
