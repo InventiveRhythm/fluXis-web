@@ -150,30 +150,29 @@ function getColor() {
                 cursor: pointer;
                 text-shadow: var(--text-shadow-2);
 
-                .banner {
+                > * {
+                    position: relative;
+                    grid-area: 1 / 1;
                     width: 100%;
-                    height: 100%;
+                    height: inherit;
+                }
+
+                .banner {
                     object-fit: cover;
-                    grid-row: 1;
-                    grid-column: 1;
                 }
 
                 .banner-dim {
-                    width: 100%;
-                    height: 100%;
-                    background-color: rgba(0, 0, 0, 0.5);
-                    grid-row: 1;
-                    grid-column: 1;
-                    transition: background-color .2s;
+                    background-color: var(--bg-secondary);
+                    opacity: .5;
+                    transition: 200ms;
                 }
 
                 .info {
-                    grid-row: 1;
-                    grid-column: 1;
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
+                    z-index: 81;
 
                     .avatar {
                         width: 60px;
@@ -189,17 +188,20 @@ function getColor() {
                         align-items: center;
                         color: var(--color);
                         gap: 5px;
+                        filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .25));
                     }
 
                     .username {
                         font-size: 12px;
                         color: var(--text-color-secondary);
+                        filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .25));
                     }
                 }
 
                 &:hover {
                     .banner-dim {
-                        background-color: rgba(0, 0, 0, 0.4);
+                        opacity: .4;
+                        transition: 50ms;
                     }
                 }
             }
