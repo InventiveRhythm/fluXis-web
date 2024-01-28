@@ -14,7 +14,7 @@ function getCountryName(country) {
     if (!country) return "Unknown";
 
     const names = new Intl.DisplayNames(['en'], { type: 'region' });
-    return names.of(country);
+    return names.of(country.toUpperCase());
 }
 
 function createClubGradient(club) {
