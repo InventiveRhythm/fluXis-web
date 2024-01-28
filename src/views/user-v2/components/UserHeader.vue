@@ -100,7 +100,7 @@ function createClubGradient() {
         position: relative;
         grid-area: 1 / 1;
         width: 100%;
-        height: 100%;
+        height: inherit;
     }
 
     .banner {

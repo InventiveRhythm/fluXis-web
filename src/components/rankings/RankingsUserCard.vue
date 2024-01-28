@@ -107,7 +107,7 @@ function createClubGradient(club) {
 
     .banner {
         width: 100%;
-        height: 100%;
+        height: inherit;
         object-fit: cover;
         grid-row: 1;
         grid-column: 1;
