@@ -34,7 +34,7 @@ function toggleBlur() {
             <RouterLink to="/wiki/legal/dmca">DMCA</RouterLink>
         </div>
         <span>
-            Copyright © 2022-2023 <a href="https://flux.moe" target="_blank">Flustix</a>
+            Copyright © 2022-2024 <a href="https://flux.moe" target="_blank">Flustix</a>
         </span>
         <div @click="toggleBlur" class="blur-disable">Toggle Blur</div>
     </div>
