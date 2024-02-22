@@ -11,12 +11,11 @@ import { startLoading, stopLoading } from '../utils/Loading.js'
   /home - Home (logged in) (shows news, feed, etc.)
   /login - Login
   /logout - Logout
-  /m/:id - Map
   /n/:id - News
   /ranking - Ranking
   /ranking/c/:code - Country Ranking
-  /s - MapSet Search
-  /s/:id - MapSet
+  /sets - MapSet Search
+  /set/:id - MapSet
   /team - Team
   /u/:id - User
   /wiki/:path - Wiki Page
@@ -89,6 +88,11 @@ const router = createRouter({
       path: '/u/:id',
       name: 'user-details-v2',
       component: () => import('../views/user-v2/UserPage.vue')
+    },
+    {
+      path: '/set/:id',
+      name: 'mapset-details-v2',
+      component: () => import('../views/mapset/MapSetPage.vue')
     },
     {
       path: '/@:handle+',

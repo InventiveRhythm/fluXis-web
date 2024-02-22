@@ -58,7 +58,7 @@ function getStatusString() {
 </script>
 
 <template>
-    <RouterLink :to="'/mapset/' + mapset.id" class="mapset-link" v-if="mapset">
+    <RouterLink :to="'/set/' + mapset.id" class="mapset-link" v-if="mapset">
         <div class="mapset-info">
             <img :src="Config.apiUrl + '/assets/background/' + mapset.id" class="mapset-background future loadFade">
             <div class="mapset-metadata">
