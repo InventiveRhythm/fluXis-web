@@ -102,7 +102,9 @@ const router = createRouter({
     {
       path: '/mapset/:id',
       name: 'mapset-details',
-      component: () => import('../views/map/MapSetPage.vue')
+      beforeEnter() { // redirect to new route
+        window.location.href = '/set/' + window.location.href.split('/').pop();
+      }
     },
     {
       path: '/download',
