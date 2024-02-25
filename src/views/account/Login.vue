@@ -55,7 +55,7 @@ const onLogin = async () => {
             <h4>Don't have an account?</h4>
             <p>Download fluXis to create an account!</p>
             <div class="btns">
-                <a href="https://dl.flux.moe/fluXis/updater.zip">
+                <a href="https://dl.flux.moe/install/fluXis-installer.zip">
                     <div class="login-btn register-btn">Download</div>
                 </a>
             </div>

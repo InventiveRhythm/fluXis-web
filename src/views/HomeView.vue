@@ -40,7 +40,7 @@ getStats();
                 <br>
                 vertical scrolling rhythm game.
             </h3>
-            <a href="https://dl.flux.moe/fluXis/updater.zip" class="btn-download">
+            <a href="https://dl.flux.moe/install/fluXis-installer.zip" class="btn-download">
                 <i class="fa fa-download"></i>
                 <p>Download</p>
             </a>

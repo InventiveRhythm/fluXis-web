@@ -110,7 +110,7 @@ const router = createRouter({
       path: '/download',
       name: 'download',
       beforeEnter() {
-        window.open('https://dl.flux.moe/fluXis/updater.zip', '_blank');
+        window.open('https://dl.flux.moe/install/fluXis-installer.zip', '_blank');
         window.location.back();
       }
     },
