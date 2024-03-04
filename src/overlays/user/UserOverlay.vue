@@ -14,7 +14,7 @@ function userClick() {
         router.push('/u/' + react.user.id);
     }
     else {
-        router.push('/login');
+        window.location.href = Config.authUrl + '/login?redirect=' + window.location.href;
     }
 
     closeUserOverlay();
