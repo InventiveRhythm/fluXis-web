@@ -2,7 +2,16 @@
 import Assets from '@/utils/Assets';
 
 import { RouterLink } from 'vue-router';
-import UserHeaderRole from './header/UserHeaderRole.vue';
+import UserHeaderGroup from './header/UserHeaderGroup.vue';
+
+// used for people without a group
+// e.g. normal users
+// the header kinda looks dumb without a group tag so we use this
+const defaultGroup = {
+    id: "member",
+    name: "Member",
+    color: "#AA99FF"
+};
 
 const props = defineProps({
     user: Object
@@ -36,7 +45,10 @@ function createClubGradient() {
                     <img :src="Assets.avatar(user.id)" class="avatar" animated-load>
                     <div class="text">
                         <div class="top">
-                            <UserHeaderRole :role="user.role" />
+                            <div class="groups" v-if="user.groups.length > 0">
+                                <UserHeaderGroup :group="group" v-for="group in user.groups" />
+                            </div>
+                            <UserHeaderGroup :group="defaultGroup" v-else />
                             <div class="status" v-if="user.role != 5">
                                 <span>Last online</span>
                                 {{ user.lastloginString }}
@@ -155,6 +167,11 @@ function createClubGradient() {
                         display: flex;
                         justify-content: space-between;
                         align-items: center;
+
+                        .groups {
+                            display: flex;
+                            gap: 10px;
+                        }
 
                         .status {
                             font-size: 16px;
