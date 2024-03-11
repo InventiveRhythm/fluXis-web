@@ -270,6 +270,18 @@ function edit() {
                 font-family: monospace;
             }
 
+            blockquote {
+                margin-top: 10px;
+                padding: 10px;
+                background-color: var(--bg-secondary);
+                border-left: 5px solid var(--highlight);
+                border-radius: 10px;
+
+                > p:first-child {
+                    margin-top: 0;
+                }
+            }
+
             img {
                 max-width: 100%;
                 border-radius: 10px;
