@@ -33,7 +33,9 @@ const react = reactive({
 startLoading();
 setTitle("/" + path);
 
-fetch('/fluxis-wiki/' + path + '.md')
+const lang = "en";
+
+fetch('/fluxis-wiki/' + path + '/' + lang +  '.md')
     .then(response => response.text())
     .then(render);
 

@@ -30,6 +30,11 @@ getStats();
 
 <template>
     <div class="banner-box">
+        <ButtonDefault title="" desc="" link="" />
+        <ButtonDefault title="" desc="" link="" />
+        <ButtonDefault title="" desc="" link="" />
+        <ButtonDefault title="" desc="" link="" />
+        <ButtonDefault title="" desc="" link="" />
         <!-- <img :src=HomeBanner class="future loadFade"> -->
         <video :src="HomeVideo" class="future loadFade" autoplay muted loop ></video>
         <div class="dim"></div>
