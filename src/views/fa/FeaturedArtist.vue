@@ -1,11 +1,8 @@
 <script setup>
-import {
-    useRoute
-} from 'vue-router';
-import {
-    reactive
-} from 'vue';
+import { useRoute } from 'vue-router';
+import { reactive } from 'vue';
 
+import API from '../../utils/API';
 import { startLoading, stopLoading } from '../../utils/Loading';
 
 const route = useRoute();
@@ -17,10 +14,9 @@ const react = reactive({
 
 startLoading();
 
-fetch(`/featured-artist/data.json`)
-    .then(res => res.json())
+await API.get('/artists/' + id)
     .then(res => {
-        var artist = res.find(x => x.id == id);
+        var artist = res.data;
         react.artist = artist;
         console.log(artist);
 

@@ -1,8 +1,8 @@
 <script setup>
-import {
-    reactive
-} from 'vue';
+import { reactive } from 'vue';
 import { RouterLink } from 'vue-router';
+
+import API from '../../utils/API';
 import { startLoading, stopLoading } from '../../utils/Loading';
 
 const react = reactive({
@@ -11,20 +11,18 @@ const react = reactive({
 
 startLoading();
 
-fetch(`/featured-artist/data.json`)
-    .then(res => res.json())
+await API.get('/artists')
     .then(res => {
-
         // Sort by name
-        res.sort((a, b) => {
+        res.data.sort((a, b) => {
             if (a.name < b.name) return -1;
             if (a.name > b.name) return 1;
 
             return 0;
         });
 
-        react.data = res;
-        console.log(res);
+        react.data = res.data;
+        console.log(res.data);
 
         stopLoading();
     })
