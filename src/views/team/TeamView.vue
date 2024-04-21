@@ -1,6 +1,7 @@
 <script setup>
 import TeamEntry from './TeamEntry.vue';
 import SmallTeamEntry from './SmallTeamEntry.vue';
+import Utils from '@/utils/Utils';
 
 const staff = [
     {
@@ -22,7 +23,7 @@ const people = [
     }
 ];
 
-setTitle("fluXis Team");
+Utils.setTitle("fluXis Team");
 </script>
 
 <template>

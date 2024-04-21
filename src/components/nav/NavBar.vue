@@ -1,10 +1,13 @@
 <script setup>
-import Config from "@/config.json";
 import { RouterLink, useRouter } from 'vue-router'
-import FluXisText from '../../assets/images/logo-text.png';
 import { reactive } from 'vue';
+
+import FluXisText from '@/assets/images/logo-text.png';
+
 import NavLink from './NavLink.vue';
 import NavProfile from "./NavProfile.vue";
+
+import Utils from '@/utils/Utils';
     
 const router = useRouter();
 
@@ -14,7 +17,7 @@ let react = reactive({
 
 function onProfileClick(e) {
     if (e.button == 0) {
-        openUserOverlay();
+        Utils.openUserOverlay();
     }
 
     if (e.button == 2 && react.user) {

@@ -1,5 +1,7 @@
 <script setup>
-setTitle("404");
+import Utils from '@/utils/Utils';
+
+Utils.setTitle("404");
 </script>
 
 <template>

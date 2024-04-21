@@ -5,6 +5,7 @@ import { reactive } from 'vue';
 import { getRatingColor, darkenColor } from '@/utils/ColorUtils';
 import Config from '@/config.json';
 import API from '@/utils/API';
+import Utils from '@/utils/Utils';
 import { startLoading, stopLoading } from '@/utils/Loading';
 
 import MapSetHeader from './components/MapSetHeader.vue';
@@ -39,7 +40,7 @@ async function load() {
             react.set = set;
             react.maps = set.maps.sort((a, b) => a.nps - b.nps);
 
-            setTitle(set.title + " - " + set.artist);
+            Utils.setTitle(set.title + " - " + set.artist);
             switchDifficulty(set.maps[0]);
 
             react.loading = false;

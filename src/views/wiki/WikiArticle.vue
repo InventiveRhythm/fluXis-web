@@ -4,6 +4,7 @@ import { reactive } from 'vue';
 import { RouterLink } from 'vue-router';
 import { marked } from 'marked';
 import { startLoading, stopLoading } from '../../utils/Loading';
+import Utils from '@/utils/Utils';
 
 const route = useRoute();
 const router = useRouter();
@@ -31,7 +32,7 @@ const react = reactive({
 });
 
 startLoading();
-setTitle("/" + path);
+Utils.setTitle("/" + path);
 
 const lang = "en";
 
@@ -44,7 +45,7 @@ function render(data) {
 
     let title = data.match(/# (.*)/);
     if (title) {
-        setTitle(title[1] + " - wiki");
+        Utils.setTitle(title[1] + " - wiki");
         react.path[react.path.length - 1].title = title[1];
     }
 

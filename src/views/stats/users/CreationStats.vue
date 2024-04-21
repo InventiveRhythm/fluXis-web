@@ -1,5 +1,6 @@
 <script setup>
 import Config from '@/config.json'
+import Utils from '@/utils/Utils';
 import { reactive } from 'vue'
 import { Chart, Line } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, CategoryScale, LinearScale, LineElement, PointElement } from 'chart.js'
@@ -79,7 +80,7 @@ fetch(`${Config.apiUrl}/stats/users/creation`)
         }
     });
 
-setTitle("User Registrations");
+Utils.setTitle("User Registrations");
 </script>
 
 <template>

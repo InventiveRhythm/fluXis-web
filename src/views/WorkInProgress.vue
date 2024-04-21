@@ -1,5 +1,7 @@
 <script setup>
-setTitle("Work in Progress");
+import Utils from '@/utils/Utils';
+
+Utils.setTitle("Work in Progress");
 </script>
 
 <template>

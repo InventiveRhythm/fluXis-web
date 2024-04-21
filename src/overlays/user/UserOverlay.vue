@@ -3,10 +3,20 @@ import Config from "@/config.json";
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
+import { registerEvent } from '@/utils/Events';
+import Utils from "@/utils/Utils";
+
 const router = useRouter();
 
 let react = reactive({
     user: $cookies.get('user')
+});
+
+registerEvent('user-overlay', (status) => {
+    if (status)
+        document.getElementById('user-overlay').classList.remove('hidden');
+    else
+        document.getElementById('user-overlay').classList.add('hidden');
 });
 
 function userClick() {
@@ -14,10 +24,10 @@ function userClick() {
         router.push('/u/' + react.user.id);
     }
     else {
-        window.location.href = Config.authUrl + '/login?redirect=' + window.location.href;
+        window.location.href = Config.authUrl + '/login?redirect=' + window.location.href + '&app=' + Config.authAppId;
     }
 
-    closeUserOverlay();
+    Utils.closeUserOverlay();
 }
 
 function getRoleTag(roleid) {
@@ -64,7 +74,7 @@ function getColor() {
 
 <template>
     <div class="hidden" id="user-overlay">
-        <div class="dim" onclick="closeUserOverlay()"></div>
+        <div class="dim" @click="Utils.closeUserOverlay"></div>
         <div class="width-wrapper">
             <div class="wrapper">
                 <div class="overlay-content">

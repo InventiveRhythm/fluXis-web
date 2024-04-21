@@ -4,6 +4,7 @@ import { reactive } from 'vue';
 
 import TimeUtils from '@/utils/TimeUtils';
 import API from '@/utils/API';
+import Utils from '@/utils/Utils';
 import { startLoading, stopLoading } from '@/utils/Loading';
 
 import UserHeader from './components/UserHeader.vue';
@@ -55,7 +56,7 @@ async function loadStuff() {
     }
 
     if (react.user && react.user.username)
-        setTitle(react.user.username + " - user info");
+        Utils.setTitle(react.user.username + " - user info");
 
     react.loading = false;
     stopLoading();

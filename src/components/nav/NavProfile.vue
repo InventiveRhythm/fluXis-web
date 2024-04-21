@@ -1,7 +1,9 @@
 <script setup>
 import Config from "@/config.json";
-import { RouterLink, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { reactive } from 'vue';
+
+import Utils from "@/utils/Utils";
 
 const router = useRouter();
 
@@ -11,7 +13,7 @@ let react = reactive({
 
 function onProfileClick(e) {
     if (e.button == 0) {
-        openUserOverlay();
+        Utils.openUserOverlay();
     }
 
     if (e.button == 2 && react.user) {

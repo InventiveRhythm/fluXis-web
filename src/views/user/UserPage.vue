@@ -4,6 +4,7 @@ import { reactive } from 'vue';
 
 import Config from '@/config.json';
 import TimeUtils from '../../utils/TimeUtils';
+import Utils from '@/utils/Utils';
 
 import ScoreCard from '../../components/score/ScoreCard.vue';
 import UserPageMaps from './sections/UserPageMaps.vue';
@@ -32,7 +33,7 @@ let react = reactive({
 });
 
 if (id != -1) {
-    setTitle("Loading...");
+    Utils.setTitle("Loading...");
 
     await fetch(`${Config.apiUrl}/user/${id}`).then(res => res.json()).then(data => {
         if (!data.data) return;
@@ -40,7 +41,7 @@ if (id != -1) {
         react['user'] = data.data;
         react.user.lastloginString = TimeUtils.formatAgo(react.user.lastlogin);
 
-        setTitle(react.user.username + " - user info");
+        Utils.setTitle(react.user.username + " - user info");
         loadScores();
     }).catch(err => {
         console.error(err);

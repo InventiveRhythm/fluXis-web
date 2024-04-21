@@ -1,4 +1,5 @@
 <script setup>
+import Utils from '@/utils/Utils';
 import HomeVideo from '../assets/images/home/fluxis.mp4';
 import NewsCard from '../components/news/NewsCard.vue';
 import Config from '@/config.json';
@@ -12,7 +13,7 @@ const stats = reactive({
     mapsets: undefined
 });
 
-setTitle("Home");
+Utils.setTitle("Home");
 
 function getStats() {
     fetch(`${Config.apiUrl}/stats`)
