@@ -20,42 +20,21 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="nav-link">
-        <RouterLink :to="to">
+    <div class="hidden md:flex items-center px-3 py-1 mx-2 rounded-md transition-colors !bg-opacity-20 hover:bg-white">
+        <RouterLink :to="to" class="flex gap-2 items-center">
             <i :class="'fa fa-' + icon"></i>
             {{ text }}
         </RouterLink>
-        <div class="dropdown" v-if="dropdown && dropdown.length > 0">
+        <!-- i'm gonna completely rewrite this because it sucks -->
+        <!-- <div class="dropdown" v-if="dropdown && dropdown.length > 0">
             <div class="dropdown-list" >
                 <RouterLink v-for="link in dropdown" :key="link.to" :to="link.to">{{ link.text }}</RouterLink>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
-<style lang="scss">
-.nav-link {
-    display: flex;
-    align-items: center;
-    padding: 5px 10px;
-    margin: 5px 10px;
-    transition: background-color .3s;
-    border-radius: calc(var(--border) / 2); 
-    position: relative;
-
-    i {
-        margin-right: 5px;
-    }
-
-    @media screen and (max-width: 700px) {
-        display: none;
-    }
-}
-
-.nav-link:hover {
-    background-color: var(--bg-hover);
-}
-
+<!-- <style lang="scss">
 .dropdown {
     position: absolute;
     top: -60px;
@@ -101,4 +80,4 @@ const props = defineProps({
     opacity: 1;
     top: -30px;
 }
-</style>
+</style> -->

@@ -79,7 +79,7 @@ function getStatusString() {
 
 <style lang="scss">
     .mapset-link {
-        width: 480px;
+        width: 100%;
         height: 100px;
         display: block;
 

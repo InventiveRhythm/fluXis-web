@@ -26,48 +26,8 @@ function onProfileClick(e) {
 </script>
 
 <template>
-    <div class="nav-user" @mousedown="onProfileClick" >
-        <div class="user">
-            <img v-if="react.user" :src="Config.apiUrl + '/assets/avatar/' + react.user.id"
-                class="future loadFade" alt="user avatar">
-            <img v-else :src="Config.apiUrl + '/assets/avatar/-1'" class="future loadFade" alt="logged out user avatar" >
-        </div>
+    <div class="size-24 flex items-center justify-center rounded-bl-3xl bg-dark-3 hover:bg-dark-4 transition-colors" @mousedown="onProfileClick" >
+        <img class="size-16 rounded-lg" v-if="react.user" :src="Config.apiUrl + '/assets/avatar/' + react.user.id" alt="user avatar" animated-load>
+        <img class="size-16 rounded-lg" v-else :src="Config.apiUrl + '/assets/avatar/-1'" alt="logged out user avatar" animated-load>
     </div>
 </template>
-
-<style lang="scss">
-.nav-user {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: inherit;
-    text-align: right;
-    width: 90px;
-    height: 90px;
-    border-radius: 0 0 0 20px;
-    background-color: var(--bg-triary);
-    transition: background-color 200ms;
-    cursor: pointer;
-    position: relative;
-    z-index: 110;
-
-    div {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        border-radius: 10px;
-    }
-
-    img {
-        width: 60px;
-        height: 60px;
-        border-radius: 10px;
-        object-fit: cover;
-    }
-
-    &:hover {
-        transition: background-color 50ms;
-        background-color: var(--bg-quaternary);
-    }
-}
-</style>

@@ -2,7 +2,11 @@
 import Assets from '@/utils/Assets';
 
 import { RouterLink } from 'vue-router';
+
 import UserHeaderGroup from './header/UserHeaderGroup.vue';
+import UserHeaderButton from './header/UserHeaderButton.vue';
+
+import ClubTag from '../../../components/ClubTag.vue';
 
 // used for people without a group
 // e.g. normal users
@@ -16,244 +20,64 @@ const defaultGroup = {
 const props = defineProps({
     user: Object
 });
-
-function createClubGradient() {
-    if (!props.user.club) return;
-    const colors = props.user.club.colors;
-
-    let gradient = "linear-gradient(90deg";
-
-    colors.forEach(el => {
-        let color = el.color;
-        let position = el.position;
-
-        gradient += `, ${color} ${position * 100}%`;
-    });
-
-    gradient += ")";
-    return gradient;
-}
 </script>
 
 <template>
-    <div class="user-header">
-        <img :src="Assets.banner(user.id)" class="banner" animated-load>
-        <div class="dim"></div>
-        <div class="wrapper">
-            <div class="data">
-                <div class="info">
-                    <img :src="Assets.avatar(user.id)" class="avatar" animated-load>
-                    <div class="text">
-                        <div class="top">
-                            <div class="groups" v-if="user.groups.length > 0">
+    <div class="w-full md:h-96 xl:h-auto xl:aspect-header md:rounded-3xl overflow-hidden overlap-grid">
+        <img class="object-cover h-full md:h-inherit xl:h-auto xl:aspect-header" :src="Assets.banner(user.id)" animated-load>
+        <div class="bg-dark-2 opacity-50"></div>
+        <div class="flex flex-col items-center justify-center py-5 md:py-0">
+            <div class="w-full max-w-[1200px] md:px-10 flex flex-col items-center justify-center gap-5">
+                <div class="flex flex-col md:flex-row md:h-32 items-center self-stretch gap-3">
+                    <img class="size-32 rounded-3xl shadow-normal" :src="Assets.avatar(user.id)" animated-load>
+                    <div class="w-full flex flex-col justify-center items-center gap-3 drop-shadow-text">
+                        <div class="w-full flex flex-col md:flex-row gap-3 justify-between items-center">
+                            <div class="flex gap-3" v-if="user.groups.length > 0">
                                 <UserHeaderGroup :group="group" v-for="group in user.groups" />
                             </div>
                             <UserHeaderGroup :group="defaultGroup" v-else />
-                            <div class="status" v-if="user.role != 5">
-                                <span>Last online</span>
+                            <div class="text-base" v-if="user.role != 5">
+                                <span class="opacity-80">Last online</span>
                                 {{ user.lastloginString }}
                             </div>
                         </div>
-                        <div class="names">
-                            <p class="club" v-if="user.club">
-                                <span class="color" :style="'background-image: ' + createClubGradient()">
-                                    {{ user.club.tag }}
-                                </span>
-                            </p>
+                        <div class="w-full flex justify-center md:justify-start items-center gap-3">
+                            <ClubTag class="text-3xl" :club="user.club" />
 
-                            <p class="name-big" v-if="!user.displayname">{{ user.username }}</p>
+                            <p class="text-5xl" v-if="!user.displayname">{{ user.username }}</p>
 
-                            <p class="name-big" v-if="user.displayname">{{ user.displayname }}</p>
-                            <p class="name-small" v-if="user.displayname">{{ user.username }}</p>
+                            <p class="text-5xl" v-if="user.displayname">{{ user.displayname }}</p>
+                            <p class="text-2xl" v-if="user.displayname">{{ user.username }}</p>
                         </div>
                     </div>
                 </div>
-                <div class="header-bottom">
-                    <div class="left">
+                <div class="w-full md:h-12 flex flex-col md:flex-row gap-3 justify-between items-center drop-shadow-text">
+                    <div class="flex h-full gap-3">
                         <RouterLink to="/rankings/overall">
-                            <div class="button">
-                                <i class="fas fa-globe-americas"></i>
+                            <UserHeaderButton>
+                                <i class="fas fa-globe-americas w-5"></i>
                                 #{{ user.rank }}
-                            </div>
+                            </UserHeaderButton>
                         </RouterLink>
                         <RouterLink :to="'/rankings/country/' + user.country">
-                            <div class="button" v-if="user.country">
-                                <span :class="'fi fi-' + user.country + ' flag'"></span>
+                            <UserHeaderButton v-if="user.country">
+                                <span :class="'fi fi-' + user.country + ' flag sizwe-5'"></span>
                                 #{{ user.country_rank }}
-                            </div>
+                            </UserHeaderButton>
                         </RouterLink>
                     </div>
-                    <div class="right">
-                        <div class="button share-button" onclick="alert('Not implemented yet.')">
-                            <i class="fas fa-share-nodes"></i>
-                        </div>
-                        <div class="button" onclick="alert('Not implemented yet.')">
-                            <i class="fas fa-plus"></i>
+                    <div class="flex h-full gap-3">
+                        <!-- The arbitrary padding needed to make the button a circle -->
+                        <UserHeaderButton class="!px-[14px]" onclick="alert('Not implemented yet.')">
+                            <i class="fas fa-share-nodes w-5"></i>
+                        </UserHeaderButton>
+                        <UserHeaderButton onclick="alert('Not implemented yet.')">
+                            <i class="fas fa-plus w-5"></i>
                             Follow
-                        </div>
+                        </UserHeaderButton>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
-
-<style lang="scss">
-.user-header {
-    width: 100%;
-    height: 440px;
-    border-radius: 20px;
-    overflow: hidden;
-
-    display: grid;
-    place-items: center;
-
-    > * {
-        position: relative;
-        grid-area: 1 / 1;
-        width: 100%;
-        height: inherit;
-    }
-
-    .banner {
-        object-fit: cover;
-    }
-
-    .dim {
-        background-color: var(--bg-secondary);
-        opacity: .5;
-    }
-
-    .wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-        .data {
-            width: 1200px;
-            padding: 0 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-
-            .info {
-                height: 120px;
-                display: flex;
-                align-items: center;
-                align-self: stretch;
-                gap: 10px;
-
-                .avatar {
-                    width: 120px;
-                    height: 120px;
-
-                    border-radius: 20px;
-                    box-shadow:var(--box-shadow);
-                }
-
-                .text {
-                    width: 100%;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .25));
-
-                    .top {
-                        width: 100%;
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-
-                        .groups {
-                            display: flex;
-                            gap: 10px;
-                        }
-
-                        .status {
-                            font-size: 16px;
-
-                            span {
-                                opacity: .8;
-                            }
-                        }
-                    }
-
-                    .names {
-                        display: flex;
-                        align-items: center;
-                        width: 100%;
-                        gap: 10px;
-
-                        .club {
-                            color: var(--text-color);
-                            font-size: 32px;
-
-                            &::before {
-                                content: '[';
-                            }
-
-                            .color {
-                                background-clip: text;
-                                -webkit-background-clip: text;
-                                -webkit-text-fill-color: transparent;
-                            }
-
-                            &::after {
-                                content: ']';
-                            }
-                        }
-
-                        .name-big {
-                            font-size: 48px;
-                        }
-
-                        .name-small {
-                            font-size: 24px;
-                            opacity: .8;
-                        }
-                    }
-                }
-            }
-
-            .header-bottom {
-                width: 100%;
-                height: 50px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                filter: drop-shadow(0 2px 5px rgba(0, 0, 0, .25));
-
-                > div {
-                    height: 100%;
-                    display: flex;
-                    gap: 10px;
-                }
-
-                .button {
-                    height: 100%;
-                    display: flex;
-                    align-items: center;
-                    gap: 10px;
-                    padding: 10px 20px;
-                    border-radius: 25px;
-                    background: var(--bg-secondary);
-                    font-size: 16px;
-                    cursor: pointer;
-
-                    i, span {
-                        width: 20px;
-                    }
-                }
-
-                .share-button {
-                    padding: 10px 15px;
-                }
-            }
-        }
-    }
-}
-</style>

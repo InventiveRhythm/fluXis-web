@@ -2,62 +2,37 @@
 import { formatAccuracy, formatScore } from '@/utils/formatting';
 
 const props = defineProps({
-    user: Object
+    user: {
+        type: Object,
+        required: true
+    }
 });
+
+const user = props.user;
+
+const stats = [{
+    name: 'Overall Rating',
+    value: user.ovr
+}, {
+    name: 'Potential Rating',
+    value: user.ptr
+}, {
+    name: 'Overall Accuracy',
+    value: formatAccuracy(user.ova)
+}, {
+    name: 'Ranked Score',
+    value: formatScore(user.ranked_score)
+}, {
+    name: 'Max Combo',
+    value: `${user.max_combo}x`
+}];
 </script>
 
 <template>
-    <div class="user-stats">
-        <div>
-            <p class="stat">Overall Rating</p>
-            <p class="num">{{ user.ovr }}</p>
-        </div>
-        <div>
-            <p class="stat">Potential Rating</p>
-            <p class="num">{{ user.ptr }}</p>
-        </div>
-        <div>
-            <p class="stat">Overall Accuracy</p>
-            <p class="num">{{ formatAccuracy(user.ova) }}</p>
-        </div>
-        <div>
-            <p class="stat">Ranked Score</p>
-            <p class="num">{{ formatScore(user.ranked_score) }}</p>
-        </div>
-        <div>
-            <p class="stat">Max Combo</p>
-            <p class="num">{{ user.max_combo }}x</p>
+    <div class="flex w-full flex-col items-center justify-center gap-2 rounded-b-3xl md:rounded-2xl bg-dark-2 py-4 md:h-24 md:flex-row md:gap-0 md:py-0">
+        <div class="w-full flex flex-col justify-center items-center" v-for="stat in stats">
+            <p class="opacity-80">{{ stat.name }}</p>
+            <p class="text-2xl">{{ stat.value }}</p>
         </div>
     </div>
 </template>
-
-<style lang="scss">
-.user-stats {
-    display: flex;
-    width: 100%;
-    height: 100px;
-    justify-content: center;
-    align-items: center;
-
-    border-radius: 20px;
-    background: var(--bg-secondary);
-
-    > div {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        line-height: 1.1;
-
-        .stat {
-            font-size: 16px;
-            opacity: .8;
-        }
-
-        .num {
-            font-size: 32px;
-        }
-    }
-}
-</style>

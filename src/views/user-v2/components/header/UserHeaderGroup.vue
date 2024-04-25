@@ -24,25 +24,8 @@ function getIcon() {
 </script>
 
 <template>
-    <div class="group" :style="'color: ' + group.color">
-        <i :class="getIcon()"></i>
-        <p>{{ group.name }}</p>
+    <div class="flex h-8 p-3 justify-center items-center gap-2 bg-dark-2 bg-opacity-50 rounded-full" :style="'color: ' + group.color">
+        <i :class="getIcon() + ' w-5'"></i>
+        <p class="text-sm">{{ group.name }}</p>
     </div>
 </template>
-
-<style lang="scss">
-.group {
-    display: flex;
-    height: 30px;
-    padding: 10px;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-
-    border-radius: 20px;
-    background: rgba(34, 34, 42, 0.50);
-
-    i { width: 20px; }
-    p { font-size: 14px; }
-}
-</style>

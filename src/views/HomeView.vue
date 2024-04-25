@@ -30,131 +30,40 @@ getStats();
 </script>
 
 <template>
-    <div class="banner-box">
-        <ButtonDefault title="" desc="" link="" />
-        <ButtonDefault title="" desc="" link="" />
-        <ButtonDefault title="" desc="" link="" />
-        <ButtonDefault title="" desc="" link="" />
-        <ButtonDefault title="" desc="" link="" />
-        <!-- <img :src=HomeBanner class="future loadFade"> -->
-        <video :src="HomeVideo" class="future loadFade" autoplay muted loop ></video>
-        <div class="dim"></div>
-        <div class="text-box">
-            <h1>fluXis</h1>
-            <h3>
+    <div class="overlap-grid relative w-full h-96 rounded-3xl overflow-hidden">
+        <video :src="HomeVideo" class="future loadFade object-cover blur-sm scale-105" autoplay muted loop></video>
+        <div class="bg-dark-2 opacity-60"></div>
+        <div class="flex flex-col justify-center items-center lg:items-start lg:text-left px-16">
+            <h1 class="text-6xl">fluXis</h1>
+            <h3 class="opacity-80">
                 A free, community-driven and open-source
                 <br>
                 vertical scrolling rhythm game.
             </h3>
-            <a href="https://dl.flux.moe/install/fluXis-installer.zip" class="btn-download">
-                <i class="fa fa-download"></i>
+            <a class="flex bg-accent-2 hover:bg-accent-1 w-max cursor-pointer justify-center text-lg px-2 py-1 rounded-md gap-2 mt-3 transition-colors" href="https://dl.flux.moe/install/fluXis-installer.zip">
+                <i class="fa fa-download flex items-center"></i>
                 <p>Download</p>
             </a>
         </div>
-        <div class="stats-text">
-            <span>{{ stats.users }}</span>
+        <div class="absolute bottom-5 left-5 w-fit h-fit text-left text-xs">
+            <span class="font-bold">{{ stats.users }}</span>
             registered users,
-            <span>{{ stats.online }}</span>
+            <span class="font-bold">{{ stats.online }}</span>
             currently online
             <br>
             with
-            <span>{{ stats.scores }}</span>
+            <span class="font-bold">{{ stats.scores }}</span>
             scores on
-            <span>{{ stats.mapsets }}</span>
+            <span class="font-bold">{{ stats.mapsets }}</span>
             mapsets
         </div>
     </div>
-    <div class="news">
+    <div class="w-full max-w-[1150px] flex flex-wrap justify-center items-center mt-3">
         <NewsCard v-for="entry in News" :data="entry"/>
     </div>
 </template>
 
 <style lang="scss">
-.banner-box {
-    height: 500px;
-    display: grid;
-    border-radius: 20px;
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-
-    .dim {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.6) 20%, rgba(0,0,0,0) 100%);
-        backdrop-filter: var(--blur);
-        z-index: 1;
-    }
-
-    video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        grid-row: 1;
-        grid-column: 1;
-    }
-
-    .text-box {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        grid-row: 1;
-        grid-column: 1;
-        z-index: 2;
-        height: 500px;
-        text-align: left;
-        padding: 0 60px;
-        text-shadow: var(--text-shadow);
-
-        h1 {
-            font-size: 60px;
-        }
-
-        h3 {
-            color: var(--text-color-secondary);
-        }
-
-        .btn-download {
-            margin-top: 20px;
-            padding: 5px 10px;
-            border-radius: 5px;
-            background-color: var(--accent-secondary);
-            color: var(--text-color);
-            width: max-content;
-            display: flex;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 20px;
-
-            &:hover {
-                background-color: var(--accent-primary);
-            }
-
-            i {
-                margin-right: 10px;
-                display: flex;
-                align-items: center;
-            }
-        }
-    }
-
-    .stats-text {
-        z-index: 2;
-        position: absolute;
-        bottom: 20px;
-        left: 20px;
-        color: var(--text-color-secondary);
-        font-size: 12px;
-        text-align: left;
-
-        span {
-            // color: var(--accent-primary);
-            font-weight: bold;
-        }
-    }
-}
-
 .news {
     display: flex;
     justify-content: center;
@@ -163,17 +72,5 @@ getStats();
     max-width: 1150px;
     width: 100%;
     margin-top: 10px;
-}
-
-@media (max-width: 700px) {
-    .banner-box .text-box {
-        text-align: center;
-        align-items: center;
-    }
-
-    .banner-box video {
-        position: absolute;
-        right: 0;
-    }
 }
 </style>

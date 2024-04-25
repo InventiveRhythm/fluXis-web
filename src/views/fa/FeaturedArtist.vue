@@ -73,51 +73,50 @@ function downloadSong(album, track) {
 </script>
 
 <template>
-<div v-if="react.artist" class="artist-content">
-    <div class="artist-sidebar">
-        <img :src="'/featured-artist/' + react.artist.id + '/icon.png'" alt="Artist Image" class="future loadFade">
+<div v-if="react.artist" class="w-full flex rounded-3xl bg-dark-2 text-left">
+    <div class="w-80 min-w-80">
+        <img class="w-80 h-80 object-cover rounded-3xl" :src="'/featured-artist/' + react.artist.id + '/icon.png'" alt="Artist Image" animated-load>
         <div class="socials">
 
         </div>
     </div>
-    <div class="artist-main">
-        <div class="artist-info">
-            <h1>{{ react.artist.name }}</h1>
-            <p>{{ react.artist.description }}</p>
+    <div class="w-full p-5">
+        <div class="w-full flex flex-col mb-8">
+            <h1 class="text-5xl">{{ react.artist.name }}</h1>
+            <p class="text-base">{{ react.artist.description }}</p>
         </div>
-        <div class="artist-album-list">
-            <div class="album" v-for="album in react.artist.albums"
-                :style="'--album-accent:' + album.colors.accent + '; --album-accent-opaque:' + album.colors.accent + '88; --album-text:' + album.colors.text + '; --album-text2:' + album.colors.text2 + '; --album-bg:' + album.colors.bg + '; --album-bg2:' + album.colors.bg2 + '; ' ">
-                <div class="header">
-                    <img :src="'/featured-artist/' + react.artist.id + '/' + album.id + '/cover.png'" alt="" class="album-background future loadFade">
-                    <div class="blur"></div>
-                    <div class="dim"></div>
-                    <div class="color-dim"></div>
-                    <div class="album-info">
-                        <img :src="'/featured-artist/' + react.artist.id + '/' + album.id + '/cover.png'" alt="" class="cover future loadFade">
-                        <div class="text">
-                            <h2>{{ album.name }}</h2>
-                            <p>{{ album.tracks.length }} songs</p>
+        <div class="w-full flex flex-col items-center content-center gap-5">
+            <div class="w-full h-max overflow-hidden rounded-3xl" v-for="album in react.artist.albums"
+                :style="'--album-accent:' + album.colors.accent + '; --album-accent-opaque:' + album.colors.accent + '88; --album-text:' + album.colors.text + '; --album-text2:' + album.colors.text2 + '; background-color:' + album.colors.bg + '; --album-bg2:' + album.colors.bg2 + '; ' ">
+                <div class="overlap-grid h-24 rounded-3xl">
+                    <img class="w-full h-full object-cover blur scale-110" :src="'/featured-artist/' + react.artist.id + '/' + album.id + '/cover.png'" alt="" animated-load>
+                    <div class="section-gradient opacity-50"></div>
+                    <div class="section-gradient-custom opacity-50" style="--section-gradient-col: var(--album-accent)"></div>
+                    <div class="flex w-full h-full gap-4">
+                        <img class="w-24 h-24 rounded-3xl object-cover" :src="'/featured-artist/' + react.artist.id + '/' + album.id + '/cover.png'" alt="" animated-load>
+                        <div class="flex flex-col justify-center drop-shadow-text" style="color: var(--album-text);">
+                            <h2 class="text-2xl leading-tight">{{ album.name }}</h2>
+                            <p class="text-base leading-tight">{{ album.tracks.length }} songs</p>
                         </div>
                     </div>
                 </div>
-                <div class="tracklist">
-                    <div class="track" v-for="track in album.tracks">
-                        <div class="left">
-                            <div class="play">
+                <div class="flex flex-col p-3 gap-1">
+                    <div class="group w-full h-10 flex items-center justify-between px-3 rounded-xl overflow-hidden" style="background-color: var(--album-bg2); color: var(--album-text);" v-for="track in album.tracks">
+                        <div class="flex items-center">
+                            <div class="w-0 group-hover:w-5 opacity-0 group-hover:opacity-100 transition-all">
                                 <i class="fas fa-play" @click="playSong(album.id, track.id)" :id="'icon-' + album.id + '-' + track.id"></i>
                             </div>
-                            <p>{{ track.name }}</p>
+                            <p class="text-base">{{ track.name }}</p>
                         </div>
-                        <div class="right">
-                            <div class="metadata">
-                                <div class="bpm-length">
+                        <div class="flex items-center text-right">
+                            <div class="flex flex-col text-xs leading-none" style="color: var(--album-text2);">
+                                <div class="flex gap-1">
                                     <p>{{ track.bpm }}bpm</p>
-                                    <p class="length">{{ track.length }}</p>
+                                    <p style="color: var(--album-text);">{{ track.length }}</p>
                                 </div>
                                 <p>{{ track.genre }}</p>
                             </div>
-                            <div class="download">
+                            <div class="w-0 group-hover:w-6 opacity-0 group-hover:opacity-100 transition-all">
                                 <i class="fas fa-download" @click="downloadSong(album.id, track.id)"></i>
                             </div>
                         </div>

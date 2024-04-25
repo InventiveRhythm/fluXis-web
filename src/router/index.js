@@ -145,15 +145,6 @@ router.beforeEach((to, from) => {
 })
 
 router.afterEach((to, from) => {
-  const toDepth = to.path.split('/').length
-  const fromDepth = from.path.split('/').length
-
-  let transitionName = 'slide-right';
-  if (toDepth < fromDepth && toDepth != fromDepth) {
-    transitionName = 'slide-left';
-  }
-  to.meta.transition = transitionName;
-
   stopLoading();
 })
 
