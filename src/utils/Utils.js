@@ -1,6 +1,11 @@
 import { emitEvent } from "./Events";
+import { reactive } from "vue";
 
 export default class Utils {
+    static globalReact = reactive({
+        user: $cookies.get('user') || null,
+    });
+
     static setTitle(title) {
         document.title = title + ' | fluXis';
     }

@@ -65,19 +65,14 @@ const router = createRouter({
       component: () => import('../views/wiki/WikiArticle.vue')
     },
     {
-      path: '/login',
-      name: 'login',
-      component: () => import('../views/account/Login.vue')
+      path: '/oauth',
+      name: 'oauth',
+      component: () => import('../views/account/OAuth.vue')
     },
     {
       path: '/logout',
       name: 'logout',
       component: () => import('../views/account/Logout.vue')
-    },
-    {
-      path: '/reset-password',
-      name: 'password-reset',
-      component: () => import('../views/account/PasswordReset.vue')
     },
     {
       path: '/user/:id',

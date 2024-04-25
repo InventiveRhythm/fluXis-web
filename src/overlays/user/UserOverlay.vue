@@ -5,12 +5,9 @@ import { useRouter } from 'vue-router';
 
 import { registerEvent } from '@/utils/Events';
 import Utils from "@/utils/Utils";
+import API from "../../utils/API";
 
 const router = useRouter();
-
-let react = reactive({
-    user: $cookies.get('user')
-});
 
 registerEvent('user-overlay', (status) => {
     if (status)
@@ -20,14 +17,50 @@ registerEvent('user-overlay', (status) => {
 });
 
 function userClick() {
-    if (react.user) {
-        router.push('/u/' + react.user.id);
+    if (Utils.globalReact.user) {
+        router.push('/u/' + Utils.globalReact.user.id);
     }
     else {
-        window.location.href = Config.authUrl + '/login?redirect=' + window.location.href + '&app=' + Config.authAppId;
+        openLogin();
     }
 
     Utils.closeUserOverlay();
+}
+
+function openLogin() {
+    const url = Config.authUrl + '/login?app=' + Config.authAppId;
+    const params = 'width=600,height=600,scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no';
+
+    const popup = window.open(url, 'Login', params);
+
+    const interval = setInterval(() => {
+        popup.postMessage('', `${window.location.protocol}//${window.location.host}/`);
+    }, 200);
+
+    window.addEventListener('message', (event) => {
+        if (popup && !popup.closed && event.data.token) {
+			clearInterval(interval);
+            popup.close();
+
+            const token = event.data.token;
+            console.log('Got token from auth!');
+            $cookies.set('token', token);
+
+            API.get('/account').then((res) => {
+                Utils.globalReact.user = res.data;
+                $cookies.set('user', res.data);
+                Utils.globalReact.user = res.data;
+            }).catch((err) => {
+                console.error(err);
+            });
+		};
+    });
+
+	window.addEventListener("beforeunload", (_) => {
+		if (popup && !popup.closed) {
+			popup.close();
+		};
+	});
 }
 
 function getRoleTag(roleid) {
@@ -48,7 +81,7 @@ function getRoleTag(roleid) {
 }
 
 function getRoleIcon() {
-    switch (react.user.role) {
+    switch (Utils.globalReact.user.role) {
         case 1: // featured artist
             return "fas fa-star";
         case 2: // purifier
@@ -65,8 +98,8 @@ function getRoleIcon() {
 }
 
 function getColor() {
-    if (react.user)
-        return "--color: var(--tag-role-" + getRoleTag(react.user.role) + ")";
+    if (Utils.globalReact.user)
+        return "--color: var(--tag-role-" + getRoleTag(Utils.globalReact.user.role) + ")";
 
     return "";
 }
@@ -79,25 +112,25 @@ function getColor() {
             <div class="wrapper">
                 <div class="overlay-content">
                     <div class="user" :onclick=userClick>
-                        <img v-if="react.user" :src="Config.apiUrl + '/assets/banner/' + react.user.id" alt="" class="banner">
+                        <img v-if="Utils.globalReact.user" :src="Config.apiUrl + '/assets/banner/' + Utils.globalReact.user.id" alt="" class="banner">
                         <img v-else :src="Config.apiUrl + '/assets/banner/-1'" alt="" class="banner">
                         <div class="banner-dim"></div>
                         <div class="info" :style=getColor()>
-                            <img v-if="react.user" :src="Config.apiUrl + '/assets/avatar/' + react.user.id" alt="" class="avatar">
+                            <img v-if="Utils.globalReact.user" :src="Config.apiUrl + '/assets/avatar/' + Utils.globalReact.user.id" alt="" class="avatar">
                             <img v-else :src="Config.apiUrl + '/assets/avatar/-1'" alt="" class="avatar">
 
                             <div class="name-flex">
-                                <i v-if="react.user" :class=getRoleIcon()></i>
+                                <i v-if="Utils.globalReact.user" :class=getRoleIcon()></i>
 
-                                <p v-if="react.user && react.user.displayname" class="name">{{ react.user.displayname }}</p>
-                                <p v-else-if="react.user" class="name">{{ react.user.username }}</p>
+                                <p v-if="Utils.globalReact.user && Utils.globalReact.user.displayname" class="name">{{ Utils.globalReact.user.displayname }}</p>
+                                <p v-else-if="Utils.globalReact.user" class="name">{{ Utils.globalReact.user.username }}</p>
                                 <p v-else class="name">Not Logged in</p>
                             </div>
 
-                            <p v-if="react.user && react.user.displayname" class="username">{{ react.user.username }}</p>
+                            <p v-if="Utils.globalReact.user && Utils.globalReact.user.displayname" class="username">{{ Utils.globalReact.user.username }}</p>
                         </div>
                     </div>
-                    <div class="links" v-if="react.user">
+                    <div class="links" v-if="Utils.globalReact.user">
                         <RouterLink class="link" to="/logout">
                             Log out
                         </RouterLink>

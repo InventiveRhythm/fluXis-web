@@ -1,32 +1,10 @@
 <script setup>
-import { RouterLink, useRouter } from "vue-router";
-import { reactive } from "vue";
+import { RouterLink, } from "vue-router";
 
 import FluXisText from "@/assets/images/logo-text.png";
 
 import NavLink from "./NavLink.vue";
 import NavProfile from "./NavProfile.vue";
-
-import Utils from "@/utils/Utils";
-
-const router = useRouter();
-
-let react = reactive({
-    user: $cookies.get("user"),
-});
-
-function onProfileClick(e) {
-    if (e.button == 0) {
-        Utils.openUserOverlay();
-    }
-
-    if (e.button == 2 && react.user) {
-        e.preventDefault();
-        if (confirm("Are you sure you want to log out?")) {
-            router.push("/logout");
-        }
-    }
-}
 
 const links = [
     {
