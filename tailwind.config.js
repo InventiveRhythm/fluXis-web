@@ -66,6 +66,9 @@ module.exports = {
                 },
                 '.section-gradient-custom': {
                     background: `linear-gradient(90deg, var(--section-gradient-col) 0%, var(--section-gradient-col) 20%, transparent 100%)`
+                },
+                '.keymode-gradient': {
+                    background: `linear-gradient(90deg, var(--tag-keymode-min) 0%, var(--tag-keymode-max) 100%)`
                 }
             })
         })
