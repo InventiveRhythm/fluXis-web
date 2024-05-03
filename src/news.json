@@ -1,17 +1,17 @@
 [{
-    "image": "/src/assets/images/news-1.jpg",
+    "image": "/images/news-1.jpg",
     "title": "An interesting title",
     "content": "very cool content thats extremely long so i can test line wrappings. css sucks i wish there was a better way to do this shit",
     "date": "8th June 1984",
     "type": "NEWS"
 },{
-    "image": "/src/assets/images/news-2.jpg",
+    "image": "/images/news-2.jpg",
     "title": "certified hashbrown moment",
     "content": "pretent i put lorem ipsum in here. too lazy to actually generate some",
     "date": "1st November 1987",
     "type": "NEWS"
 },{
-    "image": "/src/assets/images/news-3.jpg",
+    "image": "/images/news-3.jpg",
     "title": "i am going insane",
     "content": "i'm running out of ideas for this",
     "date": "7th March 2023",
