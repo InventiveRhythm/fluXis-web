@@ -12,9 +12,9 @@ import { startLoading, stopLoading } from '../utils/Loading.js'
   /login - Login
   /logout - Logout
   /n/:id - News
+  /maps - MapSet Search
   /ranking - Ranking
   /ranking/c/:code - Country Ranking
-  /sets - MapSet Search
   /set/:id - MapSet
   /team - Team
   /u/:id - User
@@ -28,16 +28,6 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: () => import('../views/HomeView.vue')
-    },
-    {
-      path: '/maps/artists/:id',
-      name: 'featured-artist',
-      component: () => import('../views/fa/FeaturedArtist.vue')
-    },
-    {
-      path: '/maps/artists',
-      name: 'featured-artists',
-      component: () => import('../views/fa/FeaturedArtistList.vue')
     },
     {
       path: '/maps',
@@ -55,12 +45,8 @@ const router = createRouter({
       component: () => import('../views/WorkInProgress.vue')
     },
     {
-      path: '/wiki',
-      name: 'wiki',
-      component: () => import('../views/wiki/WikiHome.vue')
-    },
-    {
       path: '/wiki/:path+',
+      alias: '/wiki',
       name: 'wiki-article',
       component: () => import('../views/wiki/WikiArticle.vue')
     },
@@ -85,6 +71,16 @@ const router = createRouter({
       alias: '/mapset/:id',
       name: 'mapset-details',
       component: () => import('../views/mapset/MapSetPage.vue')
+    },
+    {
+      path: '/artist/:id',
+      name: 'featured-artist',
+      component: () => import('../views/fa/FeaturedArtist.vue')
+    },
+    {
+      path: '/artists',
+      name: 'featured-artists',
+      component: () => import('../views/fa/FeaturedArtistList.vue')
     },
     {
       path: '/download',

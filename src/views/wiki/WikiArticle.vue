@@ -10,7 +10,7 @@ const route = useRoute();
 const router = useRouter();
 
 const pathSplit = route.path.split('/');
-const path = pathSplit.slice(2).join('/').toLowerCase();
+const path = pathSplit.slice(2).join('/').toLowerCase() || 'home';
 
 const pathArray = path.split('/').map(p => {
     let words = p.replace('-', ' ').replace('_', ' ').split(' ');

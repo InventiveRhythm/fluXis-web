@@ -70,7 +70,7 @@ const links = [
     },
     {
         text: "Wiki",
-        to: "/wiki/Home",
+        to: "/wiki",
         icon: "book",
     }
 ];
