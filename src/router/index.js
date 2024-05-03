@@ -75,31 +75,16 @@ const router = createRouter({
       component: () => import('../views/account/Logout.vue')
     },
     {
-      path: '/user/:id',
+      path: '/u/:id',
+      alias: '/user/:id',
       name: 'user-details',
       component: () => import('../views/user/UserPage.vue')
     },
     {
-      path: '/u/:id',
-      name: 'user-details-v2',
-      component: () => import('../views/user-v2/UserPage.vue')
-    },
-    {
       path: '/set/:id',
-      name: 'mapset-details-v2',
-      component: () => import('../views/mapset/MapSetPage.vue')
-    },
-    {
-      path: '/@:handle+',
-      name: 'user-details-handle',
-      component: () => import('../views/user/UserPage.vue')
-    },
-    {
-      path: '/mapset/:id',
+      alias: '/mapset/:id',
       name: 'mapset-details',
-      beforeEnter() { // redirect to new route
-        window.location.href = '/set/' + window.location.href.split('/').pop();
-      }
+      component: () => import('../views/mapset/MapSetPage.vue')
     },
     {
       path: '/download',
