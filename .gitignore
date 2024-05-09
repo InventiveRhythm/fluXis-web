@@ -28,7 +28,7 @@ coverage
 *.sw?
 
 # custom
-/fluxis-wiki
+/public/fluxis-wiki
 /featured-artist
 package-lock.json
 /src/config.json
