@@ -79,10 +79,10 @@ function render(data) {
     data = marked.parse(data);
     react.article = data;
     stopLoading();
-    setTimeout(replaceLinks, 100);
+    setTimeout(postProcess, 100);
 }
 
-function replaceLinks() {
+function postProcess() {
     const links = document.querySelectorAll('.article a');
 
     links.forEach(link => {
@@ -98,6 +98,13 @@ function replaceLinks() {
             router.push(url);
         });
     });
+
+    if (route.hash) {
+        const h = document.getElementById(route.hash.split("#")[1]);
+        
+        if (h)
+            h.scrollIntoView();
+	};
 }
 
 function edit() {
