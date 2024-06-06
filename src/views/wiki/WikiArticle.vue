@@ -2,7 +2,9 @@
 import { useRoute, useRouter } from 'vue-router';
 import { reactive } from 'vue';
 import { RouterLink } from 'vue-router';
-import { marked } from 'marked';
+import { Marked } from "marked";
+import hljs from 'highlight.js';
+import { markedHighlight } from "marked-highlight";
 import { startLoading, stopLoading } from '../../utils/Loading';
 import Utils from '@/utils/Utils';
 
@@ -63,6 +65,16 @@ function render(data) {
             }
         });
     }
+
+    const marked = new Marked(
+        markedHighlight({
+            langPrefix: 'hljs language-',
+            highlight(code, lang, info) {
+              const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+              return hljs.highlight(code, { language }).value;
+            }
+        })
+    );
 
     data = marked.parse(data);
     react.article = data;
@@ -289,7 +301,10 @@ function edit() {
             code {
                 background-color: var(--bg-secondary);
                 border-radius: 5px;
-                font-family: monospace;
+                
+                span {
+                    font-family: monospace;
+                }
             }
 
             blockquote {

@@ -7,6 +7,8 @@
     font-family: 'Renogare Soft';
     src: url("font/RenogareSoft.ttf");
 }
+                
+@import url("style/codeblocks.scss");
 
 :root {
     --bg: hsl(240, 10%, 10%);
