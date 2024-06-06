@@ -221,24 +221,43 @@ function edit() {
             background-color: var(--bg-triary);
             border-radius: 10px 10px 20px 10px;
 
-            h1,
+            h1 {
+                font-size: 1.875rem;
+                line-height: 2.25rem;
+            }
+
             h2 {
+                font-size: 1.5rem;
+                line-height: 2rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                line-height: 1.75rem;
+            }
+
+            h4 {
+                font-size: 1.125rem;
+                line-height: 1.75rem;
+            }
+
+            h1, h2 {
                 margin-top: 20px;
                 border-bottom: 1px solid rgba($color: #ffffff, $alpha: .4);
             }
 
-            h3,
-            h4 {
-                font-size: 20px;
+            h3, h4 {
                 margin-top: 15px;
             }
 
-            h5,
-            h6 {
+            h5, h6 {
                 margin-top: 10px;
             }
 
             p {
+                font-size: 1rem;
+                line-height: 1.5rem;
+
                 margin-top: 10px;
 
                 code {
