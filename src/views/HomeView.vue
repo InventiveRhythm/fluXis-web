@@ -58,7 +58,7 @@ getStats();
             mapsets
         </div>
     </div>
-    <div class="w-full max-w-[1150px] flex flex-wrap justify-center items-center mt-3">
+    <div class="w-full flex flex-wrap justify-center items-center mt-3">
         <NewsCard v-for="entry in News" :data="entry"/>
     </div>
 </template>
