@@ -43,7 +43,7 @@ function createClubGradient(club) {
             <div class="data">
                 <div class="rank">
                     <span>
-                        #{{ user.rank }}
+                        #{{ user.stats.global }}
                     </span>
                 </div>
                 <img :src="Config.apiUrl + '/assets/avatar/' + user.id + '.png'" class="avatar future loadFade">
@@ -73,14 +73,14 @@ function createClubGradient(club) {
                 <div class="spacer"></div>
                 <div class="stats">
                     <span class="main-stat">
-                        {{ user.ovr }} OVR
+                        {{ user.stats.ovr }} OVR
                     </span>
                     <div class="additional">
                         <span>
-                            {{ user.ptr }} PR
+                            {{ user.stats.ptr }} PR
                         </span>
                         <span>
-                            {{ formatAccuracy(user.ova) }}
+                            {{ formatAccuracy(user.stats.ova) }}
                         </span>
                     </div>
                 </div>
