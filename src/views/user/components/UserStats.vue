@@ -2,29 +2,29 @@
 import { formatAccuracy, formatScore } from '@/utils/formatting';
 
 const props = defineProps({
-    user: {
+    statistics: {
         type: Object,
         required: true
     }
 });
 
-const user = props.user;
+const statistics = props.statistics;
 
 const stats = [{
     name: 'Overall Rating',
-    value: user.ovr
+    value: statistics.ovr
 }, {
     name: 'Potential Rating',
-    value: user.ptr
+    value: statistics.ptr
 }, {
     name: 'Overall Accuracy',
-    value: formatAccuracy(user.ova)
+    value: formatAccuracy(statistics.ova)
 }, {
     name: 'Ranked Score',
-    value: formatScore(user.ranked_score)
+    value: formatScore(statistics.score)
 }, {
     name: 'Max Combo',
-    value: `${user.max_combo}x`
+    value: `${statistics.combo}x`
 }];
 </script>
 

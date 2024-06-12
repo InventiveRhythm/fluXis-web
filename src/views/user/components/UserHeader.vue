@@ -56,13 +56,13 @@ const props = defineProps({
                         <RouterLink to="/rankings/overall">
                             <UserHeaderButton>
                                 <i class="fas fa-globe-americas w-5"></i>
-                                #{{ user.rank }}
+                                #{{ user.stats.global }}
                             </UserHeaderButton>
                         </RouterLink>
                         <RouterLink :to="'/rankings/country/' + user.country">
                             <UserHeaderButton v-if="user.country">
                                 <span :class="'fi fi-' + user.country + ' flag sizwe-5'"></span>
-                                #{{ user.country_rank }}
+                                #{{ user.stats.country }}
                             </UserHeaderButton>
                         </RouterLink>
                     </div>

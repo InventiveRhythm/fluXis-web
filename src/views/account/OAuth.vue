@@ -1,8 +1,10 @@
 <script setup>
 // get token query parameter
-const token = new URLSearchParams(window.location.search).get('token');
+const params = new URLSearchParams(window.location.search);
+const token = params.get('token');
+const user = params.get('user');
 
-if (token) {
+if (token && user) {
     window.addEventListener("message", (event) => {
         if (!event.source) {
             console.log('no source');
@@ -18,7 +20,10 @@ if (token) {
             return;
         }
 
-	    event.source.postMessage({ token });
+	    event.source.postMessage({
+            token,
+            user
+        });
     });
 }
 </script>

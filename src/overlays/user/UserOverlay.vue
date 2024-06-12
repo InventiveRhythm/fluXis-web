@@ -46,7 +46,7 @@ function openLogin() {
             console.log('Got token from auth!');
             $cookies.set('token', token);
 
-            API.get('/account').then((res) => {
+            API.get('/user/' + event.data.user).then((res) => {
                 Utils.globalReact.user = res.data;
                 $cookies.set('user', res.data);
                 Utils.globalReact.user = res.data;
