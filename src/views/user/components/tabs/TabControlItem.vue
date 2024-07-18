@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router';
 
 const props = defineProps({
     url: String,
+    alternate: String,
     icon: String,
     text: String
 });
@@ -22,7 +23,14 @@ watch(() => route.path, () => {
 updateState();
 
 function updateState() {
-    react.current = route.path === props.url;
+    let routePath = route.path;
+
+    if (routePath.endsWith("/")) {
+        const idx = routePath.lastIndexOf("/");
+        routePath = routePath.substring(0, idx);
+    }
+
+    react.current = routePath === props.url || routePath === props.alternate;
 }
 </script>
 

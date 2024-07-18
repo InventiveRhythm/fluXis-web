@@ -84,7 +84,7 @@ async function loadStuff() {
             </div>
             <div class="w-full flex flex-col gap-4 text-left mt-5 md:mt-0">
                 <div class="flex items-center justify-start px-3 gap-6">
-                    <TabControlIcon :url="`/u/${id}/scores`" icon="fa-solid fa-arrow-trend-up" text="Scores" />
+                    <TabControlIcon :url="`/u/${id}/scores`" :alternate="`/u/${id}`" icon="fa-solid fa-arrow-trend-up" text="Scores" />
                     <TabControlIcon :url="`/u/${id}/maps`" icon="fa-solid fa-map" text="Maps" />
                 </div>
                 <RouterView />
