@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { startLoading, stopLoading } from '../utils/Loading.js'
 
+import WorkInProgress from '../components/WorkInProgress.vue';
+
 /*
   future page mapping:
   / - Home (for not logged in users)
@@ -32,7 +34,7 @@ const router = createRouter({
     {
       path: '/maps',
       name: 'maps',
-      component: () => import('../views/WorkInProgress.vue')
+      component: WorkInProgress
     },
     {
       path: '/rankings/overall',
@@ -42,7 +44,7 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
-      component: () => import('../views/WorkInProgress.vue')
+      component: WorkInProgress
     },
     {
       path: '/wiki/:path+',
