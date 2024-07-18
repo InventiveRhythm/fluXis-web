@@ -56,6 +56,9 @@ module.exports = {
             height: {
                 'inherit': 'inherit'
             },
+            fontFamily: {
+                'rank': "YoureGone"
+            }
         }
     },
     plugins: [

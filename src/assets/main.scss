@@ -7,6 +7,11 @@
     font-family: 'Renogare Soft';
     src: url("font/RenogareSoft.ttf");
 }
+
+@font-face {
+    font-family: 'YoureGone';
+    src: url("font/youregone.ttf");
+}
                 
 @import url("style/codeblocks.scss");
 
@@ -71,10 +76,10 @@
     --tag-keymode-10: #8c4451;
 
     --rank-x: #a9a9a9;
-    --rank-ss: #ce9b3d;
-    --rank-s: #ffc14a;
-    --rank-aa: #69ca5a;
-    --rank-a: #84ff70;
+    --rank-ss: #ffc14a;
+    --rank-s: #ce9b3d;
+    --rank-aa: #84ff70;
+    --rank-a: #69ca5a;
     --rank-b: #70d7ff;
     --rank-c: #ff70ff;
     --rank-d: #ff686b;

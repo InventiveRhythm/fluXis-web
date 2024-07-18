@@ -12,6 +12,7 @@ import UserStats from './components/UserStats.vue';
 import UserClub from './components/UserClub.vue';
 import UserSection from './components/UserSection.vue';
 import UserSubsection from './components/UserSubsection.vue';
+import UserContentList from './components/UserContentList.vue';
 import UserWrapList from './components/UserWrapList.vue';
 import UserSidebarSection from './components/sidebar/UserSidebarSection.vue';
 
@@ -89,14 +90,14 @@ async function loadStuff() {
             </div>
             <div class="w-full flex flex-col gap-10 text-left mt-5 md:mt-0">
                 <UserSection title="Best Scores">
-                    <UserWrapList>
+                    <UserContentList>
                         <ScoreCard v-for="score in react.scores.best_scores.splice(0, 8)" :score="score" />
-                    </UserWrapList>
+                    </UserContentList>
                 </UserSection>
                 <UserSection title="Recent Scores">
-                    <UserWrapList>
+                    <UserContentList>
                         <ScoreCard v-for="score in react.scores.recent_scores.splice(0, 6)" :score="score" />
-                    </UserWrapList>
+                    </UserContentList>
                 </UserSection>
                 <UserSection title="Maps">
                     <UserSubsection title="Pure">
