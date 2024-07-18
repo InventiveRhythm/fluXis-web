@@ -15,11 +15,7 @@ const react = reactive({
     current: false
 });
 
-watch(() => route.path, () => {
-    console.log("yeah")
-    updateState();
-})
-
+watch(() => route.path, updateState);
 updateState();
 
 function updateState() {

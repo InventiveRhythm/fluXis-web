@@ -80,6 +80,25 @@ const router = createRouter({
       ]
     },
     {
+      path: '/club/:id',
+      name: 'club-details',
+      component: () => import('../views/club/ClubPage.vue'),
+      children: [
+        {
+          alias: "",
+          path: "members",
+          name: "club-details:members",
+          component: () => import("../views/club/subpages/ClubMembers.vue")
+        },
+        {
+          alias: "",
+          path: "scores",
+          name: "club-details:scores",
+          component: () => import("../views/club/subpages/ClubScores.vue")
+        },
+      ]
+    },
+    {
       path: '/set/:id',
       alias: '/mapset/:id',
       name: 'mapset-details',

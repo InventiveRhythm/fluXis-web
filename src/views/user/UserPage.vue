@@ -11,7 +11,8 @@ import UserHeader from './components/UserHeader.vue';
 import UserStats from './components/UserStats.vue';
 import UserClub from './components/UserClub.vue';
 import UserSidebarSection from './components/sidebar/UserSidebarSection.vue';
-import TabControlIcon from './components/tabs/TabControlItem.vue';
+import TabControl from '../../components/tabs/TabControl.vue';
+import TabControlItem from '../../components/tabs/TabControlItem.vue';
 
 const route = useRoute();
 let id = parseInt(route.params.id);
@@ -83,10 +84,10 @@ async function loadStuff() {
                 </UserSidebarSection>
             </div>
             <div class="w-full flex flex-col gap-4 text-left mt-5 md:mt-0">
-                <div class="flex items-center justify-start px-3 gap-6">
-                    <TabControlIcon :url="`/u/${id}/scores`" :alternate="`/u/${id}`" icon="fa-solid fa-arrow-trend-up" text="Scores" />
-                    <TabControlIcon :url="`/u/${id}/maps`" icon="fa-solid fa-map" text="Maps" />
-                </div>
+                <TabControl>
+                    <TabControlItem :url="`/u/${id}/scores`" :alternate="`/u/${id}`" icon="fa-solid fa-arrow-trend-up" text="Scores" />
+                    <TabControlItem :url="`/u/${id}/maps`" icon="fa-solid fa-map" text="Maps" />
+                </TabControl>
                 <RouterView />
             </div>
         </div>
