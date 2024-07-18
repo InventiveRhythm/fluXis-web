@@ -30,7 +30,7 @@ const props = defineProps({
             <div class="w-full max-w-[1200px] md:px-10 flex flex-col items-center justify-center gap-5">
                 <div class="flex flex-col md:flex-row md:h-32 items-center self-stretch gap-3">
                     <img class="size-32 rounded-3xl shadow-normal" :src="Assets.avatar(user.id)" animated-load>
-                    <div class="w-full flex flex-col justify-center items-center gap-3 drop-shadow-text">
+                    <div class="w-full flex flex-col justify-center items-center gap-1 leading-none drop-shadow-text">
                         <div class="w-full flex flex-col md:flex-row gap-3 justify-between items-center">
                             <div class="flex gap-3" v-if="user.groups.length > 0">
                                 <UserHeaderGroup :group="group" v-for="group in user.groups" />
@@ -43,11 +43,12 @@ const props = defineProps({
                         </div>
                         <div class="w-full flex justify-center md:justify-start items-center gap-3">
                             <ClubTag class="text-3xl" :club="user.club" />
-
                             <p class="text-5xl" v-if="!user.displayname">{{ user.username }}</p>
-
                             <p class="text-5xl" v-if="user.displayname">{{ user.displayname }}</p>
-                            <p class="text-2xl" v-if="user.displayname">{{ user.username }}</p>
+                        </div>
+                        <div v-if="user.username || user.pronouns" class="w-full flex justify-center md:justify-start items-center gap-3">
+                            <p class="text-2xl opacity-80" v-if="user.displayname">{{ user.username }}</p>
+                            <p class="text-xl opacity-60" v-if="user.pronouns">{{ user.pronouns }}</p>
                         </div>
                     </div>
                 </div>
