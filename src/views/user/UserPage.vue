@@ -74,6 +74,9 @@ async function loadStuff() {
         <UserStats :statistics="react.user.stats" />
         <div class="w-full flex justify-center items-start p-3 gap-5">
             <div class="w-80 min-w-80 flex flex-col justify-center gap-5" hide-mobile>
+                <UserSidebarSection title="About Me" class="!gap-0">
+                    <p class="text-left px-2 opacity-80">{{ react.user.aboutme }}</p>
+                </UserSidebarSection>
                 <UserSidebarSection title="Club" v-if="react.user.club">
                     <UserClub :club="react.user.club" />
                 </UserSidebarSection>
