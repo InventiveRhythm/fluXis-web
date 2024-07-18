@@ -42,6 +42,7 @@ registerEvent('loading', (status) => {
     backdrop-filter: var(--blur);
     opacity: 1;
     visibility: visible;
+    pointer-events: none;
 }
 
 .load-wrapper svg {

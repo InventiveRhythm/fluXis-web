@@ -5,13 +5,26 @@ import Footer from "./components/footer/Footer.vue";
 import Loading from "./components/loading/Loading.vue";
 import UserOverlay from "./overlays/user/UserOverlay.vue";
 import { Transition, Suspense } from "vue";
+
+function stringifyRoute(route) {
+    if (!route.name)
+        return route.path;
+
+    var result = route.name.split(":")[0];
+
+    for (const [key, value] of Object.entries(route.params)) {
+        result += `/${key}:${value}`;
+    }
+
+    return result;
+}
 </script>
 
 <template>
     <div class="mx-auto grid w-full grid-cols-1 grid-rows-1 pb-32 pt-20 md:pt-28 text-center xl:w-content">
         <RouterView v-slot="{ Component, route }">
             <Transition name="fade">
-                <div :key="route.path" class="row-1 col-1">
+                <div :key="stringifyRoute(route)" class="row-1 col-1">
                     <Suspense>
                         <component :is="Component" />
                     </Suspense>

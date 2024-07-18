@@ -64,7 +64,20 @@ const router = createRouter({
       path: '/u/:id',
       alias: '/user/:id',
       name: 'user-details',
-      component: () => import('../views/user/UserPage.vue')
+      component: () => import('../views/user/UserPage.vue'),
+      children: [
+        {
+          alias: "",
+          path: "scores",
+          name: "user-details:scores",
+          component: () => import("../views/user/subpages/UserScores.vue")
+        },
+        {
+          path: "maps",
+          name: "user-details:maps",
+          component: () => import("../views/user/subpages/UserMaps.vue")
+        }
+      ]
     },
     {
       path: '/set/:id',

@@ -1,5 +1,5 @@
 <script async setup>
-import { useRoute } from 'vue-router';
+import { RouterLink, RouterView, useRoute } from 'vue-router';
 import { reactive } from 'vue';
 
 import TimeUtils from '@/utils/TimeUtils';
@@ -10,14 +10,8 @@ import { startLoading, stopLoading } from '@/utils/Loading';
 import UserHeader from './components/UserHeader.vue';
 import UserStats from './components/UserStats.vue';
 import UserClub from './components/UserClub.vue';
-import UserSection from './components/UserSection.vue';
-import UserSubsection from './components/UserSubsection.vue';
-import UserContentList from './components/UserContentList.vue';
-import UserWrapList from './components/UserWrapList.vue';
 import UserSidebarSection from './components/sidebar/UserSidebarSection.vue';
-
-import ScoreCard from '@/components/score-v2/ScoreCard.vue';
-import MapSetCard from '@/components/map/MapSet.vue';
+import TabControlIcon from './components/tabs/TabControlItem.vue';
 
 const route = useRoute();
 let id = parseInt(route.params.id);
@@ -88,37 +82,12 @@ async function loadStuff() {
                     </div>
                 </UserSidebarSection>
             </div>
-            <div class="w-full flex flex-col gap-10 text-left mt-5 md:mt-0">
-                <UserSection title="Best Scores">
-                    <UserContentList>
-                        <ScoreCard v-for="score in react.scores.best_scores.splice(0, 8)" :score="score" />
-                    </UserContentList>
-                </UserSection>
-                <UserSection title="Recent Scores">
-                    <UserContentList>
-                        <ScoreCard v-for="score in react.scores.recent_scores.splice(0, 6)" :score="score" />
-                    </UserContentList>
-                </UserSection>
-                <UserSection title="Maps">
-                    <UserSubsection title="Pure">
-                        <p v-if="!react.maps.ranked || react.maps.ranked.length == 0" class="px-3 opacity-60">This user has no pure maps.</p>
-                        <UserWrapList v-else>
-                            <MapSetCard v-for="map in react.maps.ranked" :mapset="map" />
-                        </UserWrapList>
-                    </UserSubsection>
-                    <UserSubsection title="Impure/Unsubmitted">
-                        <p v-if="!react.maps.unranked || react.maps.unranked.length == 0" class="px-3 opacity-60">This user has no impure/unsubmitted maps.</p>
-                        <UserWrapList v-else>
-                            <MapSetCard v-for="map in react.maps.unranked" :mapset="map" />
-                        </UserWrapList>
-                    </UserSubsection>
-                    <UserSubsection title="Guest Difficulties">
-                        <p v-if="!react.maps.guest_diffs || react.maps.guest_diffs.length == 0" class="px-3 opacity-60">This user has no guest difficulties.</p>
-                        <UserWrapList v-else>
-                            <MapSetCard v-for="map in react.maps.guest_diffs" :mapset="map" />
-                        </UserWrapList>
-                    </UserSubsection>
-                </UserSection>
+            <div class="w-full flex flex-col gap-4 text-left mt-5 md:mt-0">
+                <div class="flex items-center justify-start px-3 gap-6">
+                    <TabControlIcon :url="`/u/${id}/scores`" icon="fa-solid fa-arrow-trend-up" text="Scores" />
+                    <TabControlIcon :url="`/u/${id}/maps`" icon="fa-solid fa-map" text="Maps" />
+                </div>
+                <RouterView />
             </div>
         </div>
     </div>
