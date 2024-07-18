@@ -34,27 +34,28 @@ async function loadStuff() {
     startLoading();
 
     try {
-        await API.get(`/user/${id}`).then(data => {
-            if (!data.data) return;
+        await API.get(`/user/${id}`).then(res => {
+            if (res.status != 200) return;
 
-            react.user = data.data;
-            react.user['lastloginString'] = TimeUtils.formatAgo(data.data.lastlogin);
+            react.user = res.data;
+            react.user['lastloginString'] = TimeUtils.formatAgo(res.data.lastlogin);
         })
 
         // no need to continue if user is null
-        if (!react.user || !react.user.username) return;
+        if (react.user && react.user.username) {
+            await API.get(`/user/${react.user.id}/maps`).then(res => {
+                if (!res.data) return;
 
-        await API.get(`/user/${react.user.id}/maps`).then(data => {
-            if (!data.data) return;
+                react['maps'] = res.data;
+            })
 
-            react['maps'] = data.data;
-        })
+            await API.get(`/user/${react.user.id}/scores`).then(res => {
+                if (!res.data) return;
 
-        await API.get(`/user/${react.user.id}/scores`).then(data => {
-            if (!data.data) return;
+                react['scores'] = res.data;
+            })
+        }
 
-            react['scores'] = data.data;
-        })
     } catch (err) {
         console.error(err);
     }
@@ -117,8 +118,8 @@ async function loadStuff() {
             </div>
         </div>
     </div>
-    <div v-if="!react.loading && !react.user">
-        <h1>User not found</h1>
-        <h4>The user you are looking for does not exist or has been deleted.</h4>
+    <div v-if="!react.loading && !react.user" class="pt-20">
+        <h1 class="text-2xl">User not found</h1>
+        <h4 class="opacity-80">The user you are looking for does not exist or has been deleted.</h4>
     </div>
 </template>
