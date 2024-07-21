@@ -7,6 +7,7 @@ import TabControlItem from '../../components/tabs/TabControlItem.vue';
 import ClubHeader from './components/ClubHeader.vue';
 
 import API from '@/utils/API';
+import Utils from '@/utils/Utils';
 import { startLoading, stopLoading } from '@/utils/Loading';
 
 const route = useRoute();

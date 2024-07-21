@@ -1,10 +1,15 @@
 <script setup>
 import { RouterLink } from 'vue-router';
 
-import Assets from '@/utils/Assets';
-import TimeUtils from '@/utils/TimeUtils'
+import RoundedButton from '../../../components/RoundedButton.vue';
 
-defineProps({
+import Assets from '@/utils/Assets';
+import TimeUtils from '@/utils/TimeUtils';
+import API from '@/utils/API';
+import Utils from '@/utils/Utils';
+import Config from '@/config.json';
+
+const props = defineProps({
     club: Object
 });
 
@@ -17,26 +22,51 @@ function getOnlineStatus(member) {
 
     return `last online ${TimeUtils.formatAgo(member.lastlogin)}`;
 }
+
+async function invite() {
+    const id = prompt("Enter the ID of the user you want to invite:");
+
+    const parsed = parseInt(id);
+
+    if (!parsed) {
+        alert(`'${id}' is not a valid user id.`)
+        return;
+    }
+
+    API.post(`/club/${props.club.id}/invites`, {
+        user: parsed
+    }).then(res => {
+        if (res.status != 201) {
+            alert(res.message);
+            return;
+        }
+
+        alert(`Invite created! Give the person you want to invite this link: ${Config.baseUrl}/invite/${res.data.code}`)
+    })
+}
 </script>
 
 <template>
-    <RouterLink :to="`/u/${member.id}`" class="flex flex-row items-center gap-2" v-for="member in club.members">
-        <img class="object-cover size-12 rounded-lg" :src="Assets.avatar(member.id)" animated-load>
-        <div class="flex flex-col">
-            <div class="flex gap-1.5">
-                <p v-if="member.displayname">
-                    <i class="fa-solid fa-crown" v-if="club.owner.id == member.id"></i>
-                    {{ member.displayname }}
-                    <span class="text-sm opacity-80">
+    <div class="flex flex-col items-center">
+        <RouterLink :to="`/u/${member.id}`" class="w-full flex flex-row items-center gap-2" v-for="member in club.members">
+            <img class="object-cover size-12 rounded-lg" :src="Assets.avatar(member.id)" animated-load>
+            <div class="flex flex-col">
+                <div class="flex gap-1.5">
+                    <p v-if="member.displayname">
+                        <i class="fa-solid fa-crown" v-if="club.owner.id == member.id"></i>
+                        {{ member.displayname }}
+                        <span class="text-sm opacity-80">
+                            {{ member.username }}
+                        </span>
+                    </p>
+                    <p v-else>
+                        <i class="fa-solid fa-crown" v-if="club.owner.id == member.id"></i>
                         {{ member.username }}
-                    </span>
-                </p>
-                <p v-else>
-                    <i class="fa-solid fa-crown" v-if="club.owner.id == member.id"></i>
-                    {{ member.username }}
-                </p>
+                    </p>
+                </div>
+                <p class="text-2xs">{{ getOnlineStatus(member) }}</p>
             </div>
-            <p class="text-2xs">{{ getOnlineStatus(member) }}</p>
-        </div>
-    </RouterLink>
+        </RouterLink>
+        <RoundedButton v-if="Utils.globalReact.user && Utils.globalReact.user.id == club.owner.id" @click="invite" class="px-6 py-2 text-white text-opacity-75 mt-6">Invite...</RoundedButton>
+    </div>
 </template>

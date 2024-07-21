@@ -20,30 +20,34 @@ const react = reactive({
     invite: null
 });
 
-startLoading();
+if (!Utils.globalReact.user) {
+    react.error = "Please log in to accept invites.";
+} else {
+    startLoading();
 
-try {
-    API.get(`/invites/${code}`).then(res => {
-        stopLoading();
+    try {
+        API.get(`/invites/${code}`).then(res => {
+            stopLoading();
+            react.loading = false;
+
+            if (res.status != 200) {
+                react.error = res.message;
+                console.log(react.error);
+                return;
+            }
+
+            if (Utils.globalReact.user.id != res.data.user) {
+                react.error = "This invite is not intended for you!";
+                return;
+            }
+
+            react.invite = res.data;
+        })
+    } catch (ex) {
         react.loading = false;
-
-        if (res.status != 200) {
-            react.error = res.message;
-            console.log(react.error);
-            return;
-        }
-
-        if (Utils.globalReact.user.id != res.data.user) {
-            react.error = "This invite is not intended for you!";
-            return;
-        }
-
-        react.invite = res.data;
-    })
-} catch (ex) {
-    react.loading = false;
-    stopLoading();
-    console.log(ex)
+        stopLoading();
+        console.log(ex)
+    }
 }
 
 function acceptInvite() {
@@ -64,18 +68,20 @@ function acceptInvite() {
 </script>
 
 <template>
-<div v-if="react.error">
-    {{ react.error }}
-</div>
-<div class="flex flex-col justify-center items-center pt-24" v-else-if="!react.loading && react.invite">
-    <img class="size-56 object-cover mb-8 rounded-2xl" :src="Assets.clubIcon(react.invite.club.id)" alt="">
-    <p class="text-sm opacity-80">You've been invited to join</p>
-    <div class="flex items-center gap-2">
-        <ClubTag class="text-xl" :club="react.invite.club"></ClubTag>
-        <p class="text-2xl">{{ react.invite.club.name }}</p>
+    <div v-if="react.error">
+        {{ react.error }}
     </div>
-    <RoundedButton @click="acceptInvite" class="px-6 py-2 text-white text-opacity-75 mt-6">Accept Invite</RoundedButton>
-</div>
+    <div class="flex flex-col justify-center items-center pt-24" v-else-if="!react.loading && react.invite">
+        <img class="size-56 object-cover mb-8 rounded-2xl" :src="Assets.clubIcon(react.invite.club.id)" alt="">
+        <p class="text-sm opacity-80">You've been invited to join</p>
+        <div class="flex items-center gap-2">
+            <ClubTag class="text-xl" :club="react.invite.club"></ClubTag>
+            <p class="text-2xl">{{ react.invite.club.name }}</p>
+        </div>
+        <RoundedButton @click="acceptInvite" class="px-6 py-2 text-white text-opacity-75 mt-6">Accept Invite
+        </RoundedButton>
+    </div>
 
-<img class="absolute top-0 left-0 blur-md w-screen h-screen object-cover -z-10 opacity-20" :src="Assets.clubBanner(react.invite.club.id)" v-if="!react.loading && react.invite" />
+    <img class="absolute top-0 left-0 blur-md w-screen h-screen object-cover -z-10 opacity-20"
+        :src="Assets.clubBanner(react.invite.club.id)" v-if="!react.loading && react.invite" />
 </template>
