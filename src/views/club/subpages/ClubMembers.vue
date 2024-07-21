@@ -47,7 +47,7 @@ async function invite() {
 </script>
 
 <template>
-    <div class="flex flex-col items-center">
+    <div class="flex flex-col items-center gap-4">
         <RouterLink :to="`/u/${member.id}`" class="w-full flex flex-row items-center gap-2" v-for="member in club.members">
             <img class="object-cover size-12 rounded-lg" :src="Assets.avatar(member.id)" animated-load>
             <div class="flex flex-col">
@@ -67,6 +67,6 @@ async function invite() {
                 <p class="text-2xs">{{ getOnlineStatus(member) }}</p>
             </div>
         </RouterLink>
-        <RoundedButton v-if="Utils.globalReact.user && Utils.globalReact.user.id == club.owner.id" @click="invite" class="px-6 py-2 text-white text-opacity-75 mt-6">Invite...</RoundedButton>
+        <RoundedButton v-if="Utils.globalReact.user && Utils.globalReact.user.id == club.owner.id" @click="invite" class="px-6 py-2 text-white text-opacity-75 mt-3">Invite...</RoundedButton>
     </div>
 </template>
