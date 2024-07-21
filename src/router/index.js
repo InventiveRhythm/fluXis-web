@@ -112,6 +112,11 @@ const router = createRouter({
       component: () => import('../views/fa/FeaturedArtist.vue')
     },
     {
+      path: '/invite/:code',
+      name: 'accept-invite',
+      component: () => import('../views/invite/InviteView.vue') 
+    },
+    {
       path: '/artists',
       name: 'featured-artists',
       component: () => import('../views/fa/FeaturedArtistList.vue')
