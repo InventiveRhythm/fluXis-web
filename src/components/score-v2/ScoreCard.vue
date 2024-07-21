@@ -16,7 +16,8 @@ const props = defineProps({
                 {{ letter }}
             </p>
         </div>
-        <div class="overlap-grid size-full rounded-lg overflow-hidden">
+        <!-- thank you chome, that I have to put the same size again because youre too stupid to accept 100% height -->
+        <div class="overlap-grid w-full h-12 rounded-lg overflow-hidden">
             <img class="object-cover" :src="Config.assetsUrl + '/background/' + score.map.mapset" animated-load />
             <div class="bg-dark-2 opacity-50"></div>
             <div class="flex flex-row items-center justify-center gap-3 px-3 drop-shadow-text">
