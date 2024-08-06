@@ -11,7 +11,7 @@ const staff = [
     },
     {
         "name": "Monoseul",
-        "role": 2,
+        "role": 3,
         "id": 90
     }
 ];
@@ -27,70 +27,32 @@ Utils.setTitle("fluXis Team");
 </script>
 
 <template>
-    <h1>The fluXis team</h1>
-    <p class="sub">The people behind fluXis.</p>
-    <div class="list">
-        <TeamEntry
-            name="Flustix"
-            :id=1 role="Lead Development"
-            about="Definitely not a Nanahira addict."
-            :flip=false />
-        <TeamEntry
-            name="Akiri"
-            :id=2 role="Community Management, Sound Design"
-            about="meow"
-            :flip=true />
-    </div>
+    <div class="flex justify-center">
+        <div class="w-[900px]">
+            <p class="text-2xl">The fluXis team</p>
+            <p class="text-sm mb-5">The people behind fluXis.</p>
+            <div class="flex flex-col gap-4 mb-8">
+                <TeamEntry name="Flustix" :id=1 role="Lead Development, UI Design" about="nanahira and choccy milk addict" />
+                <TeamEntry name="Akiri" :id=2 role="Community Management, Sound Design" about="I make stuff" flip />
+            </div>
 
-    <h1>fluXis Staff</h1>
-    <p class="sub">The people who help us keep the community nice and tidy.</p>
-    <div class="list small-list">
-        <SmallTeamEntry v-for="member in staff" :name="member.name" :id="member.id" :role="member.role"></SmallTeamEntry>
-    </div>
+            <p class="text-2xl">fluXis Staff</p>
+            <p class="text-sm mb-5">The people who keep the community nice and tidy.</p>
+            <div class="w-full grid gap-2 grid-cols-2 mb-5">
+                <SmallTeamEntry v-for="member in staff" :name="member.name" :id="member.id" :role="member.role" />
+            </div>
 
-    <h1>Special thanks</h1>
-    <p class="sub">People who helped us.</p>
-    <div class="spacer"></div>
-    <p class="small" v-for="person in people">
-        {{ person.name }}<span class="grey"> - {{ person.about }}</span>
-    </p>
-    <div class="spacer"></div>
-    <p class="small">All of our contributors.</p>
-    <div class="spacer"></div>
-    <p class="small">And most importantly,</p>
-    <p class="small">you.</p>
+            <p class="text-2xl">Special thanks</p>
+            <p class="text-sm mb-5">People who helped us.</p>
+            <p class="text-sm mb-4" v-for="person in people">
+                {{ person.name }}
+                <span class="opacity-80"> - {{ person.about }}</span>
+            </p>
+
+            <p class="text-sm mb-8">All of our contributors.</p>
+
+            <p class="text-sm">And most importantly,</p>
+            <p class="text-sm underline mb-8">you.</p>
+        </div>
+    </div>
 </template>
-
-<style>
-.list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 900px;
-    max-width: 100%;
-    margin: 20px 0;
-}
-
-.small-list {
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-}
-
-.sub {
-    font-size: 14px;
-}
-
-.spacer {
-    height: 15px;
-}
-
-.small {
-    font-size: 14px;
-}
-
-.grey {
-    color: var(--text-color-secondary);
-}
-</style>

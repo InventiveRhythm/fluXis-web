@@ -29,6 +29,10 @@ module.exports = {
                 '2': '#4846d5',
                 '3': '#533ec3',
                 '4': '#5f30a7'
+            },
+            'group': {
+                'moderators': '#73d173',
+                'purifier': '#55b2ff',
             }
         },
         extend: {
