@@ -7,7 +7,7 @@ import RoundedButton from '../../components/RoundedButton.vue';
 
 import API from '../../utils/API';
 import Assets from '../../utils/Assets';
-import Utils from '../../utils/Utils';
+import { state } from '@/utils/State';
 import { startLoading, stopLoading } from '../../utils/Loading';
 
 const route = useRoute();
@@ -20,7 +20,7 @@ const react = reactive({
     invite: null
 });
 
-if (!Utils.globalReact.user) {
+if (!state.user) {
     react.error = "Please log in to accept invites.";
 } else {
     startLoading();
@@ -36,7 +36,7 @@ if (!Utils.globalReact.user) {
                 return;
             }
 
-            if (Utils.globalReact.user.id != res.data.user) {
+            if (state.id != res.data.user) {
                 react.error = "This invite is not intended for you!";
                 return;
             }

@@ -62,6 +62,9 @@ module.exports = {
             },
             fontFamily: {
                 'rank': "YoureGone"
+            },
+            transitionDuration: {
+                '50': '50ms'
             }
         }
     },

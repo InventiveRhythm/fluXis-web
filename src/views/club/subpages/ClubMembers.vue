@@ -6,8 +6,8 @@ import RoundedButton from '../../../components/RoundedButton.vue';
 import Assets from '@/utils/Assets';
 import TimeUtils from '@/utils/TimeUtils';
 import API from '@/utils/API';
-import Utils from '@/utils/Utils';
 import Config from '@/config.json';
+import { state } from '@/utils/State';
 
 const props = defineProps({
     club: Object
@@ -67,6 +67,6 @@ async function invite() {
                 <p class="text-2xs">{{ getOnlineStatus(member) }}</p>
             </div>
         </RouterLink>
-        <RoundedButton v-if="Utils.globalReact.user && Utils.globalReact.user.id == club.owner.id" @click="invite" class="px-6 py-2 text-white text-opacity-75 mt-3">Invite...</RoundedButton>
+        <RoundedButton v-if="state.user && state.user.id == club.owner.id" @click="invite" class="px-6 py-2 text-white text-opacity-75 mt-3">Invite...</RoundedButton>
     </div>
 </template>
