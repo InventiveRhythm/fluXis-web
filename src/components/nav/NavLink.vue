@@ -29,10 +29,9 @@ const props = defineProps({
             <i :class="'fa fa-' + icon"></i>
             {{ text }}
         </RouterLink>
-        <div class="p-8 absolute" v-if="showDropdown"></div>
-        <div class="absolute mt-16 group" v-if="dropdown && dropdown.length > 0 && showDropdown">
+        <div class="absolute mt-7 pt-9 group" v-if="dropdown && dropdown.length > 0 && showDropdown">
             <div class="flex flex-col justify-start items-start gap-1">
-                <RouterLink class="text-sm hover:!opacity-100 group-hover:opacity-60" v-for="link in dropdown" :key="link.to" :to="link.to">{{ link.text }}</RouterLink>
+                <RouterLink class="text-sm w-full hover:!opacity-100 group-has-[:hover]:opacity-60" v-for="link in dropdown" :key="link.to" :to="link.to">{{ link.text }}</RouterLink>
             </div>
         </div>  
     </div>
