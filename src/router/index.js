@@ -11,9 +11,8 @@ import WorkInProgress from '../components/WorkInProgress.vue';
   /changelog - Changelog
   /download - Download
   /home - Home (logged in) (shows news, feed, etc.)
-  /login - Login
-  /logout - Logout
-  /n/:id - News
+  /news - News
+  /news/:id - News Post
   /maps - MapSet Search
   /ranking - Ranking
   /ranking/c/:code - Country Ranking
@@ -32,54 +31,22 @@ const router = createRouter({
       component: () => import('../views/HomeView.vue')
     },
     {
-      path: '/maps',
-      name: 'maps',
-      component: WorkInProgress
+      path: '/artists',
+      name: 'featured-artists',
+      component: () => import('../views/fa/FeaturedArtistList.vue')
     },
     {
-      path: '/rankings/overall',
-      name: 'rankings',
-      component: () => import('../views/rankings/OverallRating.vue')
+      path: '/artist/:id',
+      name: 'featured-artist',
+      component: () => import('../views/fa/FeaturedArtist.vue')
     },
     {
-      path: '/about',
-      name: 'about',
-      component: WorkInProgress
-    },
-    {
-      path: '/wiki/:path+',
-      alias: '/wiki',
-      name: 'wiki-article',
-      component: () => import('../views/wiki/WikiArticle.vue')
-    },
-    {
-      path: '/oauth',
-      name: 'oauth',
-      component: () => import('../views/account/OAuth.vue')
-    },
-    {
-      path: '/logout',
-      name: 'logout',
-      component: () => import('../views/account/Logout.vue')
-    },
-    {
-      path: '/u/:id',
-      alias: '/user/:id',
-      name: 'user-details',
-      component: () => import('../views/user/UserPage.vue'),
-      children: [
-        {
-          alias: "",
-          path: "scores",
-          name: "user-details:scores",
-          component: () => import("../views/user/subpages/UserScores.vue")
-        },
-        {
-          path: "maps",
-          name: "user-details:maps",
-          component: () => import("../views/user/subpages/UserMaps.vue")
-        }
-      ]
+      path: '/changelog',
+      name: 'changelog',
+      beforeEnter() {
+        window.open('https://github.com/TeamFluXis/fluXis/releases', '_blank');
+        window.location.back();
+      }
     },
     {
       path: '/club/:id',
@@ -101,27 +68,6 @@ const router = createRouter({
       ]
     },
     {
-      path: '/set/:id',
-      alias: '/mapset/:id',
-      name: 'mapset-details',
-      component: () => import('../views/mapset/MapSetPage.vue')
-    },
-    {
-      path: '/artist/:id',
-      name: 'featured-artist',
-      component: () => import('../views/fa/FeaturedArtist.vue')
-    },
-    {
-      path: '/invite/:code',
-      name: 'accept-invite',
-      component: () => import('../views/invite/InviteView.vue') 
-    },
-    {
-      path: '/artists',
-      name: 'featured-artists',
-      component: () => import('../views/fa/FeaturedArtistList.vue')
-    },
-    {
       path: '/download',
       name: 'download',
       beforeEnter() {
@@ -130,12 +76,55 @@ const router = createRouter({
       }
     },
     {
-      path: '/changelog',
-      name: 'changelog',
-      beforeEnter() {
-        window.open('https://github.com/TeamFluXis/fluXis/releases', '_blank');
-        window.location.back();
-      }
+      path: '/invite/:code',
+      name: 'accept-invite',
+      component: () => import('../views/invite/InviteView.vue') 
+    },
+    {
+      path: '/logout',
+      name: 'logout',
+      component: () => import('../views/account/Logout.vue')
+    },
+    {
+      path: '/news',
+      name: 'news',
+      component: WorkInProgress
+    },
+    {
+      path: '/news/:post',
+      name: 'news-post',
+      component: WorkInProgress
+    },
+    {
+      path: '/maps',
+      name: 'maps',
+      component: WorkInProgress
+    },
+    {
+      path: '/oauth',
+      name: 'oauth',
+      component: () => import('../views/account/OAuth.vue')
+    },
+    {
+      path: '/rankings/overall',
+      name: 'rankings',
+      component: () => import('../views/rankings/OverallRating.vue')
+    },
+    {
+      path: '/rankings/:type+',
+      name: 'rankings-extra',
+      component: WorkInProgress
+    },
+    {
+      path: '/set/:id',
+      alias: '/mapset/:id',
+      name: 'mapset-details',
+      component: () => import('../views/mapset/MapSetPage.vue')
+    },
+    {
+      path: '/stats/registrations',
+      name: 'registration-stats',
+      component: () => import('../views/stats/users/CreationStats.vue')
     },
     {
       path: '/team',
@@ -143,9 +132,29 @@ const router = createRouter({
       component: () => import('../views/team/TeamView.vue')
     },
     {
-      path: '/stats/registrations',
-      name: 'registration-stats',
-      component: () => import('../views/stats/users/CreationStats.vue')
+      path: '/u/:id',
+      alias: '/user/:id',
+      name: 'user-details',
+      component: () => import('../views/user/UserPage.vue'),
+      children: [
+        {
+          alias: "",
+          path: "scores",
+          name: "user-details:scores",
+          component: () => import("../views/user/subpages/UserScores.vue")
+        },
+        {
+          path: "maps",
+          name: "user-details:maps",
+          component: () => import("../views/user/subpages/UserMaps.vue")
+        }
+      ]
+    },
+    {
+      path: '/wiki/:path+',
+      alias: '/wiki',
+      name: 'wiki-article',
+      component: () => import('../views/wiki/WikiArticle.vue')
     },
     {
       path: '/:pathMatch(.*)*',
@@ -155,12 +164,7 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from) => {
-  startLoading();
-})
-
-router.afterEach((to, from) => {
-  stopLoading();
-})
+router.beforeEach((_, __) => startLoading());
+router.afterEach((_, __) => stopLoading());
 
 export default router
