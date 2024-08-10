@@ -68,6 +68,11 @@ const router = createRouter({
       ]
     },
     {
+      path: '/clubs',
+      name: 'club-listing',
+      component: () => import('@/views/clubs/ClubsList.vue')
+    },
+    {
       path: '/download',
       name: 'download',
       beforeEnter() {
