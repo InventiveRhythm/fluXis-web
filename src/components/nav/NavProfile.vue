@@ -2,6 +2,7 @@
 import Config from "@/config.json";
 import { useRouter } from 'vue-router'
 
+import API from "@/utils/API";
 import Utils from "@/utils/Utils";
 import { state } from "@/utils/State";
 
@@ -10,6 +11,11 @@ const router = useRouter();
 function onProfileClick(e) {
     if (e.button == 0) {
         Utils.ToggleUserOverlay();
+    }
+
+    if (e.button == 1 && state.user) {
+        e.preventDefault();
+        API.RefreshInfo(state.user.id);
     }
 
     if (e.button == 2 && state.user) {

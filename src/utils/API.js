@@ -34,16 +34,12 @@ export default class API {
 
     static OpenLogin() {
         const url = Config.authUrl + '/login?app=' + Config.authAppId;
-        const params =
-            'width=600,height=600,scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no';
+        const params = 'width=600,height=600,scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no';
 
         const popup = window.open(url, 'Login', params);
 
         const interval = setInterval(() => {
-            popup.postMessage(
-                '',
-                `${window.location.protocol}//${window.location.host}/`
-            );
+            popup.postMessage('', `${window.location.protocol}//${window.location.host}/`);
         }, 200);
 
         window.addEventListener('message', (event) => {
@@ -54,16 +50,7 @@ export default class API {
                 const token = event.data.token;
                 console.log('Got token from auth!');
                 $cookies.set('token', token);
-
-                API.get('/user/' + event.data.user)
-                    .then((res) => {
-                        state.user = res.data;
-                        $cookies.set('user', res.data);
-                        state.user = res.data;
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                    });
+                this.RefreshInfo(event.data.user);
             }
         });
 
@@ -72,6 +59,18 @@ export default class API {
                 popup.close();
             }
         });
+    }
+
+    static RefreshInfo(id) {
+        API.get('/user/' + id)
+            .then((res) => {
+                state.user = res.data;
+                $cookies.set('user', res.data);
+                state.user = res.data;
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     }
 }
 

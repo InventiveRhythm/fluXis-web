@@ -5,6 +5,7 @@ import Footer from "./components/footer/Footer.vue";
 import Loading from "./components/loading/Loading.vue";
 import UserOverlay from "./overlays/user/UserOverlay.vue";
 import { Transition, Suspense } from "vue";
+import CreateClubOverlay from "./overlays/club-creation/CreateClubOverlay.vue";
 
 function stringifyRoute(route) {
     if (!route.name)
@@ -37,6 +38,7 @@ function stringifyRoute(route) {
 
     <div class="fixed top-0 left-0 w-screen h-screen pointer-events-none z-40">
         <UserOverlay />
+        <CreateClubOverlay />
         <Loading />
     </div>
 

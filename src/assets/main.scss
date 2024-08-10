@@ -1,19 +1,19 @@
 @font-face {
     font-family: 'Renogare';
-    src: url("font/Renogare.otf");
+    src: url('font/Renogare.otf');
 }
 
 @font-face {
     font-family: 'Renogare Soft';
-    src: url("font/RenogareSoft.ttf");
+    src: url('font/RenogareSoft.ttf');
 }
 
 @font-face {
     font-family: 'YoureGone';
-    src: url("font/youregone.ttf");
+    src: url('font/youregone.ttf');
 }
-                
-@import url("style/codeblocks.scss");
+
+@import url('style/codeblocks.scss');
 
 :root {
     --bg: hsl(240, 10%, 10%);
@@ -56,11 +56,11 @@
     --tag-role-admin: #f7b373;
     --tag-role-moderator: #73d173;
     --tag-role-purifier: #55b2ff;
-    --tag-role-featured-artist: #FF7B74;
-    --tag-role-user: #AA99FF;
+    --tag-role-featured-artist: #ff7b74;
+    --tag-role-user: #aa99ff;
 
     --tag-status-pure: #55b2ff;
-    --tag-status-impure: #FF7B74;
+    --tag-status-impure: #ff7b74;
     --tag-status-pending: #f7b373;
     --tag-status-unsubmitted: #888;
 
@@ -124,6 +124,19 @@ html {
     min-height: 100vh;
 }
 
+input[type='color']::-moz-color-swatch {
+    border: none;
+}
+
+input[type='color']::-webkit-color-swatch-wrapper {
+    padding: 0;
+    border-radius: 0;
+}
+
+input[type='color']::-webkit-color-swatch {
+    border: none;
+}
+
 .overlap-grid {
     display: grid;
     overflow: hidden;
@@ -152,7 +165,7 @@ html {
 }
 
 [animated-load] {
-    transition: opacity .4s, filter .8s;
+    transition: opacity 0.4s, filter 0.8s;
     opacity: 0;
 }
 

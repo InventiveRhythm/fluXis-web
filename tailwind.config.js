@@ -8,6 +8,7 @@ module.exports = {
             white: '#fff',
             black: '#000',
             transparent: 'transparent',
+            red: '#f55',
             'dark': {
                 '1': 'hsl(240, 10%, 10%)',
                 '2': 'hsl(240, 10%, 15%)',
@@ -37,6 +38,7 @@ module.exports = {
         },
         extend: {
             width: {
+                'panel': 620,
                 'content': 1280 // matches with the xl viewport
             },
             dropShadow: {
