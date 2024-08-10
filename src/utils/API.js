@@ -17,6 +17,14 @@ export default class API {
         }).then((response) => response.json());
     }
 
+    static async patch(endpoint, body) {
+        return fetch(Config.apiUrl + endpoint, {
+            method: 'PATCH',
+            headers: createHeaders(),
+            body: JSON.stringify(body)
+        }).then((response) => response.json());
+    }
+
     static async put(endpoint, body) {
         return fetch(Config.apiUrl + endpoint, {
             method: 'PUT',
@@ -61,14 +69,13 @@ export default class API {
         });
     }
 
-    static RefreshInfo(id) {
-        API.get('/user/' + id)
+    static async RefreshInfo(id) {
+        await API.get('/user/' + id)
             .then((res) => {
                 state.user = res.data;
                 $cookies.set('user', res.data);
                 state.user = res.data;
-            })
-            .catch((err) => {
+            }).catch((err) => {
                 console.error(err);
             });
     }

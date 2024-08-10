@@ -6,6 +6,7 @@ import Loading from "./components/loading/Loading.vue";
 import UserOverlay from "./overlays/user/UserOverlay.vue";
 import { Transition, Suspense } from "vue";
 import CreateClubOverlay from "./overlays/club-creation/CreateClubOverlay.vue";
+import EditClubOverlay from "./overlays/club-edit/EditClubOverlay.vue";
 
 function stringifyRoute(route) {
     if (!route.name)
@@ -39,6 +40,7 @@ function stringifyRoute(route) {
     <div class="fixed top-0 left-0 w-screen h-screen pointer-events-none z-40">
         <UserOverlay />
         <CreateClubOverlay />
+        <EditClubOverlay />
         <Loading />
     </div>
 
