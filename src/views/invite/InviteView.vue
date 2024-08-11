@@ -36,7 +36,7 @@ if (!state.user) {
                 return;
             }
 
-            if (state.id != res.data.user) {
+            if (state.user.id != res.data.user) {
                 react.error = "This invite is not intended for you!";
                 return;
             }
