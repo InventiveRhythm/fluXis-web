@@ -79,6 +79,12 @@ const links = [
         ],
     },
     {
+        text: "Clubs",
+        id: "clubs",
+        to: "/clubs",
+        icon: "circle-nodes",
+    },
+    {
         text: "Wiki",
         id: "wiki",
         to: "/wiki",
@@ -111,7 +117,7 @@ function stopHover() {
             <div class="absolute w-full h-56 bg-dark-3" v-if="react.showExtra" ></div>
         </Transition>
         <div class="absolute size-full flex justify-between items-center bg-dark-2 shadow-normal">
-            <div class="w-24 md:hidden"></div>
+            <div class="w-24 lg:hidden"></div>
             <div class="flex items-center px-3">
                 <RouterLink to="/">
                     <div class="flex items-center p-3 rounded-lg transition-colors !bg-opacity-20 hover:bg-white">

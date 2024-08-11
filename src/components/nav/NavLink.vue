@@ -24,7 +24,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="hidden md:flex flex-col items-start px-3 py-1 mx-2 rounded-md transition-colors !bg-opacity-20 hover:bg-white">
+    <div class="hidden lg:flex flex-col items-start px-3 py-1 mx-2 rounded-md transition-colors !bg-opacity-20 hover:bg-white">
         <RouterLink :to="to" class="flex gap-2 items-center">
             <i :class="'fa fa-' + icon"></i>
             {{ text }}
