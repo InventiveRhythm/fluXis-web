@@ -3,6 +3,7 @@ import { reactive, ref } from 'vue';
 
 import { registerEvent } from '@/utils/Events';
 import RoundedButton from '@/components/RoundedButton.vue';
+import IconTextBox from '@/components/IconTextBox.vue';
 
 import DefaultClubIcon from '@/assets/images/defaults/club-icon.png';
 import DefaultClubBanner from '@/assets/images/defaults/club-banner.png';
@@ -23,11 +24,12 @@ const react = reactive({
 const allowedImages = ["image/png", "image/jpeg"];
 
 const content = ref();
-const name = ref();
 const icon = ref();
 const banner = ref();
+let name = "";
 
 registerEvent('club-edit-overlay', club => {
+    name = club.name;
     react.colorStart = club.colors[0].color;
     react.colorEnd = club.colors[1].color;
     react.icon = Assets.clubIcon(club.id);
@@ -37,7 +39,7 @@ registerEvent('club-edit-overlay', club => {
 
 function Perform() {
     API.patch(`/club/${react.club.id}`, {
-        'name': name.value.value,
+        'name': name,
         'icon': getAsset(react.icon),
         'banner': getAsset(react.banner),
         'color-start': react.colorStart,
@@ -118,13 +120,7 @@ function VoidClick(e) {
                     <p class="text-2xl">Edit Club</p>
                     <p class="text-red" v-if="react.error">{{ react.error }}</p>
                 </div>
-                <div class="relative">
-                    <div class="absolute left-4 top-4 size-6 flex items-center justify-center">
-                        <i class="fa fa-font text-xl"></i>
-                    </div>
-                    <input ref="name" class="w-full p-4 pl-12 bg-dark-2 rounded-xl focus:outline-none"
-                        placeholder="Name" type="text" maxlength="16" :value="react.club.name">
-                </div>
+                <IconTextBox icon="font" :changed="i => name = i" placeholder="Name" maxlength="16" :value="react.club.name" />
                 <div class="flex flex-row gap-4">
                     <label for="icon">
                         <img class="rounded-xl size-32 object-cover" :src="react.icon || DefaultClubIcon">

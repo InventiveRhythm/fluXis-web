@@ -48,7 +48,7 @@ API.get("/clubs").then(res => {
                             <ClubTag :club="club" class="text-sm inline" />
                             {{ club.name }}
                         </p>
-                        <p class="text-xs opacity-80">{{ club.members || '??' }} members</p>
+                        <p class="text-xs opacity-80">{{ club.count || '??' }} {{ club.count > 1 ? "members" : "member" }}</p>
                     </div>
                 </div>
             </RouterLink>
