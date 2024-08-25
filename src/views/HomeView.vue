@@ -1,10 +1,13 @@
 <script setup>
-import Utils from '@/utils/Utils';
+import { reactive } from 'vue';
+
 import HomeVideo from '../assets/images/home/fluxis.mp4';
 import NewsCard from '../components/news/NewsCard.vue';
+
+import { FormatNumber } from '@/utils/formatting';
+import Utils from '@/utils/Utils';
 import Config from '@/config.json';
 import News from '@/news.json';
-import { reactive } from 'vue';
 
 const stats = reactive({
     users: undefined,
@@ -46,15 +49,15 @@ getStats();
             </a>
         </div>
         <div class="absolute bottom-5 left-5 w-fit h-fit text-left text-xs">
-            <span class="font-bold">{{ stats.users }}</span>
+            <span class="font-bold">{{ FormatNumber(stats.users) }}</span>
             registered users,
             <span class="font-bold">{{ stats.online }}</span>
             currently online
             <br>
             with
-            <span class="font-bold">{{ stats.scores }}</span>
+            <span class="font-bold">{{ FormatNumber(stats.scores) }}</span>
             scores on
-            <span class="font-bold">{{ stats.mapsets }}</span>
+            <span class="font-bold">{{ FormatNumber(stats.mapsets) }}</span>
             mapsets
         </div>
     </div>
