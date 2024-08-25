@@ -2,6 +2,7 @@
 import { reactive } from 'vue';
 
 import ClubTag from '@/components/ClubTag.vue';
+import LoadingImage from '@/components/LoadingImage.vue';
 
 import API from '@/utils/API';
 import Assets from '@/utils/Assets';
@@ -40,9 +41,9 @@ API.get("/clubs").then(res => {
             <RouterLink
                 class="flex flex-col w-full h-56 bg-dark-2 transition-all active:scale-95 hover:bg-dark-3 rounded-3xl"
                 :to="`/club/${club.id}`" v-for="club in react.clubs">
-                <img class="w-full h-36 object-cover rounded-3xl" :src="Assets.clubBanner(club.id)" animated-load>
+                <LoadingImage class="w-full h-36 object-cover rounded-3xl" :src="Assets.ClubBanner(club.id)" />
                 <div class="w-full flex-grow flex flex-row items-center p-4 gap-2 text-left">
-                    <img class="size-12 object-cover rounded-lg" :src="Assets.clubIcon(club.id)" animated-load>
+                    <LoadingImage class="size-12 object-cover rounded-lg" :src="Assets.ClubIcon(club.id)" />
                     <div class="min-w-0 flex-grow">
                         <p class="truncate">
                             <ClubTag :club="club" class="text-sm inline" />

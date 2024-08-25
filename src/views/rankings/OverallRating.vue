@@ -1,9 +1,10 @@
 <script setup>
-import RankingsUserCard from '../../components/rankings/RankingsUserCard.vue';
-
-import Config from '@/config.json';
 import { startLoading, stopLoading } from '../../utils/Loading';
 import { reactive } from 'vue';
+
+import RankingsUserCard from '../../components/rankings/RankingsUserCard.vue';
+
+import API from '@/utils/API';
 
 const react = reactive({
     rankings: []
@@ -11,18 +12,16 @@ const react = reactive({
 
 startLoading();
 
-await fetch(Config.apiUrl + '/leaderboards/overall')
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        react.rankings = data.data;
+await API.get('/leaderboards/overall')
+    .then(res => {
+        react.rankings = res.data;
     });
 
 stopLoading();
 </script>
 
 <template>
-    <div class="rankings">
+    <div class="flex flex-wrap justify-center gap-4">
         <RankingsUserCard v-for="user in react.rankings" :user="user" />
     </div>
 </template>

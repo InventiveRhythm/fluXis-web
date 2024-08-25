@@ -1,5 +1,6 @@
 <script setup>
-import Config from '@/config.json';
+import LoadingImage from '@/components/LoadingImage.vue';
+
 import Assets from '@/utils/Assets';
 
 const props = defineProps({
@@ -10,10 +11,10 @@ const props = defineProps({
 <template>
     <RouterLink :to="`/club/${club.id}`">
         <div class="w-full h-20 overlap-grid rounded-xl">
-            <img class="object-cover" :src="Assets.clubBanner(club.id)" animated-load />
+            <LoadingImage class="object-cover" :src="Assets.ClubBanner(club.id)" />
             <div class="bg-dark-2 opacity-50"></div>
             <div class="w-full flex items-center gap-3">
-                <img class="size-20 rounded-xl object-cover" :src="Assets.clubIcon(club.id)" animated-load />
+                <LoadingImage class="size-20 rounded-xl object-cover" :src="Assets.ClubIcon(club.id)" />
                 <p class="drop-shadow-text text-xl">{{ club.name }}</p>
             </div>
         </div>

@@ -3,14 +3,14 @@ import { state } from './State';
 
 export default class API {
     static async get(endpoint) {
-        return fetch(Config.apiUrl + endpoint, {
+        return await fetch(Config.apiUrl + endpoint, {
             method: 'GET',
             headers: createHeaders()
         }).then((response) => response.json());
     }
 
     static async post(endpoint, body) {
-        return fetch(Config.apiUrl + endpoint, {
+        return await fetch(Config.apiUrl + endpoint, {
             method: 'POST',
             headers: createHeaders(),
             body: JSON.stringify(body)
@@ -18,7 +18,7 @@ export default class API {
     }
 
     static async patch(endpoint, body) {
-        return fetch(Config.apiUrl + endpoint, {
+        return await fetch(Config.apiUrl + endpoint, {
             method: 'PATCH',
             headers: createHeaders(),
             body: JSON.stringify(body)
@@ -26,7 +26,7 @@ export default class API {
     }
 
     static async put(endpoint, body) {
-        return fetch(Config.apiUrl + endpoint, {
+        return await fetch(Config.apiUrl + endpoint, {
             method: 'PUT',
             headers: createHeaders(),
             body: JSON.stringify(body)

@@ -2,6 +2,7 @@
 import { RouterLink } from 'vue-router';
 
 import RoundedButton from '../../../components/RoundedButton.vue';
+import LoadingImage from '@/components/LoadingImage.vue';
 
 import Assets from '@/utils/Assets';
 import TimeUtils from '@/utils/TimeUtils';
@@ -49,7 +50,7 @@ async function invite() {
 <template>
     <div class="flex flex-col items-center gap-4">
         <RouterLink :to="`/u/${member.id}`" class="w-full flex flex-row items-center gap-2" v-for="member in club.members">
-            <img class="object-cover size-12 rounded-lg" :src="Assets.avatar(member.id)" animated-load>
+            <LoadingImage class="object-cover size-12 rounded-lg" :src="Assets.Avatar(member.id)" />
             <div class="flex flex-col">
                 <div class="flex gap-1.5">
                     <p v-if="member.displayname">

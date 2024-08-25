@@ -32,8 +32,8 @@ registerEvent('club-edit-overlay', club => {
     name = club.name;
     react.colorStart = club.colors[0].color;
     react.colorEnd = club.colors[1].color;
-    react.icon = Assets.clubIcon(club.id);
-    react.banner = Assets.clubBanner(club.id);
+    react.icon = Assets.ClubIcon(club.id);
+    react.banner = Assets.ClubBanner(club.id);
     react.club = club;
 });
 

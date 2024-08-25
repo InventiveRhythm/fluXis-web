@@ -1,8 +1,12 @@
 <script setup>
-import Config from "@/config.json";
 import { useRouter } from 'vue-router'
 
+import LoadingImage from "../LoadingImage.vue";
+
+import DefaultAvatar from "@/assets/images/defaults/avatar.png";
+
 import API from "@/utils/API";
+import Assets from "@/utils/Assets";
 import Utils from "@/utils/Utils";
 import { state } from "@/utils/State";
 
@@ -29,7 +33,6 @@ function onProfileClick(e) {
 
 <template>
     <div class="size-24 flex items-center justify-center rounded-bl-3xl bg-dark-3 hover:bg-dark-4 transition-colors" @mousedown="onProfileClick" >
-        <img class="size-16 rounded-lg" v-if="state.user" :src="Config.apiUrl + '/assets/avatar/' + state.user.id" alt="user avatar" animated-load>
-        <img class="size-16 rounded-lg" v-else :src="Config.apiUrl + '/assets/avatar/-1'" alt="logged out user avatar" animated-load>
+        <LoadingImage class="size-16 rounded-lg" :src="state.user ? Assets.Avatar(state.user.id) : DefaultAvatar" alt="user avatar" />
     </div>
 </template>

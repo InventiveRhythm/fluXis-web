@@ -1,9 +1,10 @@
 <script setup>
-import Config from '@/config.json'
-import Utils from '@/utils/Utils';
 import { reactive } from 'vue'
-import { Chart, Line } from 'vue-chartjs'
+import { Line } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, CategoryScale, LinearScale, LineElement, PointElement } from 'chart.js'
+
+import API from '@/utils/API';
+import Utils from '@/utils/Utils';
 
 ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, LineElement, PointElement)
 
@@ -13,7 +14,7 @@ const react = reactive({
     options: {
         responsive: true,
         maintainAspectRatio: true,
-        
+
         plugins: {
             title: {
                 display: true,
@@ -31,8 +32,7 @@ const react = reactive({
     }
 })
 
-fetch(`${Config.apiUrl}/stats/users/creation`)
-    .then(res => res.json())
+API.get('/stats/users/creation')
     .then(data => {
         if (!data.data) return
 
@@ -84,5 +84,5 @@ Utils.setTitle("User Registrations");
 </script>
 
 <template>
-<Line v-if="react.data" :data="react.data" :options="react.options"></Line>
+    <Line v-if="react.data" :data="react.data" :options="react.options"></Line>
 </template>

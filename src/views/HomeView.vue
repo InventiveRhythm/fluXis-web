@@ -3,10 +3,12 @@ import { reactive } from 'vue';
 
 import HomeVideo from '../assets/images/home/fluxis.mp4';
 import NewsCard from '../components/news/NewsCard.vue';
+import RoundedButton from '@/components/RoundedButton.vue';
 
+import API from '@/utils/API';
 import { FormatNumber } from '@/utils/formatting';
 import Utils from '@/utils/Utils';
-import Config from '@/config.json';
+
 import News from '@/news.json';
 
 const stats = reactive({
@@ -18,18 +20,16 @@ const stats = reactive({
 
 Utils.setTitle("Home");
 
-function getStats() {
-    fetch(`${Config.apiUrl}/stats`)
-        .then(res => res.json())
-        .then(data => {
-            stats.users = data.data.users;
-            stats.online = data.data.online;
-            stats.scores = data.data.scores;
-            stats.mapsets = data.data.mapsets;
-        });
-}
+API.get("/stats").then(res => {
+    stats.users = res.data.users;
+    stats.online = res.data.online;
+    stats.scores = res.data.scores;
+    stats.mapsets = res.data.mapsets;
+})
 
-getStats();
+function OpenDownload() {
+    window.open("https://dl.flux.moe/install/fluXis-installer.zip")
+}
 </script>
 
 <template>
@@ -39,14 +39,14 @@ getStats();
         <div class="flex flex-col justify-center items-center lg:items-start lg:text-left px-16">
             <h1 class="text-6xl">fluXis</h1>
             <h3 class="opacity-80">
-                A free, community-driven and open-source
+                A free and community-driven rhythm game
                 <br>
-                vertical scrolling rhythm game.
+                with a focus on creativity and expression.
             </h3>
-            <a class="flex bg-accent-2 hover:bg-accent-1 w-max cursor-pointer justify-center text-lg px-2 py-1 rounded-md gap-2 mt-3 transition-colors" href="https://dl.flux.moe/install/fluXis-installer.zip">
+            <RoundedButton class="flex px-4 py-2 gap-2 mt-3" @click=OpenDownload>
                 <i class="fa fa-download flex items-center"></i>
                 <p>Download</p>
-            </a>
+            </RoundedButton>
         </div>
         <div class="absolute bottom-5 left-5 w-fit h-fit text-left text-xs">
             <span class="font-bold">{{ FormatNumber(stats.users) }}</span>
@@ -62,7 +62,7 @@ getStats();
         </div>
     </div>
     <div class="w-full flex flex-wrap justify-center items-center mt-3">
-        <NewsCard v-for="entry in News" :data="entry"/>
+        <NewsCard v-for="entry in News" :data="entry" />
     </div>
 </template>
 

@@ -1,25 +1,27 @@
 <script setup>
-const props = defineProps({
+import LoadingImage from '../LoadingImage.vue';
+
+defineProps({
     data: Object
 });
 </script>
 
 <template>
-    <div class="news-card">
-        <div class="news-card-image">
-            <img :src="data.image">
-            <div class="">
-                <div class="news-card-date">
-                    <p>{{ data.date }}</p>
+    <div class="m-3 flex h-64 min-w-80 flex-1 flex-col overflow-hidden rounded-2xl bg-dark-2 hover:bg-dark-3 transition-all cursor-pointer active:scale-95">
+        <div class="h-40 overlap-grid">
+            <LoadingImage class="size-full object-cover rounded-2xl" :src="data.image" />
+            <div class="size-full flex flex-row justify-between items-end text-2xs p-2">
+                <div class="bg-dark-2 px-3 py-1 rounded-full">
+                    <p class="opacity-75">{{ data.date }}</p>
                 </div>
-                <div class="news-card-type">
-                    <p>{{ data.type }}</p>
+                <div class="bg-dark-2 px-3 py-1 rounded-full">
+                    <p class="opacity-75">{{ data.type }}</p>
                 </div>
             </div>
         </div>
-        <div class="news-card-content">
-            <h3>{{ data.title }}</h3>
-            <p>{{ data.content }}</p>
+        <div class="text-left p-3">
+            <p class="text-lg">{{ data.title }}</p>
+            <p class="text-sm line-clamp-2 opacity-60">{{ data.content }}</p>
         </div>
     </div>
 </template>
@@ -49,67 +51,6 @@ const props = defineProps({
     .news-card-image {
         height: 160px;
         display: grid;
-
-        img {
-            width: 100%;
-            height: inherit;
-            object-fit: cover;
-            border-radius: 20px;
-
-            grid-row: 1;
-            grid-column: 1;
-        }
-
-        > div {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: flex-end;
-            grid-row: 1;
-            grid-column: 1;
-            padding: 10px;
-            
-            > div {
-                display: flex;
-                font-size: 10px;
-                background-color: var(--bg-secondary);
-                padding: 2px 10px;
-                border-radius: 15px;
-
-                p {
-                    opacity: .75;
-                }
-            }
-        }
-    }
-
-    .news-card-content {
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 100%;
-
-        h3 {
-            font-size: 1.2rem;
-            text-align: left;
-        }
-
-        > p {
-            font-size: 14px;
-            margin: 0;
-            text-align: left;
-            height: 40px;
-            max-width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
-            display: -webkit-box;
-            opacity: .6;
-        }
     }
 }
 </style>

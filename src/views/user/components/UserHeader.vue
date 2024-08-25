@@ -7,6 +7,7 @@ import UserHeaderGroup from './header/UserHeaderGroup.vue';
 import UserHeaderButton from './header/UserHeaderButton.vue';
 
 import ClubTag from '../../../components/ClubTag.vue';
+import LoadingImage from '@/components/LoadingImage.vue';
 
 // used for people without a group
 // e.g. normal users
@@ -24,12 +25,12 @@ const props = defineProps({
 
 <template>
     <div class="w-full md:h-96 xl:h-auto xl:aspect-header md:rounded-3xl overflow-hidden overlap-grid">
-        <img class="object-cover h-full md:h-inherit xl:h-auto xl:aspect-header" :src="Assets.banner(user.id)" animated-load>
+        <LoadingImage class="object-cover h-full md:h-inherit xl:h-auto xl:aspect-header" :src="Assets.Banner(user.id)" />
         <div class="bg-dark-2 opacity-50"></div>
         <div class="flex flex-col items-center justify-center py-5 md:py-0">
             <div class="w-full max-w-[1200px] md:px-10 flex flex-col items-center justify-center gap-5">
                 <div class="flex flex-col md:flex-row md:h-32 items-center self-stretch gap-3">
-                    <img class="size-32 rounded-3xl shadow-normal" :src="Assets.avatar(user.id)" animated-load>
+                    <LoadingImage class="size-32 rounded-3xl shadow-normal" :src="Assets.Avatar(user.id)" />
                     <div class="w-full flex flex-col justify-center items-center gap-1 leading-none drop-shadow-text">
                         <div class="w-full flex flex-col md:flex-row gap-3 justify-between items-center">
                             <div class="flex gap-3" v-if="user.groups.length > 0">

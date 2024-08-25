@@ -1,5 +1,7 @@
 <script setup>
-import Config from '@/config.json';
+import LoadingImage from '../LoadingImage.vue';
+
+import Assets from '@/utils/Assets';
 import { formatAccuracy, formatDecimal } from '@/utils/formatting';
 import TimeUtils from '@/utils/TimeUtils';
 
@@ -18,7 +20,7 @@ const props = defineProps({
         </div>
         <!-- thank you chome, that I have to put the same size again because youre too stupid to accept 100% height -->
         <div class="overlap-grid w-full h-12 rounded-lg overflow-hidden">
-            <img class="object-cover" :src="Config.assetsUrl + '/background/' + score.map.mapset" animated-load />
+            <LoadingImage class="object-cover" :src="Assets.Background(score.map.mapset)" />
             <div class="bg-dark-2 opacity-50"></div>
             <div class="flex flex-row items-center justify-center gap-3 px-3 drop-shadow-text">
                 <div class="flex w-full flex-col items-start justify-center">

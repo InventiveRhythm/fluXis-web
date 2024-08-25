@@ -9,7 +9,9 @@ module.exports = {
             black: '#000',
             transparent: 'transparent',
             red: '#f55',
+            'highlight': 'hsl(240, 100%, 70%)',
             'dark': {
+                'text': "#fff",
                 '1': 'hsl(240, 10%, 10%)',
                 '2': 'hsl(240, 10%, 15%)',
                 '3': 'hsl(240, 10%, 20%)',
@@ -18,6 +20,7 @@ module.exports = {
                 '6': 'hsl(240, 10%, 35%)'
             },
             'light': {
+                'text': "hsl(240, 10%, 15%)",
                 '1': 'hsl(240, 10%, 90%)',
                 '2': 'hsl(240, 10%, 85%)',
                 '3': 'hsl(240, 10%, 80%)',

@@ -1,6 +1,9 @@
 <script setup>
 import { RouterLink } from 'vue-router';
-import Config from '@/config.json';
+
+import LoadingImage from '../LoadingImage.vue';
+
+import Assets from '@/utils/Assets';
 
 const props = defineProps({
     mapset: Object
@@ -60,9 +63,9 @@ function getStatusString() {
 <template>
     <RouterLink class="h-28 w-full" :to="'/set/' + mapset.id" v-if="mapset">
         <div class="overlap-grid size-full rounded-2xl bg-dark-3">
-            <img class="object-cover" :src="Config.apiUrl + '/assets/background/' + mapset.id" animated-load>
+            <LoadingImage class="object-cover" :src="Assets.Background(mapset.id)" />
             <div class="flex flex-row bg-dark-2 bg-opacity-60 transition-colors hover:bg-opacity-50">
-                <img class="size-28 rounded-2xl object-cover" :src="Config.apiUrl + '/assets/cover/' + mapset.id" animated-load>
+                <LoadingImage class="size-28 rounded-2xl object-cover" :src="Assets.Cover(mapset.id)" />
                 <div class="flex h-full flex-grow flex-col justify-between p-3 text-left">
                     <div class="drop-shadow-text">
                         <span class="line-clamp-1 leading-tight text-lg">{{ mapset.title }}</span>

@@ -108,12 +108,6 @@ a.hoverable:hover {
     color: var(--accent-primary);
 }
 
-body {
-    background-color: var(--bg);
-    color: var(--text-color);
-    cursor: default;
-}
-
 html {
     scroll-behavior: smooth;
     height: 100%;
@@ -162,15 +156,6 @@ input[type='color']::-webkit-color-swatch {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-}
-
-[animated-load] {
-    transition: opacity 0.4s, filter 0.8s;
-    opacity: 0;
-}
-
-[animated-load][loaded] {
-    opacity: 1;
 }
 
 .flag {

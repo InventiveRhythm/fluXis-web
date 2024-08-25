@@ -1,4 +1,5 @@
 <script setup>
+import LoadingImage from '@/components/LoadingImage.vue';
 import Assets from '@/utils/Assets';
 
 const props = defineProps({
@@ -19,10 +20,10 @@ function getRoleName(role) {
 
 <template>
     <div class="overlap-grid w-full h-12 rounded-md">
-        <img class="object-cover" :src="Assets.banner(id)" animated-load>
+        <LoadingImage class="object-cover" :src="Assets.Banner(id)" />
         <div class="section-gradient opacity-60"></div>
         <div class="flex flex-row items-center p-2 gap-2">
-            <img class="size-8 object-cover rounded-md" :src="Assets.avatar(id)" animated-load>
+            <LoadingImage class="size-8 object-cover rounded-md" :src="Assets.Avatar(id)" />
             <div class="text-left leading-none">
                 <p>{{ name }}</p>
                 <p class="text-xs" :class="{

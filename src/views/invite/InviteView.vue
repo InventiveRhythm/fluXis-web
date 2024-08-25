@@ -72,7 +72,7 @@ function acceptInvite() {
         {{ react.error }}
     </div>
     <div class="flex flex-col justify-center items-center pt-24" v-else-if="!react.loading && react.invite">
-        <img class="size-56 object-cover mb-8 rounded-2xl" :src="Assets.clubIcon(react.invite.club.id)" alt="">
+        <img class="size-56 object-cover mb-8 rounded-2xl" :src="Assets.ClubIcon(react.invite.club.id)" alt="">
         <p class="text-sm opacity-80">You've been invited to join</p>
         <div class="flex items-center gap-2">
             <ClubTag class="text-xl" :club="react.invite.club"></ClubTag>
@@ -83,5 +83,5 @@ function acceptInvite() {
     </div>
 
     <img class="absolute top-0 left-0 blur-md w-screen h-screen object-cover -z-10 opacity-20"
-        :src="Assets.clubBanner(react.invite.club.id)" v-if="!react.loading && react.invite" />
+        :src="Assets.ClubBanner(react.invite.club.id)" v-if="!react.loading && react.invite" />
 </template>

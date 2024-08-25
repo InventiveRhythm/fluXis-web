@@ -1,8 +1,9 @@
 <script setup>
+import LoadingImage from '@/components/LoadingImage.vue';
+import StatusChip from './StatusChip.vue';
+
 import Assets from '@/utils/Assets';
 import TimeUtils from '@/utils/TimeUtils';
-
-import StatusChip from './StatusChip.vue';
 
 const props = defineProps({
     set: Object
@@ -11,12 +12,12 @@ const props = defineProps({
 
 <template>
     <div class="mapset-header">
-        <img :src="Assets.background(set.id)" class="background" animated-load>
+        <LoadingImage :src="Assets.Background(set.id)" class="background" />
         <div class="dim"></div>
         <div class="wrapper">
             <div class="data">
                 <div class="info">
-                    <img :src="Assets.cover(set.id)" class="cover" animated-load>
+                    <LoadingImage :src="Assets.Cover(set.id)" class="cover" />
                     <div class="text">
                         <div class="top">
                             <StatusChip :status="set.status" />

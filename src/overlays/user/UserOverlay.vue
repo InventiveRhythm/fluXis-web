@@ -2,10 +2,14 @@
 import { reactive } from "vue";
 import { useRouter } from 'vue-router';
 
-import { registerEvent } from '@/utils/Events';
+import DefaultAvatar from "@/assets/images/defaults/avatar.png";
+import DefaultBanner from "@/assets/images/defaults/banner.png";
+
 import API from "@/utils/API";
 import Assets from "@/utils/Assets";
+import { registerEvent } from '@/utils/Events';
 import { state } from "@/utils/State";
+import Utils from "@/utils/Utils";
 
 const router = useRouter();
 
@@ -25,23 +29,6 @@ function userClick() {
 
     react.open = false;
 }
-
-function getRoleTag(roleid) {
-    switch (roleid) {
-        case 1:
-            return "featured-artist";
-        case 2:
-            return "purifier";
-        case 3:
-            return "moderator";
-        case 4:
-            return "admin";
-        case 5:
-            return "fluxel";
-        default:
-            return "";
-    }
-}
 </script>
 
 <template>
@@ -53,15 +40,17 @@ function getRoleTag(roleid) {
                 <div class="wrapper absolute right-0 mt-20">
                     <div class="w-80 bg-dark-1 rounded-bl-2xl p-3">
                         <div class="overlap-grid h-40 rounded-lg cursor-pointer group leading-none" @click="userClick">
-                            <img :src="state.user ? Assets.banner(state.user.id) : Assets.banner(-1)" class="object-cover" />
+                            <img :src="state.user ? Assets.Banner(state.user.id) : DefaultBanner" class="object-cover" />
                             <div class="bg-dark-2 opacity-50 transition-opacity group-hover:opacity-40"></div>
                             <div class="flex flex-col justify-center items-center" >
-                                <img :src="state.user ? Assets.avatar(state.user.id) : Assets.avatar(-1)"
+                                <img :src="state.user ? Assets.Avatar(state.user.id) : DefaultAvatar"
                                     class="size-16 object-cover rounded-md mb-2 shadow-md">
 
                                 <div class="flex items-center gap-1 drop-shadow-text">
-                                    <p v-if="state.user && state.user.displayname"> {{ state.user.displayname }}</p>
-                                    <p v-else-if="state.user">{{ state.user.username }}</p>
+                                    <span v-if="state.user">
+                                        <i :class="`${Utils.GetIconForGroup(state.user.groups[0].id)}`" :style="`color: ${state.user.groups[0].color}`" v-if="state.user.groups"></i>
+                                        {{ state.user.displayname || state.user.username }}
+                                    </span>
                                     <p v-else class="name">Not Logged in</p>
                                 </div>
 
