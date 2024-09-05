@@ -16,7 +16,9 @@ const props = defineProps({
         <LoadingImage class="object-cover" :src="Assets.Banner(id)" />
         <div class="section-gradient opacity-60" :class="{ 'rotate-180': flip }"></div>
         <div class="flex flex-row p-6 items-center gap-4" :class="{ 'flex-row-reverse': flip }">
-            <LoadingImage class="size-24 object-cover rounded-lg" :src="Assets.Avatar(id)" />
+            <div class="size-24">
+                <LoadingImage class="size-full object-cover rounded-lg" :src="Assets.Avatar(id)" />
+            </div>
             <div class="text-left" :class="{ 'text-right': flip }">
                 <p class="text-xl">{{ name }}</p>
                 <p class="text-xs opacity-80 mb-1">{{ role }}</p>

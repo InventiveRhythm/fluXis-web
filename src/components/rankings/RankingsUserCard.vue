@@ -21,7 +21,9 @@ defineProps({
             <div class="flex size-24 items-center justify-center text-xl drop-shadow-text">
                 #{{ user.stats.global }}
             </div>
-            <LoadingImage :src="Assets.Avatar(user.id)" class="size-24 rounded-xl" />
+            <div class="size-24">
+                <LoadingImage :src="Assets.Avatar(user.id)" class="size-full rounded-xl" />
+            </div>
             <div class="flex flex-grow px-4 justify-between items-center drop-shadow-text">
                 <div class="flex flex-col text-left">
                     <span class="flex gap-2 items-center text-2xl">

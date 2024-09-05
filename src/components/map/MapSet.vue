@@ -65,8 +65,10 @@ function getStatusString() {
         <div class="overlap-grid W-full h-inherit rounded-2xl bg-dark-3">
             <LoadingImage class="object-cover" :src="Assets.Background(mapset.id)" />
             <div class="flex flex-row bg-dark-2 bg-opacity-60 transition-colors hover:bg-opacity-50">
-                <LoadingImage class="size-28 rounded-2xl object-cover" :src="Assets.Cover(mapset.id)" />
-                <div class="flex h-full flex-grow flex-col justify-between p-3 text-left">
+                <div class="size-28">
+                    <LoadingImage class="size-full rounded-2xl object-cover" :src="Assets.Cover(mapset.id)" />
+                </div>
+                <div class="flex h-full flex-1 flex-col justify-between p-3 text-left">
                     <div class="drop-shadow-text">
                         <span class="line-clamp-1 leading-tight text-lg">{{ mapset.title }}</span>
                         <span class="line-clamp-1 leading-tight text-sm">by {{ mapset.artist }}</span>

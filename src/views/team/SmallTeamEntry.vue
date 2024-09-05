@@ -23,7 +23,9 @@ function getRoleName(role) {
         <LoadingImage class="object-cover" :src="Assets.Banner(id)" />
         <div class="section-gradient opacity-60"></div>
         <div class="flex flex-row items-center p-2 gap-2">
-            <LoadingImage class="size-8 object-cover rounded-md" :src="Assets.Avatar(id)" />
+            <div class="size-8">
+                <LoadingImage class="size-full object-cover rounded-md" :src="Assets.Avatar(id)" />
+            </div>
             <div class="text-left leading-none">
                 <p>{{ name }}</p>
                 <p class="text-xs" :class="{

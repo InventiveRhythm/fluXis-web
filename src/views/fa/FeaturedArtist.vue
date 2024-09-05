@@ -77,7 +77,9 @@ function downloadSong(album, track) {
 <template>
 <div v-if="react.artist" class="w-full flex rounded-3xl bg-dark-2 text-left">
     <div class="w-80 min-w-80">
-        <LoadingImage class="w-80 h-80 object-cover rounded-3xl" :src="'/featured-artist/' + react.artist.id + '/icon.png'" alt="Artist Image" />
+        <div class="size-80">
+            <LoadingImage class="size-full object-cover rounded-3xl" :src="'/featured-artist/' + react.artist.id + '/icon.png'" alt="Artist Image" />
+        </div>
         <div class="socials">
 
         </div>
@@ -91,11 +93,13 @@ function downloadSong(album, track) {
             <div class="w-full h-max overflow-hidden rounded-3xl" v-for="album in react.artist.albums"
                 :style="'--album-accent:' + album.colors.accent + '; --album-accent-opaque:' + album.colors.accent + '88; --album-text:' + album.colors.text + '; --album-text2:' + album.colors.text2 + '; background-color:' + album.colors.bg + '; --album-bg2:' + album.colors.bg2 + '; ' ">
                 <div class="overlap-grid h-24 rounded-3xl">
-                    <LoadingImage class="w-full h-full object-cover blur scale-110" :src="'/featured-artist/' + react.artist.id + '/' + album.id + '/cover.png'" alt="" />
+                    <LoadingImage class="w-full object-cover blur scale-110" :src="'/featured-artist/' + react.artist.id + '/' + album.id + '/cover.png'" alt="" />
                     <div class="section-gradient opacity-50"></div>
                     <div class="section-gradient-custom opacity-50" style="--section-gradient-col: var(--album-accent)"></div>
                     <div class="flex w-full h-full gap-4">
-                        <LoadingImage class="w-24 h-24 rounded-3xl object-cover" :src="'/featured-artist/' + react.artist.id + '/' + album.id + '/cover.png'" alt="" />
+                        <div class="size-24">
+                            <LoadingImage class="size-full rounded-3xl object-cover" :src="'/featured-artist/' + react.artist.id + '/' + album.id + '/cover.png'" alt="" />
+                        </div>
                         <div class="flex flex-col justify-center drop-shadow-text" style="color: var(--album-text);">
                             <h2 class="text-2xl leading-tight">{{ album.name }}</h2>
                             <p class="text-base leading-tight">{{ album.tracks.length }} songs</p>
