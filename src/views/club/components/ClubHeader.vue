@@ -18,7 +18,7 @@ const props = defineProps({
                 <div class="size-32">
                     <LoadingImage class="size-full rounded-xl shadow-normal" :src="Assets.ClubIcon(club.id)" />
                 </div>
-                <div class="w-full flex flex-col text-left">
+                <div class="flex-1 flex flex-col text-left">
                     <div class="w-full flex gap-1.5 items-center">
                         <ClubTag class="text-xl" :club="club" />
                         <p class="text-3xl line-clamp-1">{{ club.name }}</p>
