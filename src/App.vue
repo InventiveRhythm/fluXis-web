@@ -4,7 +4,6 @@ import NavBar from "./components/nav/NavBar.vue";
 import Footer from "./components/footer/Footer.vue";
 import Loading from "./components/loading/Loading.vue";
 import UserOverlay from "./overlays/user/UserOverlay.vue";
-import { Transition, Suspense } from "vue";
 import CreateClubOverlay from "./overlays/club-creation/CreateClubOverlay.vue";
 import EditClubOverlay from "./overlays/club-edit/EditClubOverlay.vue";
 
@@ -50,7 +49,9 @@ function stringifyRoute(route) {
 <style lang="scss">
 .fade-enter-active,
 .fade-leave-active {
-    transition: all 0.4s ease;
+    transition: opacity 0.3s, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: 0ms;
+    transform-origin: top center;
 }
 
 .fade-enter-to,
@@ -58,8 +59,13 @@ function stringifyRoute(route) {
     opacity: 1;
 }
 
+.fade-enter-to {
+    transition-delay: 100ms;
+}
+
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;
+    transform: scale(.98)
 }
 </style>
