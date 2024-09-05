@@ -33,7 +33,7 @@ API.get("/clubs").then(res => {
                 <input class="flex-grow bg-dark-2 focus:outline-none placeholder:text-white placeholder:opacity-60"
                     placeholder="Search... (doesn't actually work yet)" type="text">
             </div>
-            <div v-if="state.user && !state.user.club" class="size-14 bg-dark-2 rounded-xl flex items-center justify-center transition-transform active:scale-90" @click="Overlays.OpenClubCreate">
+            <div v-if="state.user" class="size-14 bg-dark-2 rounded-xl flex items-center justify-center transition-transform active:scale-90" @click="Overlays.OpenClubCreate">
                 <i class="fa fa-plus text-2xl"></i>
             </div>
         </div>
