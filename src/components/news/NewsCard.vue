@@ -9,7 +9,7 @@ defineProps({
 <template>
     <div class="m-3 flex h-64 min-w-80 flex-1 flex-col overflow-hidden rounded-2xl bg-dark-2 hover:bg-dark-3 transition-all cursor-pointer active:scale-95">
         <div class="h-40 overlap-grid">
-            <LoadingImage class="size-full object-cover rounded-2xl" :src="data.image" />
+            <LoadingImage class="w-full object-cover rounded-2xl" :src="data.image" />
             <div class="size-full flex flex-row justify-between items-end text-2xs p-2">
                 <div class="bg-dark-2 px-3 py-1 rounded-full">
                     <p class="opacity-75">{{ data.date }}</p>

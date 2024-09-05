@@ -62,7 +62,7 @@ function getStatusString() {
 
 <template>
     <RouterLink class="h-28 w-full" :to="'/set/' + mapset.id" v-if="mapset">
-        <div class="overlap-grid size-full rounded-2xl bg-dark-3">
+        <div class="overlap-grid W-full h-inherit rounded-2xl bg-dark-3">
             <LoadingImage class="object-cover" :src="Assets.Background(mapset.id)" />
             <div class="flex flex-row bg-dark-2 bg-opacity-60 transition-colors hover:bg-opacity-50">
                 <LoadingImage class="size-28 rounded-2xl object-cover" :src="Assets.Cover(mapset.id)" />
