@@ -28,7 +28,7 @@ API.get("/stats").then(res => {
 })
 
 function OpenDownload() {
-    window.open("https://dl.flux.moe/install/fluXis-installer.zip")
+    window.open("https://github.com/TeamFluXis/fluXis/releases/latest/download/install.exe")
 }
 </script>
 

@@ -76,7 +76,7 @@ const router = createRouter({
       path: '/download',
       name: 'download',
       beforeEnter() {
-        window.open('https://dl.flux.moe/install/fluXis-installer.zip', '_blank');
+        window.open('https://github.com/TeamFluXis/fluXis/releases/latest/download/install.exe', '_blank');
         window.location.back();
       }
     },
