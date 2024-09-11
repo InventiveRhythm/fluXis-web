@@ -16,4 +16,4 @@ The website for [fluXis](https://fluXis.flux.moe).
 
 ## Wiki Setup
 Make sure you are in the root directory of the project.
-1. Clone the repository: `git clone https://github.com/TeamFluXis/fluXis-wiki fluxis-wiki`
+1. Clone the repository: `git clone https://github.com/InventiveRhythm/fluXis-wiki fluxis-wiki`

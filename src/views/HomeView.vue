@@ -28,7 +28,7 @@ API.get("/stats").then(res => {
 })
 
 function OpenDownload() {
-    window.open("https://github.com/TeamFluXis/fluXis/releases/latest/download/install.exe")
+    window.open("https://github.com/InventiveRhythm/fluXis/releases/latest/download/install.exe")
 }
 </script>
 

@@ -108,7 +108,7 @@ function postProcess() {
 }
 
 function edit() {
-    const repo = "https://github.com/TeamFluXis/fluXis-wiki";
+    const repo = "https://github.com/InventiveRhythm/fluXis-wiki";
 
     const path = route.path.split('/').slice(2).join('/').toLowerCase();
     const url = repo + "/edit/main/" + path + ".md";

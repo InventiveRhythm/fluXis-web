@@ -15,7 +15,7 @@ function toggleBlur() {
 <template>
     <div class="footer">
         <div class="socials">
-            <a href="https://github.com/TeamFluXis" target="_blank">
+            <a href="https://github.com/InventiveRhythm" target="_blank">
                 <i class="fab fa-github"></i>
             </a>
             <a href="https://discord.gg/29hMftpNq9" target="_blank">

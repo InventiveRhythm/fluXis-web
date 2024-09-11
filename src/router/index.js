@@ -44,7 +44,7 @@ const router = createRouter({
       path: '/changelog',
       name: 'changelog',
       beforeEnter() {
-        window.open('https://github.com/TeamFluXis/fluXis/releases', '_blank');
+        window.open('https://github.com/InventiveRhythm/fluXis/releases', '_blank');
         window.location.back();
       }
     },
@@ -76,7 +76,7 @@ const router = createRouter({
       path: '/download',
       name: 'download',
       beforeEnter() {
-        window.open('https://github.com/TeamFluXis/fluXis/releases/latest/download/install.exe', '_blank');
+        window.open('https://github.com/InventiveRhythm/fluXis/releases/latest/download/install.exe', '_blank');
         window.location.back();
       }
     },
