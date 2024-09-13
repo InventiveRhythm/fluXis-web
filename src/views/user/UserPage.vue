@@ -36,22 +36,6 @@ async function loadStuff() {
             react.user = res.data;
             react.user['lastloginString'] = TimeUtils.formatAgo(res.data.lastlogin);
         })
-
-        // no need to continue if user is null
-        if (react.user && react.user.username) {
-            await API.get(`/user/${react.user.id}/maps`).then(res => {
-                if (!res.data) return;
-
-                react['maps'] = res.data;
-            })
-
-            await API.get(`/user/${react.user.id}/scores`).then(res => {
-                if (!res.data) return;
-
-                react['scores'] = res.data;
-            })
-        }
-
     } catch (err) {
         console.error(err);
     }
