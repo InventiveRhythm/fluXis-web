@@ -9,6 +9,9 @@ module.exports = {
             black: '#000',
             transparent: 'transparent',
             red: '#f55',
+            gold: '#d4af37',
+            silver: '#c0c0c0',
+            bronze: '#cd7f32',
             'highlight': 'hsl(240, 100%, 70%)',
             'dark': {
                 'text': "#fff",
