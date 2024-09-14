@@ -48,7 +48,7 @@ async function invite() {
 </script>
 
 <template>
-    <div class="flex flex-col items-center gap-4">
+    <div class="flex flex-col items-center gap-3">
         <RouterLink :to="`/u/${member.id}`" class="w-full flex flex-row items-center gap-2" v-for="member in club.members">
             <div class="size-12">
                 <LoadingImage class="size-full object-cover rounded-lg" :src="Assets.Avatar(member.id)" />

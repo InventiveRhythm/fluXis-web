@@ -60,10 +60,14 @@ const router = createRouter({
           component: () => import("../views/club/subpages/ClubMembers.vue")
         },
         {
-          alias: "",
           path: "scores",
           name: "club-details:scores",
           component: () => import("../views/club/subpages/ClubScores.vue")
+        },
+        {
+          path: "claims",
+          name: "club-details:claims",
+          component: () => import("../views/club/subpages/ClubClaims.vue")
         },
       ]
     },

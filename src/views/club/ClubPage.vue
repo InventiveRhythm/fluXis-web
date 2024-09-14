@@ -7,8 +7,11 @@ import TabControlItem from '../../components/tabs/TabControlItem.vue';
 import ClubHeader from './components/ClubHeader.vue';
 import RoundedButton from '@/components/RoundedButton.vue';
 
+import ErrorContainer from '@/components/status/ErrorContainer.vue';
+
 import API from '@/utils/API';
 import Utils from '@/utils/Utils';
+import { formatAccuracy } from '@/utils/formatting';
 import { startLoading, stopLoading } from '@/utils/Loading';
 import { state } from '@/utils/State';
 import { emitEvent } from '@/utils/Events';
@@ -18,6 +21,7 @@ const id = parseInt(route.params.id);
 
 const react = reactive({
     loading: true,
+    error: "",
     club: null
 });
 
@@ -25,12 +29,16 @@ startLoading();
 
 try {
     await API.get(`/club/${id}`).then(res => {
-        if (res.status != 200) return;
+        if (res.status != 200) {
+            react.error = res.message;
+            return;
+        }
 
         react.club = res.data;
         Utils.setTitle(react.club.name + " - club info");
     })
 } catch (err) {
+    react.error = err;
     console.error(err);
 }
 
@@ -59,11 +67,12 @@ function CanEdit() {
     <div class="flex flex-col" v-if="!react.loading && react.club">
         <ClubHeader :club="react.club" />
         <div class="w-full flex justify-center items-start pt-8 px-4 gap-8">
-            <div class="w-full flex flex-col gap-4 text-left">
+            <div class="flex-1 flex flex-col gap-4 text-left">
                 <TabControl>
                     <TabControlItem :url="`/club/${id}/members`" :alternate="`/club/${id}`"
                         icon="fa-solid fa-user-group" text="Members" />
                     <TabControlItem :url="`/club/${id}/scores`" icon="fa-solid fa-arrow-trend-up" text="Scores" />
+                    <TabControlItem :url="`/club/${id}/claims`" icon="fa-solid fa-star" text="Claims" />
                 </TabControl>
                 <RouterView v-slot="{ Component }">
                     <component :is="Component" :club="react.club" />
@@ -82,9 +91,18 @@ function CanEdit() {
                             <p class="opacity-80">Overall Rating</p>
                             <p>{{ react.club.stats.ovr }}</p>
                         </div>
+                        <div class="flex flex-row items-center justify-between">
+                            <p class="opacity-80">Claimed Maps</p>
+                            <p>{{ react.club.stats.claims }}</p>
+                        </div>
+                        <div class="flex flex-row items-center justify-between">
+                            <p class="opacity-80">Claimed%</p>
+                            <p>{{ formatAccuracy(react.club.stats["claim-percent"]) }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <ErrorContainer :text="react.error" v-if="!react.loading && !react.club" />
 </template>
