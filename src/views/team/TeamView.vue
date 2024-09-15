@@ -23,7 +23,7 @@ const people = [
     }
 ];
 
-Utils.setTitle("fluXis Team");
+Utils.SetTitle("the team");
 </script>
 
 <template>

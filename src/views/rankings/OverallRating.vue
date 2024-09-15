@@ -21,7 +21,7 @@ await API.get('/leaderboards/overall').then(res => {
     react.top[1] = res.data[0]
 
     react.rankings = res.data.slice(3)
-    Utils.setTitle("overall - rankings")
+    Utils.SetTitle("overall - rankings")
 }).finally(() => stopLoading());
 </script>
 

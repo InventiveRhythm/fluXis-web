@@ -5,6 +5,7 @@ import { reactive } from 'vue';
 import LoadingImage from '@/components/LoadingImage.vue';
 
 import API from '../../utils/API';
+import Utils from '@/utils/Utils';
 import { startLoading, stopLoading } from '../../utils/Loading';
 
 const route = useRoute();
@@ -14,6 +15,8 @@ const react = reactive({
     artist: null
 });
 
+Utils.SetTitle("loading...")
+
 startLoading();
 
 await API.get('/artists/' + id)
@@ -21,6 +24,8 @@ await API.get('/artists/' + id)
         var artist = res.data;
         react.artist = artist;
         console.log(artist);
+
+        Utils.SetTitle(`${artist.name} - featured artist`)
 
         stopLoading();
     })

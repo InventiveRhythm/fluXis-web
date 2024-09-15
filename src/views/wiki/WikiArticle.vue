@@ -34,7 +34,7 @@ const react = reactive({
 });
 
 startLoading();
-Utils.setTitle("/" + path);
+Utils.SetTitle("/" + path);
 
 const lang = "en";
 
@@ -47,7 +47,7 @@ function render(data) {
 
     let title = data.match(/# (.*)/);
     if (title) {
-        Utils.setTitle(title[1] + " - wiki");
+        Utils.SetTitle(title[1] + " - wiki");
         react.path[react.path.length - 1].title = title[1];
     }
 

@@ -3,11 +3,14 @@ import { reactive } from 'vue';
 import { RouterLink } from 'vue-router';
 
 import API from '../../utils/API';
+import Utils from '@/utils/Utils';
 import { startLoading, stopLoading } from '../../utils/Loading';
 
 const react = reactive({
     data: null
 });
+
+Utils.SetTitle("featured artist listing")
 
 startLoading();
 

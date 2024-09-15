@@ -18,7 +18,7 @@ const stats = reactive({
     mapsets: undefined
 });
 
-Utils.setTitle("Home");
+Utils.SetTitle("Home");
 
 API.get("/stats").then(res => {
     stats.users = res.data.users;

@@ -40,7 +40,7 @@ async function load() {
             react.set = set;
             react.maps = set.maps.sort((a, b) => a.nps - b.nps);
 
-            Utils.setTitle(set.title + " - " + set.artist);
+            Utils.SetTitle(set.title + " - " + set.artist);
             switchDifficulty(set.maps[0]);
 
             react.loading = false;

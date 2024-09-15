@@ -35,7 +35,7 @@ try {
         }
 
         react.club = res.data;
-        Utils.setTitle(react.club.name + " - club info");
+        Utils.SetTitle(react.club.name + " - club info");
     })
 } catch (err) {
     react.error = err;

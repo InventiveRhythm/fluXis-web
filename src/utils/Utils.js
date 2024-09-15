@@ -1,7 +1,7 @@
 import { emitEvent } from './Events';
 
 export default class Utils {
-    static setTitle(title) {
+    static SetTitle(title) {
         document.title = title + ' | fluXis';
     }
 

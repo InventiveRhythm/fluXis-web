@@ -80,7 +80,7 @@ API.get('/stats/users/creation')
         }
     });
 
-Utils.setTitle("User Registrations");
+Utils.SetTitle("user registrations");
 </script>
 
 <template>

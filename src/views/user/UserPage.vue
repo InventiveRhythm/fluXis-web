@@ -41,7 +41,7 @@ async function loadStuff() {
     }
 
     if (react.user && react.user.username)
-        Utils.setTitle(react.user.username + " - user info");
+        Utils.SetTitle(react.user.username + " - user info");
 
     react.loading = false;
     stopLoading();

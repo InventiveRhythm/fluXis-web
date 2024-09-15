@@ -1,7 +1,7 @@
 <script setup>
 import Utils from '@/utils/Utils';
 
-Utils.setTitle("404");
+Utils.SetTitle("404");
 </script>
 
 <template>

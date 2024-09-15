@@ -7,11 +7,14 @@ import LoadingImage from '@/components/LoadingImage.vue';
 import API from '@/utils/API';
 import Assets from '@/utils/Assets';
 import Overlays from '@/utils/Overlays';
+import Utils from '@/utils/Utils';
 import { state } from '@/utils/State';
 
 const react = reactive({
     clubs: []
 });
+
+Utils.SetTitle("club listing")
 
 API.get("/clubs").then(res => {
     if (res.status != 200) {

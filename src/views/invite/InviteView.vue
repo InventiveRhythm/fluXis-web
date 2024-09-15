@@ -7,6 +7,7 @@ import RoundedButton from '../../components/RoundedButton.vue';
 
 import API from '../../utils/API';
 import Assets from '../../utils/Assets';
+import Utils from '@/utils/Utils';
 import { state } from '@/utils/State';
 import { startLoading, stopLoading } from '../../utils/Loading';
 
@@ -23,6 +24,7 @@ const react = reactive({
 if (!state.user) {
     react.error = "Please log in to accept invites.";
 } else {
+    Utils.SetTitle("loading...")
     startLoading();
 
     try {
@@ -41,6 +43,7 @@ if (!state.user) {
                 return;
             }
 
+            Utils.SetTitle(`you've been invited to '${res.data.club.name}'!`)
             react.invite = res.data;
         })
     } catch (ex) {

@@ -1,7 +1,7 @@
 <script setup>
 import Utils from '@/utils/Utils';
 
-Utils.setTitle("Work in Progress");
+Utils.SetTitle("Work in Progress");
 </script>
 
 <template>
