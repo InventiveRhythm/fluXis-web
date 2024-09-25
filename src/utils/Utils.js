@@ -53,4 +53,15 @@ export default class Utils {
                 return 'fas fa-user';
         }
     }
+
+    static IsModerator(user) {
+        if (this.IsDeveloper(user))
+            return true;
+
+        return user.groups.some(g => g.id == "moderators")
+    }
+
+    static IsDeveloper(user) {
+        return user.groups.some(g => g.id == "dev")
+    }
 }

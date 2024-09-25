@@ -1,18 +1,22 @@
 <script async setup>
-import { RouterLink, RouterView, useRoute } from 'vue-router';
+import { RouterView, useRoute } from 'vue-router';
 import { reactive } from 'vue';
 
-import TimeUtils from '@/utils/TimeUtils';
+import RoundedButton from '@/components/RoundedButton.vue';
+import TabControl from '../../components/tabs/TabControl.vue';
+import TabControlItem from '../../components/tabs/TabControlItem.vue';
+
 import API from '@/utils/API';
-import Utils from '@/utils/Utils';
+import { emitEvent } from '@/utils/Events';
+import { state } from '@/utils/State';
 import { startLoading, stopLoading } from '@/utils/Loading';
+import TimeUtils from '@/utils/TimeUtils';
+import Utils from '@/utils/Utils';
 
 import UserHeader from './components/UserHeader.vue';
 import UserStats from './components/UserStats.vue';
 import UserClub from './components/UserClub.vue';
 import UserSidebarSection from './components/sidebar/UserSidebarSection.vue';
-import TabControl from '../../components/tabs/TabControl.vue';
-import TabControlItem from '../../components/tabs/TabControlItem.vue';
 
 const route = useRoute();
 let id = parseInt(route.params.id);
@@ -46,6 +50,20 @@ async function loadStuff() {
     react.loading = false;
     stopLoading();
 }
+
+function OpenEdit() {
+    emitEvent('user-edit-overlay', react.user);
+}
+
+function ShouldShowEdit() {
+    if (!state.user || state.user.id == react.user.id)
+        return false;
+
+    if (Utils.IsModerator(state.user))
+        return true;
+    
+    return false;
+}
 </script>
 
 <template>
@@ -54,7 +72,12 @@ async function loadStuff() {
         <UserStats :statistics="react.user.stats" />
         <div class="w-full flex justify-center items-start p-3 gap-5">
             <div class="w-80 min-w-80 flex flex-col justify-center gap-5" hide-mobile>
-                <UserSidebarSection title="About Me" class="!gap-0">
+                <RoundedButton v-if="ShouldShowEdit()" @click="OpenEdit"
+                    class="px-6 py-2 text-white text-opacity-75 text-center bg-dark-2 hover:bg-dark-3">
+                    <i class="fa fa-pencil mr-1"></i>
+                    Edit
+                </RoundedButton>
+                <UserSidebarSection title="About Me" class="!gap-0" v-if="react.user.aboutme">
                     <p class="text-left px-2 opacity-80">{{ react.user.aboutme }}</p>
                 </UserSidebarSection>
                 <UserSidebarSection title="Club" v-if="react.user.club">

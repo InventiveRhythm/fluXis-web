@@ -1,6 +1,4 @@
 <script setup>
-import Assets from '@/utils/Assets';
-
 import { RouterLink } from 'vue-router';
 
 import UserHeaderGroup from './header/UserHeaderGroup.vue';
@@ -8,6 +6,10 @@ import UserHeaderButton from './header/UserHeaderButton.vue';
 
 import ClubTag from '../../../components/ClubTag.vue';
 import LoadingImage from '@/components/LoadingImage.vue';
+
+import Assets from '@/utils/Assets';
+import { emitEvent } from '@/utils/Events';
+import { state } from '@/utils/State';
 
 // used for people without a group
 // e.g. normal users
@@ -21,6 +23,10 @@ const defaultGroup = {
 const props = defineProps({
     user: Object
 });
+
+function OpenEdit() {
+    emitEvent('user-edit-overlay', props.user);
+}
 </script>
 
 <template>
@@ -75,7 +81,11 @@ const props = defineProps({
                         <UserHeaderButton class="!px-[14px]" onclick="alert('Not implemented yet.')">
                             <i class="fas fa-share-nodes w-5"></i>
                         </UserHeaderButton>
-                        <UserHeaderButton onclick="alert('Not implemented yet.')">
+                        <UserHeaderButton :onclick="OpenEdit" v-if="state.user.id == user.id">
+                            <i class="fas fa-pencil w-5"></i>
+                            Edit
+                        </UserHeaderButton>
+                        <UserHeaderButton onclick="alert('Not implemented yet.')" v-else>
                             <i class="fas fa-plus w-5"></i>
                             Follow
                         </UserHeaderButton>
