@@ -31,13 +31,15 @@ function OpenEdit() {
 
 <template>
     <div class="w-full md:h-96 xl:h-auto xl:aspect-header md:rounded-3xl overflow-hidden overlap-grid">
-        <LoadingImage class="object-cover h-full md:h-inherit xl:h-auto xl:aspect-header" :src="Assets.Banner(user.id)" />
+        <LoadingImage class="object-cover h-full md:h-inherit xl:h-auto xl:aspect-header"
+            :src="Assets.Banner(user.id)" />
         <div class="bg-dark-2 opacity-50"></div>
         <div class="flex flex-col items-center justify-center py-5 md:py-0">
             <div class="w-full max-w-[1200px] md:px-10 flex flex-col items-center justify-center gap-5">
                 <div class="flex flex-col md:flex-row md:h-32 items-center self-stretch gap-3">
                     <div class="size-32">
-                        <LoadingImage class="size-full rounded-3xl shadow-normal object-cover" :src="Assets.Avatar(user.id)" />
+                        <LoadingImage class="size-full rounded-3xl shadow-normal object-cover"
+                            :src="Assets.Avatar(user.id)" />
                     </div>
                     <div class="flex-1 flex flex-col justify-center items-center gap-1 leading-none drop-shadow-text">
                         <div class="w-full flex flex-col md:flex-row gap-3 justify-between items-center">
@@ -55,13 +57,15 @@ function OpenEdit() {
                             <p class="text-5xl" v-if="!user.displayname">{{ user.username }}</p>
                             <p class="text-5xl" v-if="user.displayname">{{ user.displayname }}</p>
                         </div>
-                        <div v-if="user.username || user.pronouns" class="w-full flex justify-center md:justify-start items-center gap-3">
+                        <div v-if="user.username || user.pronouns"
+                            class="w-full flex justify-center md:justify-start items-center gap-3">
                             <p class="text-2xl opacity-80" v-if="user.displayname">{{ user.username }}</p>
                             <p class="text-xl opacity-60" v-if="user.pronouns">{{ user.pronouns }}</p>
                         </div>
                     </div>
                 </div>
-                <div class="w-full md:h-12 flex flex-col md:flex-row gap-3 justify-between items-center drop-shadow-text">
+                <div
+                    class="w-full md:h-12 flex flex-col md:flex-row gap-3 justify-between items-center drop-shadow-text">
                     <div class="flex h-full gap-3">
                         <RouterLink to="/rankings/overall">
                             <UserHeaderButton>
@@ -85,10 +89,16 @@ function OpenEdit() {
                             <i class="fas fa-pencil w-5"></i>
                             Edit
                         </UserHeaderButton>
-                        <UserHeaderButton onclick="alert('Not implemented yet.')" v-else>
-                            <i class="fas fa-plus w-5"></i>
-                            Follow
-                        </UserHeaderButton>
+                        <template v-else>
+                            <UserHeaderButton class="!bg-accent-2 text-dark-2" onclick="alert('Not implemented yet.')" v-if="user.following">
+                                <i class="fas fa-heart w-5"></i>
+                                Following
+                            </UserHeaderButton>
+                            <UserHeaderButton onclick="alert('Not implemented yet.')" v-else>
+                                <i class="fas fa-heart w-5"></i>
+                                Follow
+                            </UserHeaderButton>
+                        </template>
                     </div>
                 </div>
             </div>
