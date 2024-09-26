@@ -105,6 +105,20 @@ const router = createRouter({
       component: WorkInProgress
     },
     {
+      path: '/management',
+      name: 'management',
+      component: () => import('@/views/management/ManagementView.vue'),
+      children: [{
+        path: '',
+        name: 'management:home',
+        component: () => import('@/views/management/subviews/home/ManagementHome.vue')
+      }, {
+        path: 'users',
+        name: 'management:users',
+        component: () => import('@/views/management/subviews/users/UserManagementView.vue')
+      }]
+    },
+    {
       path: '/maps',
       name: 'maps',
       component: WorkInProgress
