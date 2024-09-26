@@ -55,6 +55,9 @@ export default class Utils {
     }
 
     static IsModerator(user) {
+        if (!user || !user.groups)
+            return
+
         if (this.IsDeveloper(user))
             return true;
 
@@ -62,6 +65,9 @@ export default class Utils {
     }
 
     static IsDeveloper(user) {
+        if (!user || !user.groups)
+            return
+        
         return user.groups.some(g => g.id == "dev")
     }
 }
