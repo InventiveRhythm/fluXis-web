@@ -49,6 +49,10 @@ function OpenEdit() {
     emitEvent('club-edit-overlay', react.club);
 }
 
+function OpenLeave() {
+    emitEvent('club-leave-overlay', react.club);
+}
+
 function CanEdit() {
     if (!state.user)
         return false;
@@ -58,7 +62,20 @@ function CanEdit() {
 
     if (state.user.groups.some(g => g.id == "dev"))
         return true;
-    
+
+    return false;
+}
+
+function CanLeave() {
+    if (!state.user)
+        return false;
+
+    if (react.club.owner.id == state.user.id)
+        return false;
+
+    if (react.club.members.some(m => m.id == state.user.id))
+        return true;
+
     return false;
 }
 </script>
@@ -79,11 +96,18 @@ function CanEdit() {
                 </RouterView>
             </div>
             <div class="w-80 min-w-80 flex flex-col gap-7 text-left">
-                <RoundedButton v-if="CanEdit()" @click="OpenEdit"
-                    class="px-6 py-2 text-white text-opacity-75 mt-3 text-center bg-dark-2 hover:bg-dark-3">
-                    <i class="fa fa-pencil mr-1"></i>
-                    Edit
-                </RoundedButton>
+                <div class="w-full flex flex-col gap-4">
+                    <RoundedButton v-if="CanEdit()" @click="OpenEdit"
+                        class="px-6 py-2 text-white text-opacity-75 text-center bg-dark-2 hover:bg-dark-3">
+                        <i class="fa fa-pencil mr-1"></i>
+                        Edit
+                    </RoundedButton>
+                    <RoundedButton v-if="CanLeave()" @click="OpenLeave"
+                        class="px-6 py-2 text-white text-center text-opacity-75 bg-dark-2 hover:text-dark-2 hover:bg-red">
+                        <i class="fa fa-door-open mr-1"></i>
+                        Leave
+                    </RoundedButton>
+                </div>
                 <div class="flex flex-col gap-2">
                     <p class="text-2xl">Statistics</p>
                     <div class="flex flex-col gap-1 text-sm">

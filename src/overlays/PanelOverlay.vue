@@ -19,6 +19,11 @@ const props = defineProps({
     voidclick: {
         type: Function,
         required: true
+    },
+    width: {
+        type: String,
+        default: "w-panel",
+        required: false
     }
 });
 
@@ -34,9 +39,9 @@ function VoidClick(e) {
     <Transition name="panel-overlay">
         <div class="pointer-events-auto select-none fixed top-0 flex h-screen w-screen items-center justify-center backdrop-blur-md bg-dark-1 bg-opacity-80"
             v-if="open" @click="VoidClick">
-            <div class="flex flex-col w-panel gap-4 p-6 bg-dark-3 rounded-2xl drop-shadow-lg" ref="content">
+            <div :class="`flex flex-col ${width} gap-4 p-6 bg-dark-3 rounded-2xl drop-shadow-lg`" ref="content">
                 <div>
-                    <p class="text-2xl">{{ title }}</p>
+                    <p class="w-full break-words text-2xl">{{ title }}</p>
                     <p class="text-red" v-if="error">{{ error }}</p>
                 </div>
                 <slot></slot>
