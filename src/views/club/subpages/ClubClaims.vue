@@ -18,7 +18,7 @@ const react = reactive({
     claims: []
 })
 
-API.get(`/club/${id}/claims`).then(res => {
+API.PerformGet(`/club/${id}/claims`).then(res => {
     var claims = res.data
 
     claims.sort(function (a, b) {

@@ -30,7 +30,7 @@ function Load() {
 
     react.loading = true;
 
-    API.get(`/users?offset=${offset}&name=${name}&with=creation,login`).then(res => {
+    API.PerformGet(`/users?offset=${offset}&name=${name}&with=creation,login`).then(res => {
         react.loading = false;
 
         if (res.status != 200) {

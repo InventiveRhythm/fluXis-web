@@ -38,7 +38,7 @@ registerEvent('user-edit-overlay', user => {
 });
 
 function Perform() {
-    API.patch(`/user/${react.user.id}`, {
+    API.PerformPatch(`/user/${react.user.id}`, {
         'nick': nick.value.input.value,
         'about': about.value.input.value,
         'pronouns': pronouns.value.input.value,

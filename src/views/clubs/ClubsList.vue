@@ -16,7 +16,7 @@ const react = reactive({
 
 Utils.SetTitle("club listing")
 
-API.get("/clubs").then(res => {
+API.PerformGet("/clubs").then(res => {
     if (res.status != 200) {
         alert(res.message);
         return;

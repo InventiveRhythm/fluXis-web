@@ -28,7 +28,7 @@ const react = reactive({
 startLoading();
 
 try {
-    await API.get(`/club/${id}`).then(res => {
+    await API.PerformGet(`/club/${id}`).then(res => {
         if (res.status != 200) {
             react.error = res.message;
             return;

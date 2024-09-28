@@ -41,7 +41,7 @@ registerEvent('club-edit-overlay', club => {
 });
 
 function Perform() {
-    API.patch(`/club/${react.club.id}`, {
+    API.PerformPatch(`/club/${react.club.id}`, {
         'name': name,
         'icon': getAsset(react.icon),
         'banner': getAsset(react.banner),

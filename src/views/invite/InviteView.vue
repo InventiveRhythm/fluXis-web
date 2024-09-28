@@ -28,7 +28,7 @@ if (!state.user) {
     startLoading();
 
     try {
-        API.get(`/invites/${code}`).then(res => {
+        API.PerformGet(`/invites/${code}`).then(res => {
             stopLoading();
             react.loading = false;
 
@@ -56,7 +56,7 @@ if (!state.user) {
 function acceptInvite() {
     startLoading();
 
-    API.post(`/invites/${code}`, {}).then(res => {
+    API.PerformPost(`/invites/${code}`, {}).then(res => {
         stopLoading();
 
         if (res.status != 200) {

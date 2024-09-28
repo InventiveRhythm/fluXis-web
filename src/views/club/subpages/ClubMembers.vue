@@ -34,7 +34,7 @@ async function invite() {
         return;
     }
 
-    API.post(`/club/${props.club.id}/invites`, {
+    API.PerformPost(`/club/${props.club.id}/invites`, {
         user: parsed
     }).then(res => {
         if (res.status != 201) {

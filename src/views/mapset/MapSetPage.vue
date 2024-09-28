@@ -28,7 +28,7 @@ async function load() {
     startLoading();
 
     try {
-        await API.get(`/mapset/${id}`).then(data => {
+        await API.PerformGet(`/mapset/${id}`).then(data => {
             if (!data.data) {
                 stopLoading();
                 react.loading = false;
@@ -59,7 +59,7 @@ async function switchDifficulty(map) {
     console.log("switching to '" + map.difficulty + "' (" + map.id + ")");
     react.currentMap = map;
 
-    await API.get(`/map/${map.id}/scores`).then(data => {
+    await API.PerformGet(`/map/${map.id}/scores`).then(data => {
         if (!data.data) {
             stopLoading();
             return;

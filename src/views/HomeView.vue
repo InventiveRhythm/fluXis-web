@@ -20,7 +20,7 @@ const stats = reactive({
 
 Utils.SetTitle("Home");
 
-API.get("/stats").then(res => {
+API.PerformGet("/stats").then(res => {
     stats.users = res.data.users;
     stats.online = res.data.online;
     stats.scores = res.data.scores;

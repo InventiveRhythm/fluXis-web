@@ -34,7 +34,7 @@ async function loadStuff() {
     startLoading();
 
     try {
-        await API.get(`/user/${id}`).then(res => {
+        await API.PerformGet(`/user/${id}`).then(res => {
             if (res.status != 200) return;
 
             react.user = res.data;

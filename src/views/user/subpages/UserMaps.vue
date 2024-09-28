@@ -19,7 +19,7 @@ let react = reactive({
 
 try {
     startLoading();
-    API.get(`/user/${id}/maps`).then(res => {
+    API.PerformGet(`/user/${id}/maps`).then(res => {
         if (!res.data) return;
 
         react['maps'] = res.data;

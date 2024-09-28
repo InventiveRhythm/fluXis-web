@@ -15,7 +15,7 @@ const react = reactive({
 
 startLoading();
 
-await API.get('/leaderboards/overall').then(res => {
+await API.PerformGet('/leaderboards/overall').then(res => {
     react.top = res.data.slice(0, 3)
     react.top[0] = react.top[1]
     react.top[1] = res.data[0]

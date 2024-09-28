@@ -19,7 +19,7 @@ let react = reactive({
 
 try {
     startLoading();
-    API.get(`/user/${id}/scores`).then(res => {
+    API.PerformGet(`/user/${id}/scores`).then(res => {
         if (!res.data) return;
 
         react['scores'] = res.data;

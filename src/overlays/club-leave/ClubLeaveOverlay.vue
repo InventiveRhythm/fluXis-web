@@ -23,7 +23,7 @@ registerEvent('club-leave-overlay', club => {
 });
 
 function Perform() {
-    API.delete(`/club/${react.club.id}/members/${state.user.id}`).then(async res => {
+    API.PerformDelete(`/club/${react.club.id}/members/${state.user.id}`).then(async res => {
         if (res.status != 200) {
             react.error = res.message;
             return;

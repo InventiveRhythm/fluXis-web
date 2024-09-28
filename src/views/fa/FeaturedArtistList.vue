@@ -14,7 +14,7 @@ Utils.SetTitle("featured artist listing")
 
 startLoading();
 
-await API.get('/artists')
+await API.PerformGet('/artists')
     .then(res => {
         // Sort by name
         res.data.sort((a, b) => {

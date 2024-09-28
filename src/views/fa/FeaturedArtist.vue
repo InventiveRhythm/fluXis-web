@@ -19,7 +19,7 @@ Utils.SetTitle("loading...")
 
 startLoading();
 
-await API.get('/artists/' + id)
+await API.PerformGet('/artists/' + id)
     .then(res => {
         var artist = res.data;
         react.artist = artist;

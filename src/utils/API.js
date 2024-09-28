@@ -2,42 +2,24 @@ import Config from '@/config.json';
 import { state } from './State';
 
 export default class API {
-    static async get(endpoint) {
-        return await fetch(Config.APIUrl + endpoint, {
-            method: 'GET',
-            headers: createHeaders()
-        }).then((response) => response.json());
+    static async PerformGet(endpoint) {
+        return perform(endpoint, 'GET');
     }
 
-    static async post(endpoint, body) {
-        return await fetch(Config.APIUrl + endpoint, {
-            method: 'POST',
-            headers: createHeaders(),
-            body: JSON.stringify(body)
-        }).then((response) => response.json());
+    static async PerformPost(endpoint, body) {
+        return perform(endpoint, 'POST', body);
     }
 
-    static async patch(endpoint, body) {
-        return await fetch(Config.APIUrl + endpoint, {
-            method: 'PATCH',
-            headers: createHeaders(),
-            body: JSON.stringify(body)
-        }).then((response) => response.json());
+    static async PerformPatch(endpoint, body) {
+        return perform(endpoint, 'PATCH', body);
     }
 
-    static async put(endpoint, body) {
-        return await fetch(Config.APIUrl + endpoint, {
-            method: 'PUT',
-            headers: createHeaders(),
-            body: JSON.stringify(body)
-        }).then((response) => response.json());
+    static async PerformPut(endpoint, body) {
+        return perform(endpoint, 'PUT', body);
     }
 
-    static async delete(endpoint) {
-        return fetch(Config.APIUrl + endpoint, {
-            method: 'DELETE',
-            headers: createHeaders()
-        }).then((response) => response.json());
+    static async PerformDelete(endpoint, body = {}) {
+        return perform(endpoint, 'DELETE', body);
     }
 
     static OpenLogin() {
@@ -70,7 +52,7 @@ export default class API {
     }
 
     static async RefreshInfo(id) {
-        await API.get('/user/' + id)
+        await API.PerformGet('/user/' + id)
             .then((res) => {
                 state.user = res.data;
                 $cookies.set('user', res.data);
@@ -79,6 +61,18 @@ export default class API {
                 console.error(err);
             });
     }
+}
+
+async function perform(endpoint, method, body = {}) {
+    var data = {
+        method: method,
+        headers: createHeaders()
+    };
+
+    if (method != 'GET')
+        data = Object.assign(data, { body: JSON.stringify(body) })
+
+    return fetch(Config.APIUrl + endpoint, data).then((response) => response.json());
 }
 
 function createHeaders() {

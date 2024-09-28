@@ -32,7 +32,7 @@ const react = reactive({
     }
 })
 
-API.get('/stats/users/creation')
+API.PerformGet('/stats/users/creation')
     .then(data => {
         if (!data.data) return
 

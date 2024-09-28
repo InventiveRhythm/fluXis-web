@@ -34,7 +34,7 @@ const banner = ref();
 registerEvent('club-overlay', state => react.open = state);
 
 function Perform() {
-    API.post('/clubs', {
+    API.PerformPost('/clubs', {
         'name': name.value.value,
         'tag': tag.value.value,
         'icon': getAsset(react.icon),
