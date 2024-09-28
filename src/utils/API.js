@@ -23,7 +23,7 @@ export default class API {
     }
 
     static OpenLogin() {
-        const url = Config.APIUrl + '/login?app=' + Config.AuthAppId;
+        const url = Config.AuthUrl + '/login?app=' + Config.AuthAppId;
         const params = 'width=600,height=600,scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no';
 
         const popup = window.open(url, 'Login', params);
