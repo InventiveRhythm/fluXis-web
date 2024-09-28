@@ -1,12 +1,31 @@
-import { createApp } from 'vue'
-import VueCookies from 'vue-cookies'
-import App from './App.vue'
-import router from './router'
+import { createApp } from 'vue';
+import VueCookies from 'vue-cookies';
 
-import './assets/main.scss'
-import './assets/tailwind.css'
+import router from './router';
+import App from './App.vue';
 
-const app = createApp(App)
-app.use(VueCookies, { expires: '2y' }) // 2 years because why not
-app.use(router)
-app.mount('#app')
+import * as Sentry from '@sentry/vue';
+
+import './assets/main.scss';
+import './assets/tailwind.css';
+
+const environment = import.meta.env?.PROD ? 'prod' : 'dev';
+console.log('currently running in', environment)
+
+const app = createApp(App);
+
+Sentry.init({
+    app,
+    environment,
+    dsn: 'https://4f0469931eec0da18117e388f7414866@sentry.flux.moe/4',
+    integrations: [Sentry.browserTracingIntegration({ router }), Sentry.replayIntegration()],
+    enableTracing: environment == 'prod',
+    tracesSampleRate: environment == 'dev' ? 0 : 1,
+    tracePropagationTargets: [],
+    replaysSessionSampleRate: environment == 'dev' ? 0 : 0.1,
+    replaysOnErrorSampleRate: 1.0,
+});
+
+app.use(VueCookies, { expires: '2y' }); // 2 years because why not
+app.use(router);
+app.mount('#app');
