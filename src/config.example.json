@@ -1,7 +1,7 @@
 {
-    "baseUrl": "https://fluxis.flux.moe",
-    "apiUrl": "https://fluxis.flux.moe/api",
-    "assetsUrl": "https://assets.flux.moe",
-    "authUrl": "https://auth.flux.moe",
-    "authAppId": 0
+    "BaseUrl": "https://fluxis.flux.moe",
+    "APIUrl": "https://fluxis.flux.moe/api",
+    "AssetsUrl": "https://assets.flux.moe",
+    "AuthUrl": "https://auth.flux.moe",
+    "AuthAppId": 0
 }

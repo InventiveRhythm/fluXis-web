@@ -78,7 +78,7 @@ function wip() {
 }
 
 function download() {
-    window.open(`${Config.apiUrl}/mapset/${id}/download`, '_blank');
+    window.open(`${Config.A}/mapset/${id}/download`, '_blank');
 }
 
 function getBarColor(percent, dark = false) {

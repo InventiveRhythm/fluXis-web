@@ -3,14 +3,14 @@ import { state } from './State';
 
 export default class API {
     static async get(endpoint) {
-        return await fetch(Config.apiUrl + endpoint, {
+        return await fetch(Config.APIUrl + endpoint, {
             method: 'GET',
             headers: createHeaders()
         }).then((response) => response.json());
     }
 
     static async post(endpoint, body) {
-        return await fetch(Config.apiUrl + endpoint, {
+        return await fetch(Config.APIUrl + endpoint, {
             method: 'POST',
             headers: createHeaders(),
             body: JSON.stringify(body)
@@ -18,7 +18,7 @@ export default class API {
     }
 
     static async patch(endpoint, body) {
-        return await fetch(Config.apiUrl + endpoint, {
+        return await fetch(Config.APIUrl + endpoint, {
             method: 'PATCH',
             headers: createHeaders(),
             body: JSON.stringify(body)
@@ -26,7 +26,7 @@ export default class API {
     }
 
     static async put(endpoint, body) {
-        return await fetch(Config.apiUrl + endpoint, {
+        return await fetch(Config.APIUrl + endpoint, {
             method: 'PUT',
             headers: createHeaders(),
             body: JSON.stringify(body)
@@ -34,14 +34,14 @@ export default class API {
     }
 
     static async delete(endpoint) {
-        return fetch(Config.apiUrl + endpoint, {
+        return fetch(Config.APIUrl + endpoint, {
             method: 'DELETE',
             headers: createHeaders()
         }).then((response) => response.json());
     }
 
     static OpenLogin() {
-        const url = Config.authUrl + '/login?app=' + Config.authAppId;
+        const url = Config.APIUrl + '/login?app=' + Config.AuthAppId;
         const params = 'width=600,height=600,scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no';
 
         const popup = window.open(url, 'Login', params);

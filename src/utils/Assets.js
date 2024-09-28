@@ -2,26 +2,26 @@ import Config from "@/config.json";
 
 export default class Assets {
     static Avatar(id) {
-        return `${Config.assetsUrl}/avatar/${id}`;
+        return `${Config.AssetsUrl}/avatar/${id}`;
     }
 
     static Banner(id) {
-        return `${Config.assetsUrl}/banner/${id}`;
+        return `${Config.AssetsUrl}/banner/${id}`;
     }
 
     static Background(id) {
-        return `${Config.assetsUrl}/background/${id}`;
+        return `${Config.AssetsUrl}/background/${id}`;
     }
 
     static Cover(id) {
-        return `${Config.assetsUrl}/cover/${id}`;
+        return `${Config.AssetsUrl}/cover/${id}`;
     }
 
     static ClubIcon(id) {
-        return `${Config.assetsUrl}/club-icon/${id}`;
+        return `${Config.AssetsUrl}/club-icon/${id}`;
     }
 
     static ClubBanner(id) {
-        return `${Config.assetsUrl}/club-banner/${id}`;
+        return `${Config.AssetsUrl}/club-banner/${id}`;
     }
 };

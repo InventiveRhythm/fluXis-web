@@ -42,7 +42,7 @@ async function invite() {
             return;
         }
 
-        alert(`Invite created! Give the person you want to invite this link: ${Config.baseUrl}/invite/${res.data.code}`)
+        alert(`Invite created! Give the person you want to invite this link: ${Config.BaseUrl}/invite/${res.data.code}`)
     })
 }
 </script>
