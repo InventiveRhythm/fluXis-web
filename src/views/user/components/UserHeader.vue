@@ -47,7 +47,10 @@ function OpenEdit() {
                                 <UserHeaderGroup :group="group" v-for="group in user.groups" />
                             </div>
                             <UserHeaderGroup :group="defaultGroup" v-else />
-                            <div class="text-base" v-if="user.role != 5">
+                            <div class="text-base" v-if="user.online">
+                                Currently Online
+                            </div>
+                            <div class="text-base" v-else-if="user.lastlogin">
                                 <span class="opacity-80">Last online</span>
                                 {{ user.lastloginString }}
                             </div>
