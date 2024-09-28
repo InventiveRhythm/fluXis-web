@@ -88,7 +88,7 @@ function OpenEdit() {
                         <UserHeaderButton class="!px-[14px]" onclick="alert('Not implemented yet.')">
                             <i class="fas fa-share-nodes w-5"></i>
                         </UserHeaderButton>
-                        <UserHeaderButton :onclick="OpenEdit" v-if="state.user.id == user.id">
+                        <UserHeaderButton :onclick="OpenEdit" v-if="state.user && state.user.id == user.id">
                             <i class="fas fa-pencil w-5"></i>
                             Edit
                         </UserHeaderButton>
