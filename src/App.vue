@@ -5,7 +5,6 @@ import Footer from "./components/footer/Footer.vue";
 import Loading from "./components/loading/Loading.vue";
 import UserOverlay from "./overlays/user/UserOverlay.vue";
 import CreateClubOverlay from "./overlays/club-creation/CreateClubOverlay.vue";
-import EditClubOverlay from "./overlays/club-edit/EditClubOverlay.vue";
 import EditUserOverlay from "./overlays/edit-user/EditUserOverlay.vue";
 
 import ContextMenu from "./overlays/context/ContextMenu.vue";
@@ -43,7 +42,6 @@ function stringifyRoute(route) {
         <UserOverlay />
         <EditUserOverlay />
         <CreateClubOverlay />
-        <EditClubOverlay />
         <Loading />
     </div>
 

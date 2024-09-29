@@ -1,7 +1,7 @@
 <script setup>
 import { reactive, ref } from 'vue';
 
-import PanelOverlay from '../PanelOverlay.vue';
+import PanelOverlay from '@/overlays/PanelOverlay.vue';
 import RoundedButton from '@/components/RoundedButton.vue';
 import IconTextBox from '@/components/IconTextBox.vue';
 

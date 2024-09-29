@@ -1,7 +1,7 @@
 <script setup>
 import { reactive } from 'vue';
 
-import PanelOverlay from '../PanelOverlay.vue';
+import PanelOverlay from '@/overlays/PanelOverlay.vue';
 import RoundedButton from '@/components/RoundedButton.vue';
 
 import API from '@/utils/API';

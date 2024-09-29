@@ -72,7 +72,15 @@ async function perform(endpoint, method, body = {}) {
     if (method != 'GET')
         data = Object.assign(data, { body: JSON.stringify(body) })
 
-    return fetch(Config.APIUrl + endpoint, data).then((response) => response.json());
+    return fetch(Config.APIUrl + endpoint, data).then((response) => {
+        if (response.status == 204) {
+            return { // it actually expects us to return an object
+                status: 204
+            };
+        }
+
+        return response.json()
+    });
 }
 
 function createHeaders() {
