@@ -13,6 +13,11 @@ const staff = [
         "name": "Monoseul",
         "role": 3,
         "id": 90
+    },
+    {
+        "name": "Kori",
+        "role": 3,
+        "id": 72
     }
 ];
 
