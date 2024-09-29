@@ -31,8 +31,8 @@ const avatar = ref();
 const banner = ref();
 
 registerEvent('user-edit-overlay', user => {
-    react.avatar = Assets.Avatar(user.id);
-    react.banner = Assets.Banner(user.id);
+    react.avatar = Assets.Avatar(user);
+    react.banner = Assets.Banner(user);
     react.user = user;
     react.open = true;
 });

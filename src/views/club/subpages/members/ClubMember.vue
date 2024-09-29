@@ -58,7 +58,7 @@ function OpenContext(e) {
     <RouterLink :to="`/u/${member.id}`" class="w-full flex flex-row items-center gap-2"
         @contextmenu.prevent="OpenContext">
         <div class="size-12">
-            <LoadingImage class="size-full object-cover rounded-lg" :src="Assets.Avatar(member.id)" />
+            <LoadingImage class="size-full object-cover rounded-lg" :src="Assets.Avatar(member)" />
         </div>
         <div class="flex flex-col">
             <div class="flex gap-1.5">

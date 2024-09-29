@@ -18,7 +18,7 @@ defineProps({
 <template>
     <RouterLink :to="`/u/${user.id}`"
         class="overlap-grid group rounded-xl bg-dark-2 first:h-72 h-80 last:h-64">
-        <LoadingImage class="object-cover" :src="Assets.Banner(user.id)" />
+        <LoadingImage class="object-cover" :src="Assets.Banner(user)" />
         <div class="bg-dark-2 opacity-50"></div>
         <div class="flex items-center p-5 gap-2 flex-col drop-shadow-text">
             <div class="flex flex-col justify-center">
@@ -26,7 +26,7 @@ defineProps({
             </div>
             <LoadingImage
                 class="flex-grow size-36 group-first:size-28 group-last:size-20 mb-1 object-cover rounded-xl bg-dark-3"
-                :src="Assets.Avatar(user.id)" />
+                :src="Assets.Avatar(user)" />
             <div class="h-full flex flex-col justify-center">
                 <ClubTag :club="user.club" />
                 <p class="text-lg leading-none">

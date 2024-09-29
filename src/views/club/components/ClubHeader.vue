@@ -11,12 +11,12 @@ const props = defineProps({
 
 <template>
     <div class="overlap-grid w-full h-44 rounded-2xl">
-        <LoadingImage class="object-cover" :src="Assets.ClubBanner(club.id)" />
+        <LoadingImage class="object-cover" :src="Assets.ClubBanner(club)" />
         <div class="bg-dark-2 opacity-50"></div>
         <div class="flex flex-col items-center justify-center">
             <div class="w-full max-w-[960px] px-10 flex flex-row items-center justify-start gap-5">
                 <div class="size-32">
-                    <LoadingImage class="size-full rounded-xl shadow-normal" :src="Assets.ClubIcon(club.id)" />
+                    <LoadingImage class="size-full rounded-xl shadow-normal" :src="Assets.ClubIcon(club)" />
                 </div>
                 <div class="flex-1 flex flex-col text-left">
                     <div class="w-full flex gap-1.5 items-center">

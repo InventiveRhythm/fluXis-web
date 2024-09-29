@@ -32,14 +32,14 @@ function OpenEdit() {
 <template>
     <div class="w-full md:h-96 xl:h-auto xl:aspect-header md:rounded-3xl overflow-hidden overlap-grid">
         <LoadingImage class="object-cover h-full md:h-inherit xl:h-auto xl:aspect-header"
-            :src="Assets.Banner(user.id)" />
+            :src="Assets.Banner(user)" />
         <div class="bg-dark-2 opacity-50"></div>
         <div class="flex flex-col items-center justify-center py-5 md:py-0">
             <div class="w-full max-w-[1200px] md:px-10 flex flex-col items-center justify-center gap-5">
                 <div class="flex flex-col md:flex-row md:h-32 items-center self-stretch gap-3">
                     <div class="size-32">
                         <LoadingImage class="size-full rounded-3xl shadow-normal object-cover"
-                            :src="Assets.Avatar(user.id)" />
+                            :src="Assets.Avatar(user)" />
                     </div>
                     <div class="flex-1 flex flex-col justify-center items-center gap-1 leading-none drop-shadow-text">
                         <div class="w-full flex flex-col md:flex-row gap-3 justify-between items-center">

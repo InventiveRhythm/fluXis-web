@@ -40,10 +40,10 @@ function userClick() {
                 <div class="wrapper absolute right-0 mt-20">
                     <div class="w-80 bg-dark-1 rounded-bl-2xl p-3">
                         <div class="overlap-grid h-40 rounded-lg cursor-pointer group leading-none" @click="userClick">
-                            <img :src="state.user ? Assets.Banner(state.user.id) : DefaultBanner" class="object-cover" />
+                            <img :src="state.user ? Assets.Banner(state.user) : DefaultBanner" class="object-cover" />
                             <div class="bg-dark-2 opacity-50 transition-opacity group-hover:opacity-40"></div>
                             <div class="flex flex-col justify-center items-center" >
-                                <img :src="state.user ? Assets.Avatar(state.user.id) : DefaultAvatar"
+                                <img :src="state.user ? Assets.Avatar(state.user) : DefaultAvatar"
                                     class="size-16 object-cover rounded-md mb-2 shadow-md">
 
                                 <div class="flex items-center gap-1 drop-shadow-text">

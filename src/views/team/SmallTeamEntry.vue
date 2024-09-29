@@ -20,11 +20,11 @@ function getRoleName(role) {
 
 <template>
     <div class="overlap-grid w-full h-12 rounded-md">
-        <LoadingImage class="object-cover" :src="Assets.Banner(id)" />
+        <LoadingImage class="object-cover" :src="Assets.Banner({ id: id })" />
         <div class="section-gradient opacity-60"></div>
         <div class="flex flex-row items-center p-2 gap-2">
             <div class="size-8">
-                <LoadingImage class="size-full object-cover rounded-md" :src="Assets.Avatar(id)" />
+                <LoadingImage class="size-full object-cover rounded-md" :src="Assets.Avatar({ id: id })" />
             </div>
             <div class="text-left leading-none">
                 <p>{{ name }}</p>

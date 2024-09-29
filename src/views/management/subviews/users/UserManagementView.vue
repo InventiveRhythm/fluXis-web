@@ -92,7 +92,7 @@ function UpdateSorting(sort) {
                     <RouterLink :to="`/u/${user.id}`" class="w-full h-12 flex flex-row items-center px-2 gap-3 text-sm bg-dark-2 odd:bg-dark-3"
                         v-for="user in react.users">
                         <div class="size-9">
-                            <LoadingImage class="size-full object-cover rounded-md" :src="Assets.Avatar(user.id)" />
+                            <LoadingImage class="size-full object-cover rounded-md" :src="Assets.Avatar(user)" />
                         </div>
                         <p class="flex-1">{{ user.username }}</p>
                         <p class="w-48 line-clamp-1">{{ (user.club || {}).name || "-" }}</p>

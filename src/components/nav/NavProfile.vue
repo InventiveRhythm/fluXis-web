@@ -33,6 +33,6 @@ function onProfileClick(e) {
 
 <template>
     <div class="size-24 flex items-center justify-center rounded-bl-3xl bg-dark-3 hover:bg-dark-4 transition-colors" @mousedown="onProfileClick" >
-        <LoadingImage class="size-16 rounded-lg" :src="state.user ? Assets.Avatar(state.user.id) : DefaultAvatar" alt="user avatar" />
+        <LoadingImage class="size-16 rounded-lg" :src="state.user ? Assets.Avatar(state.user) : DefaultAvatar" alt="user avatar" />
     </div>
 </template>

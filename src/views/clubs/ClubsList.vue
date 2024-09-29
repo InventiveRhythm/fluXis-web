@@ -45,11 +45,11 @@ API.PerformGet("/clubs").then(res => {
                 class="flex flex-col w-full h-56 bg-dark-2 transition-all active:scale-95 hover:bg-dark-3 rounded-3xl"
                 :to="`/club/${club.id}`" v-for="club in react.clubs">
                 <div class="w-full h-36">
-                    <LoadingImage class="size-full object-cover rounded-3xl" :src="Assets.ClubBanner(club.id)" />
+                    <LoadingImage class="size-full object-cover rounded-3xl" :src="Assets.ClubBanner(club)" />
                 </div>
                 <div class="w-full flex-grow flex flex-row items-center p-4 gap-2 text-left">
                     <div class="size-12">
-                        <LoadingImage class="size-full object-cover rounded-lg" :src="Assets.ClubIcon(club.id)" />
+                        <LoadingImage class="size-full object-cover rounded-lg" :src="Assets.ClubIcon(club)" />
                     </div>
                     <div class="min-w-0 flex-grow">
                         <p class="truncate">
