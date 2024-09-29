@@ -45,7 +45,8 @@ module.exports = {
         extend: {
             width: {
                 'panel': 620,
-                'content': 1280 // matches with the xl viewport
+                'content': 1280, // matches with the xl viewport,
+                'inherit': 'inherit'
             },
             dropShadow: {
                 'text': '0 2px 2px rgba(0, 0, 0, 0.2)',

@@ -58,6 +58,12 @@ function userClick() {
                                     class="text-xs drop-shadow-text opacity-80">{{ state.user.username }}</p>
                             </div>
                         </div>
+                        <div class="flex flex-col mt-2" v-if="state.user && Utils.IsModerator(state.user)">
+                            <RouterLink class="bg-dark-2 py-1 px-3 rounded-lg transition-colors text-sm hover:bg-dark-3"
+                                to="/management">
+                                Management
+                            </RouterLink>
+                        </div>
                         <div class="flex flex-col mt-2" v-if="state.user">
                             <RouterLink class="bg-dark-2 py-1 px-3 rounded-lg transition-colors text-sm hover:bg-dark-3"
                                 to="/logout">

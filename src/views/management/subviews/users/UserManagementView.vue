@@ -5,6 +5,8 @@ import { RouterLink } from 'vue-router';
 import ErrorContainer from '@/components/status/ErrorContainer.vue';
 import LoadingContainer from '@/components/status/LoadingContainer.vue';
 
+import Dropdown from '@/components/ui/dropdown/Dropdown.vue';
+import DropdownItem from '@/components/ui/dropdown/DropdownItem.vue';
 import IconTextBox from '@/components/IconTextBox.vue';
 import LoadingImage from '@/components/LoadingImage.vue';
 
@@ -14,9 +16,18 @@ import TimeUtils from '@/utils/TimeUtils';
 
 const react = reactive({
     loading: true,
+    sorting: "create-asc",
     error: "",
     users: []
 })
+
+const sortList = [{
+    id: 'create-asc',
+    title: 'Created (Ascending)'
+}, {
+    id: 'create-dec',
+    title: 'Created (Decending)'
+}];
 
 let offset = 0;
 let name = "";
@@ -30,7 +41,7 @@ function Load() {
 
     react.loading = true;
 
-    API.PerformGet(`/users?offset=${offset}&name=${name}&with=creation,login`).then(res => {
+    API.PerformGet(`/users?offset=${offset}&name=${name}&sort=${react.sorting}&with=creation,login`).then(res => {
         react.loading = false;
 
         if (res.status != 200) {
@@ -53,11 +64,19 @@ function OnInput(input) {
     schedule = setTimeout(Load, 200)
 }
 
+function UpdateSorting(sort) {
+    console.log("setting sort to", sort)
+    react.sorting = sort;
+    Load();
+}
 </script>
 
 <template>
     <div class="w-full flex flex-col gap-5">
-        <IconTextBox icon="font" placeholder="Search..." :changed="OnInput" />
+        <div class="flex flex-row gap-2">
+            <IconTextBox class="flex-1" icon="font" placeholder="Search..." :changed="OnInput" />
+            <Dropdown class="w-64 h-full" :items="sortList" :currentid="react.sorting" :selected="UpdateSorting" />
+        </div>
         <div>
             <LoadingContainer v-if="react.loading" />
             <ErrorContainer :text="react.error" v-else-if="react.error" />
