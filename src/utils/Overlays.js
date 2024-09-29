@@ -8,4 +8,22 @@ export default class Overlays {
     static CloseClubCreate() {
         emitEvent('club-overlay', false)
     }
+
+    static OpenMenu(x, y, items, right = false) {
+        emitEvent("open-context", {
+            x: x,
+            y: y,
+            items: items,
+            right: right
+        })
+    }
+
+    static OpenContext(e, items, right = false) {
+        emitEvent("open-context", {
+            x: e.clientX,
+            y: e.clientY,
+            items: items,
+            right: right
+        })
+    }
 }

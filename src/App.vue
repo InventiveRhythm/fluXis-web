@@ -7,7 +7,8 @@ import UserOverlay from "./overlays/user/UserOverlay.vue";
 import CreateClubOverlay from "./overlays/club-creation/CreateClubOverlay.vue";
 import EditClubOverlay from "./overlays/club-edit/EditClubOverlay.vue";
 import EditUserOverlay from "./overlays/edit-user/EditUserOverlay.vue";
-import ClubLeaveOverlay from "./overlays/club-leave/ClubLeaveOverlay.vue";
+
+import ContextMenu from "./overlays/context/ContextMenu.vue";
 
 function stringifyRoute(route) {
     if (!route.name)
@@ -43,11 +44,11 @@ function stringifyRoute(route) {
         <EditUserOverlay />
         <CreateClubOverlay />
         <EditClubOverlay />
-        <ClubLeaveOverlay />
         <Loading />
     </div>
 
     <NavBar />
+    <ContextMenu />
 </template>
 
 <style lang="scss">

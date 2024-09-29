@@ -7,6 +7,7 @@ import TabControlItem from '../../components/tabs/TabControlItem.vue';
 import ClubHeader from './components/ClubHeader.vue';
 import RoundedButton from '@/components/RoundedButton.vue';
 
+import ClubLeaveOverlay from '@/overlays/club-leave/ClubLeaveOverlay.vue';
 import ErrorContainer from '@/components/status/ErrorContainer.vue';
 
 import API from '@/utils/API';
@@ -129,4 +130,5 @@ function CanLeave() {
         </div>
     </div>
     <ErrorContainer :text="react.error" v-if="!react.loading && !react.club" />
+    <ClubLeaveOverlay />
 </template>
