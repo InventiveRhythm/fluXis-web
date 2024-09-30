@@ -2,14 +2,23 @@
 import { useRoute } from 'vue-router';
 import { reactive } from 'vue';
 
-import { getRatingColor, darkenColor } from '@/utils/ColorUtils';
 import Config from '@/config.json';
 import API from '@/utils/API';
 import Utils from '@/utils/Utils';
 import { startLoading, stopLoading } from '@/utils/Loading';
 
+/* top */
 import MapSetHeader from './components/MapSetHeader.vue';
+import MapSetButton from './components/MapSetButton.vue';
 import KeyModeIcon from '../../components/KeyModeIcon.vue';
+
+import LeaderboardEntry from './components/leaderboard/LeaderboardEntry.vue';
+
+/* side */
+import MapSetSidebarSection from './components/sidebar/MapSetSidebarSection.vue';
+import MapSetCreator from './components/sidebar/MapSetCreator.vue';
+import MapSetVotes from './components/sidebar/MapSetVotes.vue';
+import MapSetStatistics from './components/sidebar/MapSetStatistics.vue';
 
 const route = useRoute();
 const id = parseInt(route.params.id);
@@ -18,7 +27,7 @@ var react = reactive({
     loading: true,
     set: null,
     maps: [],
-    currentMap: 0,
+    currentMap: null,
     scores: null
 });
 
@@ -29,8 +38,9 @@ async function load() {
 
     try {
         await API.PerformGet(`/mapset/${id}`).then(data => {
+            stopLoading();
+
             if (!data.data) {
-                stopLoading();
                 react.loading = false;
                 return;
             }
@@ -51,7 +61,7 @@ async function load() {
 }
 
 async function switchDifficulty(map) {
-    if (react.currentMap.id === map.id)
+    if (react.currentMap != null && react.currentMap.id === map.id)
         return;
 
     startLoading();
@@ -78,89 +88,46 @@ function wip() {
 }
 
 function download() {
-    window.open(`${Config.A}/mapset/${id}/download`, '_blank');
-}
-
-function getBarColor(percent, dark = false) {
-    var col = getRatingColor(percent * 30);
-
-    if (dark) {
-        col = darkenColor(col, .8);
-    }
-
-    return col;
+    window.open(`${Config.APIUrl}/mapset/${id}/download`, '_blank');
 }
 </script>
 
 <template>
-    <div class="mapset-page" v-if="!react.loading && react.set">
+    <div class="w-full flex flex-col items-center gap-5" v-if="!react.loading && react.set">
         <MapSetHeader :set="react.set" />
-        <div class="mapset-buttons">
-            <div class="mapset-diff-select">
-                <div class="mapset-difficulty" v-for="map in react.set.maps" @click="switchDifficulty(map)" :class="map.id === react.currentMap.id ? 'expand' : ''">
-                    <KeyModeIcon :mode="map.mode" />
-                    <div class="text">
-                        <p>{{ map.difficulty }}</p>
-                        <p class="mapper" v-if="react.set.creator.id != map.mapper.id">mapped by {{ map.mapper.username }}</p>
+        <div class="w-full flex flex-row items-center justify-between px-3">
+            <div class="flex flex-row items-center gap-3 flex-wrap">
+                <div class="flex items-center justify-start size-12 bg-dark-2 rounded-full overflow-hidden transition-all duration-200"
+                    v-for="map in react.set.maps" @click="switchDifficulty(map)"
+                    :class="{ 'w-fit bg-dark-3': map.id === react.currentMap.id }">
+                    <KeyModeIcon class="size-12" :mode="map.mode" />
+                    <div class="w-auto h-full flex flex-col justify-center pr-4 text-left">
+                        <p class="text-sm">{{ map.difficulty }}</p>
+                        <p class="text-2xs opacity-80" v-if="react.set.creator.id != map.mapper.id">mapped by {{
+                            map.mapper.username }}</p>
                     </div>
                 </div>
             </div>
-            <div class="mapset-actions">
-                <div class="mapset-action favorite" @click="wip">
-                    <i class="fa-regular fa-star"></i>
-                </div>
-                <div class="mapset-action download" @click="download">
-                    <i class="fa-solid fa-arrow-down"></i>
-                </div>
-                <div class="mapset-action more" @click="wip">
-                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                </div>
+            <div class="w-80 flex flex-row items-center justify-end gap-3">
+                <MapSetButton icon="star" @click="wip" />
+                <MapSetButton icon="arrow-down" @click="download" />
+                <MapSetButton icon="ellipsis-vertical" @click="wip" />
             </div>
         </div>
-        <div class="mapset-page-content">
-            <div class="mapset-content">
-                <div class="mapset-map-leaderboard">
-                    leaderboard
-                    <p>soon-ish</p>
-                    <!-- The actual reason I didnt add it yet is because the API doesn't return users with scores -->
-                </div>
+        <div class="w-full flex justify-center items-start px-3 gap-5">
+            <div class="flex flex-col flex-1 gap-2">
+                <LeaderboardEntry :score="score" :idx="react.scores.indexOf(score)" v-for="score in react.scores" />
             </div>
-            <div class="mapset-sidebar">
-                <div class="mapset-sidebar-section">
-                    <p class="section-title">Creator</p>
-                    <div class="mapset-map-creator">
-
-                    </div>
-                </div>
-                <div class="mapset-sidebar-section">
-                    <p class="section-title">Statistics</p>
-                    <div class="mapset-map-stats">
-                        <div class="statistic">
-                            <p class="stat-title">Rating</p>
-                            <div class="stat-bar" :style="'background-color: ' + getBarColor(react.currentMap.rating / 30, true)">
-                                <div class="bar-fill" :style="'width: ' + ((react.currentMap.rating / 30) * 100) + '%; background-color: ' + getBarColor(react.currentMap.rating / 30)">
-                                    <p v-if="(react.currentMap.rating / 30) >= .2">{{ react.currentMap.rating.toFixed(2) }}</p>
-                                </div>
-                                <p v-if="(react.currentMap.rating / 30) < .2">{{ react.currentMap.rating.toFixed(2) }}</p>
-                            </div>
-                        </div>
-                        <div class="statistic">
-                            <p class="stat-title">Notes Per Second</p>
-                            <div class="stat-bar" :style="'background-color: ' + getBarColor(react.currentMap.nps / 40, true)">
-                                <div class="bar-fill" :style="'width: ' + ((react.currentMap.nps / 40) * 100) + '%; background-color: ' + getBarColor(react.currentMap.nps / 40)">
-                                    <p v-if="(react.currentMap.nps / 40) >= .2">{{ react.currentMap.nps.toFixed(2) }}</p>
-                                </div>
-                                <p v-if="(react.currentMap.nps / 40) < .2">{{ react.currentMap.nps.toFixed(2) }}</p>
-                            </div>
-                        </div>
-                        <!-- <div class="statistic">
-                            <p class="stat-title">Accuracy</p>
-                            <div class="stat-bar">
-                                <div class="bar-fill"></div>
-                            </div>
-                        </div> -->
-                    </div>
-                </div>
+            <div class="w-80 flex flex-col gap-5">
+                <MapSetSidebarSection title="Creator">
+                    <MapSetCreator :mapper="react.currentMap.mapper" />
+                </MapSetSidebarSection>
+                <MapSetSidebarSection title="Voting">
+                    <MapSetVotes :map="react.currentMap" />
+                </MapSetSidebarSection>
+                <MapSetSidebarSection title="Statistics">
+                    <MapSetStatistics :map="react.currentMap" />
+                </MapSetSidebarSection>
             </div>
         </div>
     </div>
@@ -213,7 +180,7 @@ function getBarColor(percent, dark = false) {
                     justify-content: center;
                     padding-right: 14px;
                     text-align: left;
-                    
+
                     p {
                         font-size: 14px;
                         color: white;

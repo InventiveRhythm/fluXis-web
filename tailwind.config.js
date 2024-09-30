@@ -40,6 +40,10 @@ module.exports = {
             'group': {
                 'moderators': '#73d173',
                 'purifier': '#55b2ff',
+            },
+            'vote': {
+                'up': '#43AFFC',
+                'down': '#FDC872',
             }
         },
         extend: {
