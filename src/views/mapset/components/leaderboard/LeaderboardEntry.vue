@@ -21,7 +21,7 @@ defineProps({
             <div class="size-12">
                 <LoadingImage class="size-full object-cover rounded-lg" :src="Assets.Avatar(score.user)" />
             </div>
-            <div class="flex-1 text-left flex flex-row items-center justify-between p-3">
+            <div class="flex-1 text-left flex flex-row items-center justify-between drop-shadow-text p-3">
                 <div class="flex flex-col gap-1">
                     <p class="leading-none">
                         <span :class="`fi fi-${score.user.country} flag text-xs leading-none`"></span>
