@@ -12,7 +12,7 @@ function GetPercentage(up, down) {
 </script>
 
 <template>
-    <div class="w-full flex flex-col px-3 gap-1.5">
+    <div class="w-full flex flex-col gap-1.5">
         <div class="w-full h-2 bg-vote-down rounded-full">
             <div class="h-full bg-vote-up rounded-full" :style="`width: ${GetPercentage(map.ups, map.downs)}%`"></div>
         </div>

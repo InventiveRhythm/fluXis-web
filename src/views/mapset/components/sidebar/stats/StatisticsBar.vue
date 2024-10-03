@@ -19,7 +19,7 @@ function GetColor(value, dark) {
 </script>
 
 <template>
-    <div class="w-full h-4 flex flex-row items-center gap-1.5 px-3">
+    <div class="w-full h-4 flex flex-row items-center gap-1.5">
         <p class="w-20 px-1 text-xs">{{ title }}</p>
         <div class="flex flex-row flex-1 h-full items-center rounded-full bg-dark-2" :style="`background-color: ${GetColor(value, true)}`">
             <div class="flex flex-row h-full rounded-full justify-end items-center transition-all"

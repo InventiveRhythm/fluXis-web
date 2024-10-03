@@ -10,7 +10,7 @@ defineProps({
 </script>
 
 <template>
-    <RouterLink :to="`/u/${mapper.id}`" class="overlap-grid w-full h-12 bg-dark-2 rounded-lg">
+    <RouterLink :to="`/u/${mapper.id}`" class="overlap-grid text-left w-full h-12 bg-dark-2 rounded-lg">
         <LoadingImage class="object-cover" :src="Assets.Banner(mapper)" />
         <div class="bg-dark-2 opacity-50"></div>
         <div class="flex flex-row items-center gap-2 pr-2">

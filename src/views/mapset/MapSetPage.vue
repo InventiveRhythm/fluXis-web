@@ -133,9 +133,7 @@ function OpenMenu(e) {
                 <LeaderboardEntry :score="score" :idx="react.scores.indexOf(score)" v-for="score in react.scores" />
             </div>
             <div class="w-80 flex flex-col gap-5">
-                <MapSetSidebarSection title="Creator">
-                    <MapSetCreator :mapper="react.currentMap.mapper" />
-                </MapSetSidebarSection>
+                <MapSetCreator :mapper="react.currentMap.mapper" />
                 <MapSetSidebarSection title="Voting">
                     <MapSetVotes :map="react.currentMap" />
                 </MapSetSidebarSection>
