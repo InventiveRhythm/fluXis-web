@@ -1,10 +1,11 @@
 <script async setup>
 import { useRoute } from 'vue-router';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 
 import Config from '@/config.json';
 import API from '@/utils/API';
 import Utils from '@/utils/Utils';
+import Overlays from '@/utils/Overlays';
 import { startLoading, stopLoading } from '@/utils/Loading';
 
 /* top */
@@ -23,7 +24,7 @@ import MapSetStatistics from './components/sidebar/MapSetStatistics.vue';
 const route = useRoute();
 const id = parseInt(route.params.id);
 
-var react = reactive({
+const react = reactive({
     loading: true,
     set: null,
     maps: [],
@@ -90,6 +91,19 @@ function wip() {
 function download() {
     window.open(`${Config.APIUrl}/mapset/${id}/download`, '_blank');
 }
+
+function OpenMenu(e) {
+    const el = e.target;
+    const rect = el.getBoundingClientRect();
+    console.log(rect)
+
+    Overlays.OpenMenu(rect.x + rect.width / 2, rect.y + rect.height + 8, [{
+        text: "Delete",
+        icon: "fa fa-trash",
+        classes: 'text-red hover:bg-red',
+        action: () => alert('Still work in progress.')
+    }], true);
+}
 </script>
 
 <template>
@@ -111,7 +125,7 @@ function download() {
             <div class="w-80 flex flex-row items-center justify-end gap-3">
                 <MapSetButton icon="star" @click="wip" />
                 <MapSetButton icon="arrow-down" @click="download" />
-                <MapSetButton icon="ellipsis-vertical" @click="wip" />
+                <MapSetButton icon="ellipsis-vertical" @click="OpenMenu" />
             </div>
         </div>
         <div class="w-full flex justify-center items-start px-3 gap-5">
