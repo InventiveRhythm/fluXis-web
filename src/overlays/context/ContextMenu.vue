@@ -34,7 +34,6 @@ document.addEventListener("click", e => {
     if (menu.value && menu.value.contains(e.target))
         return;
 
-    console.log("yea")
     react.open = false;
 });
 
