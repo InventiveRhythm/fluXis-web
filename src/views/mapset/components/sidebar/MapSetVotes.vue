@@ -14,7 +14,7 @@ function GetPercentage(up, down) {
 <template>
     <div class="w-full flex flex-col gap-1.5">
         <div class="w-full h-2 bg-vote-down rounded-full">
-            <div class="h-full bg-vote-up rounded-full" :style="`width: ${GetPercentage(map.ups, map.downs)}%`"></div>
+            <div class="h-full bg-vote-up rounded-full transition-all" :style="`width: ${GetPercentage(map.ups, map.downs)}%`"></div>
         </div>
         <div class="w-full flex flex-row justify-between">
             <p class="text-sm w-12 text-vote-up">{{ map.ups }}</p>
