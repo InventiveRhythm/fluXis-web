@@ -5,7 +5,7 @@ defineProps({
 
 function GetPercentage(up, down) {
     if (!up && !down)
-        return 0
+        return 50
 
     return Math.floor((up / (up + down)) * 100)
 }
