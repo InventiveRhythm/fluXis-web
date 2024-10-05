@@ -109,30 +109,31 @@ function OpenMenu(e) {
 <template>
     <div class="w-full flex flex-col items-center gap-5" v-if="!react.loading && react.set">
         <MapSetHeader :set="react.set" />
-        <div class="w-full flex flex-row items-center justify-between px-3">
-            <div class="flex flex-row items-center gap-3 flex-wrap">
-                <div class="flex items-center justify-start size-12 bg-dark-2 rounded-full overflow-hidden transition-all duration-200"
+        <div class="w-full flex flex-col-reverse md:flex-row gap-3 items-center justify-between px-3">
+            <div class="flex flex-row flex-wrap items-center justify-center gap-3 overflow-x-scroll px-4 md:flex-1 md:justify-start md:px-0">
+                <div class="flex size-12 items-center justify-start overflow-hidden rounded-full bg-dark-2 transition-all duration-200"
                     v-for="map in react.set.maps" @click="switchDifficulty(map)"
                     :class="{ 'w-fit bg-dark-3': map.id === react.currentMap.id }">
                     <KeyModeIcon class="size-12" :mode="map.mode" />
-                    <div class="w-auto h-full flex flex-col justify-center pr-4 text-left">
+                    <div class="w-auto h-full flex-col justify-center pr-4 text-left" :class="map.id === react.currentMap.id ? 'flex' : 'hidden'">
                         <p class="text-sm">{{ map.difficulty }}</p>
-                        <p class="text-2xs opacity-80" v-if="react.set.creator.id != map.mapper.id">mapped by {{
-                            map.mapper.username }}</p>
+                        <p class="text-2xs opacity-80" v-if="react.set.creator.id != map.mapper.id">
+                            mapped by {{ map.mapper.username }}
+                        </p>
                     </div>
                 </div>
             </div>
-            <div class="w-80 flex flex-row items-center justify-end gap-3">
+            <div class="w-fit flex flex-row items-center justify-end gap-3">
                 <MapSetButton icon="star" @click="wip" />
                 <MapSetButton icon="arrow-down" @click="download" />
                 <MapSetButton icon="ellipsis-vertical" @click="OpenMenu" />
             </div>
         </div>
-        <div class="w-full flex justify-center items-start px-3 gap-5">
-            <div class="flex flex-col flex-1 gap-2">
+        <div class="w-full flex flex-col-reverse md:flex-row justify-center items-start px-3 gap-5">
+            <div class="w-full md:w-auto flex flex-col flex-1 gap-2">
                 <LeaderboardEntry :score="score" :idx="react.scores.indexOf(score)" v-for="score in react.scores" />
             </div>
-            <div class="w-80 flex flex-col gap-5">
+            <div class="w-full md:w-80 flex flex-col gap-5">
                 <MapSetCreator :mapper="react.currentMap.mapper" />
                 <MapSetSidebarSection title="Voting">
                     <MapSetVotes :map="react.currentMap" />

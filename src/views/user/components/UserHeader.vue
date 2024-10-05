@@ -30,7 +30,7 @@ function OpenEdit() {
 </script>
 
 <template>
-    <div class="w-full md:h-96 xl:h-auto xl:aspect-header md:rounded-3xl overflow-hidden overlap-grid">
+    <div class="w-full md:h-96 xl:h-auto xl:aspect-header xl:rounded-3xl overflow-hidden overlap-grid">
         <LoadingImage class="object-cover h-full md:h-inherit xl:h-auto xl:aspect-header"
             :src="Assets.Banner(user)" />
         <div class="bg-dark-2 opacity-50"></div>

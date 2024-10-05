@@ -67,9 +67,9 @@ function ShouldShowEdit() {
 </script>
 
 <template>
-    <div class="w-full flex flex-col items-center md:gap-5" v-if="!react.loading && react.user">
+    <div class="w-full flex flex-col items-center xl:gap-5" v-if="!react.loading && react.user">
         <UserHeader :user="react.user" />
-        <UserStats :statistics="react.user.stats" />
+        <UserStats class="mb-3 xl:mb-0" :statistics="react.user.stats" />
         <div class="w-full flex justify-center items-start p-3 gap-5">
             <div class="w-80 min-w-80 flex flex-col justify-center gap-5" hide-mobile>
                 <RoundedButton v-if="ShouldShowEdit()" @click="OpenEdit"

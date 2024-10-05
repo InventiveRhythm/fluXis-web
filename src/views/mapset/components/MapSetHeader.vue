@@ -11,179 +11,26 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="mapset-header">
-        <LoadingImage :src="Assets.Background(set.id)" class="background" />
-        <div class="dim"></div>
-        <div class="wrapper">
-            <div class="data">
-                <div class="info">
-                    <LoadingImage :src="Assets.Cover(set.id)" class="cover" />
-                    <div class="text">
-                        <div class="top">
+    <div class="overlap-grid w-full h-96 md:h-72 rounded-b-3xl xl:rounded-3xl">
+        <LoadingImage class="object-cover" :src="Assets.Background(set.id)" />
+        <div class="bg-dark-2 bg-opacity-50"></div>
+        <div class="flex flex-col items-center justify-center">
+            <div class="w-full max-w-[1200px] px-10 flex flex-col items-center justify-center">
+                <div class="w-full md:h-40 flex flex-col md:flex-row items-center self-start gap-3">
+                    <LoadingImage class="size-32 md:size-40 rounded-2xl object-cover shadow-md" :src="Assets.Cover(set.id)" />
+                    <div class="flex-1 flex flex-col justify-center items-start drop-shadow-text gap-1 text-center md:text-left">
+                        <div class="w-full flex flex-col md:flex-row gap-2 items-center justify-between">
                             <StatusChip :status="set.status" />
-                            <div class="status-date">
-                                <span>Uploaded on</span>
+                            <div class="text-base">
+                                <span class="opacity-80">Uploaded on</span>
                                 {{ TimeUtils.formatDate(set.submitted) }}
                             </div>
                         </div>
-                        <p class="title">{{ set.title }}</p>
-                        <p class="artist">{{ set.artist }}</p>
+                        <p class="w-full text-4xl line-clamp-1">{{ set.title }}</p>
+                        <p class="w-full text-2xl line-clamp-1">{{ set.artist }}</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
-
-<style lang="scss">
-.mapset-header {
-    width: 100%;
-    height: 280px;
-    border-radius: 20px;
-    overflow: hidden;
-    transition: .2s;
-
-    display: grid;
-    place-items: center;
-
-    > * {
-        position: relative;
-        grid-area: 1 / 1;
-        width: 100%;
-        height: inherit;
-    }
-
-    .background {
-        object-fit: cover;
-    }
-
-    .dim {
-        background-color: var(--bg-secondary);
-        opacity: .5;
-    }
-
-    .wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-        .data {
-            width: 100%;
-            max-width: 1200px;
-            padding: 0 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            
-            .info {
-                width: 100%;
-                height: 160px;
-                display: flex;
-                align-items: center;
-                align-self: stretch;
-                gap: 10px;
-
-                .cover {
-                    width: 160px;
-                    height: 160px;
-                    border-radius: 20px;
-                    object-fit: cover;
-                    box-shadow: var(--box-shadow);
-                    transition: .2s;
-                }
-
-                .text {
-                    flex-grow: 1;
-                    max-width: calc(100% - 170px);
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: flex-start;
-                    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .25));
-                    text-align: left;
-
-                    .top {
-                        width: 100%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                    }
-
-                    .title {
-                        width: 100%;
-                        font-size: 40px;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        transition: .2s;
-                    }
-
-                    .artist {
-                        width: 100%;
-                        font-size: 24px;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        transition: .2s;
-                    }
-                }
-            }
-        }
-    }
-
-    @media screen and (max-width: 1000px) {
-        height: 480px;
-
-        .wrapper .data {
-            flex-direction: column;
-
-            .info {
-                height: auto;
-                flex-direction: column;
-
-                .text {
-                    max-width: 100%;
-                    text-align: center;
-
-                    .top {
-                        justify-content: center;
-                        align-self: flex-end;
-
-                        .status-date {
-                            display: none;
-                        }
-                    }
-
-                    .title {
-                        font-size: 32px;
-                    }
-                }
-            }
-        }
-    }
-
-    @media screen and (max-width: 500px) {
-        height: 320px;
-
-        .wrapper .data {
-
-            .info {
-                .cover {
-                    width: 120px;
-                    height: 120px;
-                }
-
-                .text {
-                    .title {
-                        font-size: 24px;
-                    }
-                    
-                    .artist {
-                        font-size: 16px;
-                    }
-                }
-            }
-        }
-    }
-}
-</style>

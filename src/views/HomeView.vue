@@ -33,7 +33,7 @@ function OpenDownload() {
 </script>
 
 <template>
-    <div class="overlap-grid relative w-full h-96 rounded-3xl overflow-hidden">
+    <div class="overlap-grid relative w-full h-96 rounded-b-3xl xl:rounded-3xl overflow-hidden">
         <video :src="HomeVideo" class="future loadFade object-cover blur-sm scale-105" autoplay muted loop></video>
         <div class="bg-dark-2 opacity-60"></div>
         <div class="flex flex-col justify-center items-center lg:items-start lg:text-left px-16">
