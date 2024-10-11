@@ -2,6 +2,8 @@
 import { useRoute } from 'vue-router';
 import { reactive, ref } from 'vue';
 
+import LoadingContainer from '@/components/status/LoadingContainer.vue';
+
 import Config from '@/config.json';
 import API from '@/utils/API';
 import Utils from '@/utils/Utils';
@@ -26,6 +28,7 @@ const id = parseInt(route.params.id);
 
 const react = reactive({
     loading: true,
+    scoresLoading: true,
     set: null,
     maps: [],
     currentMap: null,
@@ -65,20 +68,18 @@ async function switchDifficulty(map) {
     if (react.currentMap != null && react.currentMap.id === map.id)
         return;
 
-    startLoading();
+    react.scoresLoading = true;
 
     console.log("switching to '" + map.difficulty + "' (" + map.id + ")");
     react.currentMap = map;
 
     await API.PerformGet(`/map/${map.id}/scores`).then(data => {
-        if (!data.data) {
-            stopLoading();
+        react.scoresLoading = false;
+
+        if (!data.data)
             return;
-        }
 
         react.scores = data.data.scores;
-        console.log(data.data.scores);
-        stopLoading();
     }).catch(err => {
         console.error(err);
     });
@@ -131,7 +132,8 @@ function OpenMenu(e) {
         </div>
         <div class="w-full flex flex-col-reverse md:flex-row justify-center items-start px-3 gap-5">
             <div class="w-full md:w-auto flex flex-col flex-1 gap-2">
-                <LeaderboardEntry :score="score" :idx="react.scores.indexOf(score)" v-for="score in react.scores" />
+                <LeaderboardEntry v-if="!react.scoresLoading" :score="score" :idx="react.scores.indexOf(score)" v-for="score in react.scores" />
+                <LoadingContainer v-else />
             </div>
             <div class="w-full md:w-80 flex flex-col gap-5">
                 <MapSetCreator :mapper="react.currentMap.mapper" />
