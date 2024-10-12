@@ -57,10 +57,15 @@ export default class API {
         });
     }
 
+    static Logout() {
+        Cookies.Remove('user')
+        Cookies.Remove('token')
+        state.user = undefined
+    }
+
     static async RefreshInfo(id: number) {
         await API.PerformGet<APIUser>('/user/' + id)
             .then((res) => {
-                state.user = res.data;
                 Cookies.Set('user', res.data);
                 state.user = res.data;
             }).catch((err) => {

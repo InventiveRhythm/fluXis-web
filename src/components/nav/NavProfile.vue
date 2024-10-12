@@ -21,7 +21,7 @@ function OnClick(e: MouseEvent) {
     if (e.button == 2 && state.user) {
         e.preventDefault();
         if (confirm('Are you sure you want to log out?')) {
-            state.user = undefined;
+            API.Logout()
         }
     }
 }

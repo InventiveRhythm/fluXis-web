@@ -2,7 +2,11 @@
     static Set(name: string, value: any) {
         const date = new Date();
         date.setTime(date.getTime() + (2 * 265 * 24 * 60 * 60 * 1000));
-        document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/`;
+
+        if (typeof(value) !== "string")
+            value = JSON.stringify(value)
+
+        document.cookie = `${name}=${value}; Max-Age=${date.toUTCString()}; path=/`;
     }
 
     static Get(cname: string): any {
@@ -30,6 +34,6 @@
     }
 
     static Remove(name: string) {
-        this.Set(name, '');
+        document.cookie = `${name}=; Max-Age=-99999999999; path=/;`;
     }
 }

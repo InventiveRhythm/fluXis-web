@@ -1,7 +1,6 @@
 <script setup>
-import Cookies from '@/utils/Cookies';
+import API from '@/utils/API';
 
-Cookies.Remove('user');
-Cookies.Remove('token');
+API.Logout()
 location = '/';
 </script>
