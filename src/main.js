@@ -3,6 +3,9 @@ import { createApp } from 'vue';
 import router from './router';
 import App from './App.vue';
 
+import API from '@/utils/API';
+import { state } from '@/utils/State';
+
 import * as Sentry from '@sentry/vue';
 
 import './assets/main.scss';
@@ -32,3 +35,6 @@ if (environment === 'prod') {
 
 app.use(router);
 app.mount('#app');
+
+if (state.user)
+    API.RefreshInfo(state.user?.id);
