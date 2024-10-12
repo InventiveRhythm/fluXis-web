@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@sentry/vite-plugin": "^2.22.5",
     "@sentry/vue": "^8.32.0",
     "@tsconfig/node20": "^20.1.4",
     "@vue/tsconfig": "^0.5.1",

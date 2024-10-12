@@ -1,3 +1,4 @@
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
@@ -9,10 +10,20 @@ export default defineConfig({
     port: 2432,
     strictPort: true
   },
-  plugins: [vue()],
+
+  plugins: [vue(), sentryVitePlugin({
+    org: "choccymilk",
+    project: "fluxis-web",
+    url: "https://sentry.flux.moe/"
+  })],
+
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  } 
+  },
+
+  build: {
+    sourcemap: true
+  }
 })
