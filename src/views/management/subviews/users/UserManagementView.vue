@@ -18,7 +18,7 @@ const react = reactive({
     users: [],
 });
 
-const sortList: any[] = [
+const sortList = [
     {
         id: 'create-asc',
         title: 'Created (Ascending)',

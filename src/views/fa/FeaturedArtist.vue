@@ -34,7 +34,7 @@ await API.PerformGet('/artists/' + id).then(res => {
 
 function playSong(album, track) {
     // stop all other songs
-    const audioElements: HTMLAudioElement[] = document.getElementsByTagName('audio');
+    const audioElements = document.getElementsByTagName('audio');
     for (let i = 0; i < audioElements.length; i++) {
         audioElements[i].pause();
     }
@@ -55,14 +55,14 @@ function playSong(album, track) {
 }
 
 function pauseSong(album, track) {
-    const audio: HTMLAudioElement = document.getElementById(`audio-${ album }-${ track }`);
+    const audio = document.getElementById(`audio-${ album }-${ track }`);
     audio.volume = 0;
     audio.currentTime = audio.duration;
 }
 
 function songFinished(album, track) {
-    const icon: HTMLAudioElement = document.getElementById(`icon-${ album }-${ track }`);
-    const clone: HTMLAudioElement = icon.cloneNode(true);
+    const icon = document.getElementById(`icon-${ album }-${ track }`);
+    const clone = icon.cloneNode(true);
     clone.classList.remove('fa-pause');
     clone.classList.add('fa-play');
     clone.addEventListener('click', function() {

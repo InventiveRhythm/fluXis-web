@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import type APIClub from '@/api/models/clubs/APIClub';
 
 import RoundedButton from '../../../components/RoundedButton.vue';
@@ -15,15 +15,15 @@ const props = defineProps<{
 async function invite() {
     const id = prompt('Enter the ID of the user you want to invite:');
 
-    const parsed = parseInt(id);
+    const parsed = parseInt(id ?? '0');
 
     if (!parsed) {
-        alert(`'${ id }' is not a valid user id.`);
+        alert(`'${id}' is not a valid user id.`);
         return;
     }
 
-    API.PerformPost(`/club/${ props.club.id }/invites`, {
-        user: parsed,
+    API.PerformPost(`/club/${props.club.id}/invites`, {
+        user: parsed
     }).then(res => {
         if (!res.IsSuccess()) {
             alert(res.message);
@@ -31,7 +31,7 @@ async function invite() {
         }
 
         alert(
-            `Invite created! Give the person you want to invite this link: ${ Config.BaseUrl }/invite/${ res.data.code }`);
+            `Invite created! Give the person you want to invite this link: ${Config.BaseUrl}/invite/${res.data.code}`);
     });
 }
 </script>
@@ -39,7 +39,7 @@ async function invite() {
 <template>
     <div class="flex flex-col items-center gap-3">
         <ClubMember :club="club" :member="member" v-for="member in club.members" />
-        <RoundedButton v-if="state.user && state.user.id === club.owner.id" @click="invite"
+        <RoundedButton v-if="state.user && state.user?.id === club.owner?.id" @click="invite"
                        class="px-6 py-2 text-white text-opacity-75 mt-3">Invite...
         </RoundedButton>
     </div>
