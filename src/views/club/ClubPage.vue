@@ -2,7 +2,7 @@
 import { reactive } from 'vue';
 import { RouterView, useRoute } from 'vue-router';
 
-import type APIClub from '@/api/models/clubs/APIClub';
+import APIClub from '@/api/models/clubs/APIClub';
 
 import TabControl from '@/components/tabs/TabControl.vue';
 import TabControlItem from '@/components/tabs/TabControlItem.vue';
