@@ -8,7 +8,7 @@ import Config from '@/config.json';
 import API from '@/utils/API';
 import Utils from '@/utils/Utils';
 import Overlays from '@/utils/Overlays';
-import { startLoading, stopLoading } from '@/utils/Loading';
+import { StartLoading, StopLoading } from '@/utils/Loading';
 
 /* top */
 import MapSetHeader from './components/MapSetHeader.vue';
@@ -38,11 +38,11 @@ const react = reactive({
 await load();
 
 async function load() {
-    startLoading();
+    StartLoading();
 
     try {
         await API.PerformGet(`/mapset/${id}`).then(data => {
-            stopLoading();
+            StopLoading();
 
             if (!data.data) {
                 react.loading = false;

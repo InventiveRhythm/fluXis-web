@@ -1,9 +1,9 @@
-<script setup>
-const props = defineProps({
-    label: String,
-    state: Boolean,
+<script setup lang="ts">
+const props = defineProps<{
+    label: string,
+    state: boolean,
     change: Function
-});
+}>();
 </script>
 
 <template>

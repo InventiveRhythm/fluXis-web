@@ -7,7 +7,7 @@ import UserContentList from '../components/UserContentList.vue';
 import ScoreCard from '@/components/score-v2/ScoreCard.vue';
 
 import API from '@/utils/API';
-import { startLoading, stopLoading } from '@/utils/Loading';
+import { StartLoading, StopLoading } from '@/utils/Loading';
 
 const route = useRoute();
 let id = parseInt(route.params.id);
@@ -18,19 +18,19 @@ let react = reactive({
 });
 
 try {
-    startLoading();
+    StartLoading();
     API.PerformGet(`/user/${id}/scores`).then(res => {
         if (!res.data) return;
 
         react['scores'] = res.data;
     }).finally(() => {
         react.loading = false;
-        stopLoading();
+        StopLoading();
     })
 } catch (err) {
     console.error(err);
     react.loading = false;
-    stopLoading();
+    StopLoading();
 }
 </script>
 

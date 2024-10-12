@@ -1,8 +1,8 @@
-<script setup>
+<script setup lang="ts">
 import { reactive } from 'vue';
 
 const react = reactive({
-    loaded: false
+    loading: false
 });
 </script>
 

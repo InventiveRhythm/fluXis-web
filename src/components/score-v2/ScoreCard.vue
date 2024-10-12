@@ -1,18 +1,20 @@
-<script setup>
+<script setup lang="ts">
+import type { APIScore } from '@/api/models/scores/APIScore';
+
 import LoadingImage from '../LoadingImage.vue';
 
 import Assets from '@/utils/Assets';
-import { formatAccuracy, formatDecimal } from '@/utils/formatting';
+import { FormatAccuracy, FormatDecimal } from '@/utils/Formatting';
 import TimeUtils from '@/utils/TimeUtils';
 
-const props = defineProps({
-    score: Object
-});
+const props = defineProps<{
+    score: APIScore
+}>();
 </script>
 
 <template>
     <div class="flex flex-row h-12 w-full rounded-lg overflow-hidden"
-        :style="'background-color: var(--rank-' + score.grade.toLowerCase() + ');'">
+         :style="'background-color: var(--rank-' + score.grade.toLowerCase() + ');'">
         <div class="size-12 flex items-center justify-center text-dark-2">
             <p class="text-2xl font-rank even:-ml-3 even:opacity-60" v-for="letter in score.grade.split('')">
                 {{ letter }}
@@ -35,10 +37,10 @@ const props = defineProps({
                 </div>
                 <div class="flex items-center justify-between gap-3">
                     <div class="flex flex-col items-end justify-center text-xs">
-                        <p>{{ formatAccuracy(score.accuracy) }}</p>
+                        <p>{{ FormatAccuracy(score.accuracy) }}</p>
                         <p class="opacity-80">{{ score.maxcombo }}x</p>
                     </div>
-                    <p class="text-base">{{ formatDecimal(score.pr) }}pr</p>
+                    <p class="text-base">{{ FormatDecimal(score.pr) }}pr</p>
                 </div>
             </div>
         </div>

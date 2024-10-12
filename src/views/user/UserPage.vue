@@ -7,9 +7,9 @@ import TabControl from '../../components/tabs/TabControl.vue';
 import TabControlItem from '../../components/tabs/TabControlItem.vue';
 
 import API from '@/utils/API';
-import { emitEvent } from '@/utils/Events';
+import { EmitEvent } from '@/utils/Events';
 import { state } from '@/utils/State';
-import { startLoading, stopLoading } from '@/utils/Loading';
+import { StartLoading, StopLoading } from '@/utils/Loading';
 import TimeUtils from '@/utils/TimeUtils';
 import Utils from '@/utils/Utils';
 
@@ -31,7 +31,7 @@ let react = reactive({
 await loadStuff();
 
 async function loadStuff() {
-    startLoading();
+    StartLoading();
 
     try {
         await API.PerformGet(`/user/${id}`).then(res => {
@@ -48,11 +48,11 @@ async function loadStuff() {
         Utils.SetTitle(react.user.username + " - user info");
 
     react.loading = false;
-    stopLoading();
+    StopLoading();
 }
 
 function OpenEdit() {
-    emitEvent('user-edit-overlay', react.user);
+    EmitEvent('user-edit-overlay', react.user);
 }
 
 function ShouldShowEdit() {

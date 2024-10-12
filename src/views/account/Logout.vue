@@ -1,5 +1,7 @@
 <script setup>
-$cookies.remove('user');
-$cookies.remove('token');
+import Cookies from '@/utils/Cookies';
+
+Cookies.Remove('user');
+Cookies.Remove('token');
 location = '/';
 </script>

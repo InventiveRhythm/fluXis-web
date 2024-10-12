@@ -1,23 +1,21 @@
-<script setup>
+<script setup lang="ts">
 import { RouterLink } from 'vue-router';
 
 import ClubTag from '../ClubTag.vue';
 import LoadingImage from '../LoadingImage.vue';
 
 import Assets from '@/utils/Assets';
-import { formatAccuracy } from '@/utils/formatting';
+import { FormatAccuracy } from '@/utils/Formatting';
+import type APIUser from '@/api/models/users/APIUser';
 
-defineProps({
-    user: {
-        type: Object,
-        required: true
-    }
-});
+defineProps<{
+    user: APIUser
+}>();
 </script>
 
 <template>
     <RouterLink :to="`/u/${user.id}`"
-        class="overlap-grid group rounded-xl bg-dark-2 first:h-72 h-80 last:h-64">
+                class="overlap-grid group rounded-xl bg-dark-2 first:h-72 h-80 last:h-64">
         <LoadingImage class="object-cover" :src="Assets.Banner(user)" />
         <div class="bg-dark-2 opacity-50"></div>
         <div class="flex items-center p-5 gap-2 flex-col drop-shadow-text">
@@ -40,7 +38,7 @@ defineProps({
                 <p>{{ user.stats.ovr }} OVR</p>
                 <div class="text-sm opacity-80 leading-none">
                     <span>
-                        {{ user.stats.ptr }} PR • {{ formatAccuracy(user.stats.ova) }}
+                        {{ user.stats.ptr }} PR • {{ FormatAccuracy(user.stats.ova) }}
                     </span>
                 </div>
             </div>

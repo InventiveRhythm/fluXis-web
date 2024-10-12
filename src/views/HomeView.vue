@@ -1,34 +1,32 @@
-<script setup>
+<script setup lang="ts">
 import { reactive } from 'vue';
+
+import type { APIStats } from '@/api/models/other/APIStats';
 
 import HomeVideo from '../assets/images/home/fluxis.mp4';
 import NewsCard from '../components/news/NewsCard.vue';
 import RoundedButton from '@/components/RoundedButton.vue';
 
 import API from '@/utils/API';
-import { FormatNumber } from '@/utils/formatting';
+import { FormatNumber } from '@/utils/Formatting';
 import Utils from '@/utils/Utils';
 
 import News from '@/news.json';
 
-const stats = reactive({
-    users: undefined,
-    online: undefined,
-    scores: undefined,
-    mapsets: undefined
+const react = reactive<{
+    stats: APIStats
+}>({
+    stats: {}
 });
 
-Utils.SetTitle("Home");
+Utils.SetTitle('home');
 
-API.PerformGet("/stats").then(res => {
-    stats.users = res.data.users;
-    stats.online = res.data.online;
-    stats.scores = res.data.scores;
-    stats.mapsets = res.data.mapsets;
-})
+API.PerformGet<APIStats>('/stats').then(res => {
+    react.stats = res.data;
+});
 
 function OpenDownload() {
-    window.open("https://github.com/InventiveRhythm/fluXis/releases/latest/download/install.exe")
+    window.open('https://github.com/InventiveRhythm/fluXis/releases/latest/download/install.exe');
 }
 </script>
 
@@ -49,15 +47,15 @@ function OpenDownload() {
             </RoundedButton>
         </div>
         <div class="absolute bottom-5 left-5 w-fit h-fit text-left text-xs">
-            <span class="font-bold">{{ FormatNumber(stats.users) }}</span>
+            <span class="font-bold">{{ FormatNumber(react.stats.users) }}</span>
             registered users,
-            <span class="font-bold">{{ stats.online }}</span>
+            <span class="font-bold">{{ react.stats.online }}</span>
             currently online
             <br>
             with
-            <span class="font-bold">{{ FormatNumber(stats.scores) }}</span>
+            <span class="font-bold">{{ FormatNumber(react.stats.scores) }}</span>
             scores on
-            <span class="font-bold">{{ FormatNumber(stats.mapsets) }}</span>
+            <span class="font-bold">{{ FormatNumber(react.stats.mapsets) }}</span>
             mapsets
         </div>
     </div>

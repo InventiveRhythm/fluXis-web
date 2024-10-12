@@ -1,22 +1,22 @@
 <script setup>
-import { RouterView } from "vue-router";
-import NavBar from "./components/nav/NavBar.vue";
-import Footer from "./components/footer/Footer.vue";
-import Loading from "./components/loading/Loading.vue";
-import UserOverlay from "./overlays/user/UserOverlay.vue";
-import CreateClubOverlay from "./overlays/club-creation/CreateClubOverlay.vue";
-import EditUserOverlay from "./overlays/edit-user/EditUserOverlay.vue";
+import { RouterView } from 'vue-router';
+import NavBar from './components/nav/NavBar.vue';
+import Footer from './components/footer/Footer.vue';
+import Loading from './components/loading/Loading.vue';
+import UserOverlay from './overlays/user/UserOverlay.vue';
+import CreateClubOverlay from './overlays/club-creation/CreateClubOverlay.vue';
+import EditUserOverlay from './overlays/edit-user/EditUserOverlay.vue';
 
-import ContextMenu from "./overlays/context/ContextMenu.vue";
+import ContextMenu from './overlays/context/ContextMenu.vue';
 
 function stringifyRoute(route) {
     if (!route.name)
         return route.path;
 
-    var result = route.name.split(":")[0];
+    let result = route.name.split(':')[0];
 
-    for (const [key, value] of Object.entries(route.params)) {
-        result += `/${key}:${value}`;
+    for (const [ key, value ] of Object.entries(route.params)) {
+        result += `/${ key }:${ value }`;
     }
 
     return result;
@@ -24,10 +24,11 @@ function stringifyRoute(route) {
 </script>
 
 <template>
-    <div class="mx-auto grid w-full grid-cols-1 grid-rows-1 pb-32 pt-20 xl:pt-28 text-center xl:w-content transition-all">
+    <div
+        class="mx-auto grid w-full grid-cols-1 grid-rows-1 pb-32 pt-20 xl:pt-28 text-center xl:w-content transition-all">
         <RouterView v-slot="{ Component, route }">
             <Transition name="fade">
-                <div :key="stringifyRoute(route)" class="row-1 col-1">
+                <div :key="stringifyRoute(route)" class="row-1 col-1 relative">
                     <Suspense>
                         <component :is="Component" />
                     </Suspense>

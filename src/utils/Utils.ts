@@ -1,41 +1,45 @@
-import { emitEvent } from './Events';
+import type APIUser from '@/api/models/users/APIUser';
+import { EmitEvent } from './Events';
 
 export default class Utils {
-    static SetTitle(title) {
+    static SetTitle(title: string) {
         document.title = title + ' | fluXis';
     }
 
     static ToggleUserOverlay() {
-        emitEvent('toggle-user-overlay');
+        EmitEvent('toggle-user-overlay');
     }
 
-    static GetCountryName(code) {
+    static GetCountryName(code: string): string {
         if (!code) return 'Unknown';
 
         const names = new Intl.DisplayNames(['en'], { type: 'region' });
         return names.of(code.toUpperCase()) || 'Unknown';
     }
 
-    static GetB64FromInput(input, allowedTypes, callback) {
+    static GetB64FromInput(input: HTMLInputElement, allowedTypes: string[], callback: Function) {
+        if (!input.files)
+            return;
+
         const file = input.files[0];
 
         if (!file) return;
 
         if (!allowedTypes.includes(file.type)) {
-            var types = allowedTypes.map(t => t.split('/')[1])
+            var types = allowedTypes.map(t => t.split('/')[1]);
             alert(`Invalid type! Only ${types.join('/')} is supported.`);
             return;
         }
 
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onload = function () {
+        reader.onload = function() {
             var res = reader.result;
             callback(res);
         };
     }
 
-    static GetIconForGroup(group) {
+    static GetIconForGroup(group: string): string {
         switch (group) {
             case 'contributors':
                 return 'fas fa-medal';
@@ -54,20 +58,20 @@ export default class Utils {
         }
     }
 
-    static IsModerator(user) {
+    static IsModerator(user?: APIUser): boolean {
         if (!user || !user.groups)
-            return
+            return false;
 
         if (this.IsDeveloper(user))
             return true;
 
-        return user.groups.some(g => g.id == "moderators")
+        return user.groups.some(g => g.id == 'moderators');
     }
 
-    static IsDeveloper(user) {
+    static IsDeveloper(user?: APIUser): boolean {
         if (!user || !user.groups)
-            return
-        
-        return user.groups.some(g => g.id == "dev")
+            return false;
+
+        return user.groups.some(g => g.id == 'dev');
     }
 }

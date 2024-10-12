@@ -1,16 +1,18 @@
-<script setup>
+<script setup lang="ts">
 import { RouterLink } from 'vue-router';
+
+import type APIUser from '@/api/models/users/APIUser';
 
 import ClubTag from '../ClubTag.vue';
 import LoadingImage from '../LoadingImage.vue';
 
 import Assets from '@/utils/Assets';
-import { formatAccuracy } from '@/utils/formatting';
+import { FormatAccuracy } from '@/utils/Formatting';
 import Utils from '@/utils/Utils';
 
-defineProps({
-    user: Object
-});
+defineProps<{
+    user: APIUser
+}>();
 </script>
 
 <template>
@@ -44,7 +46,7 @@ defineProps({
                     </span>
                     <div class="text-sm opacity-80 leading-none">
                         <span>
-                            {{ user.stats.ptr }} PR • {{ formatAccuracy(user.stats.ova) }}
+                            {{ user.stats.ptr }} PR • {{ FormatAccuracy(user.stats.ova) }}
                         </span>
                     </div>
                 </div>

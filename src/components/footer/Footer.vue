@@ -1,87 +1,45 @@
-<script setup>
-import { RouterLink } from 'vue-router'
+<script setup lang="ts">
+const socials = [{
+    url: 'https://github.com/InventiveRhythm',
+    icon: 'fab fa-github'
+}, {
+    url: 'https://discord.gg/29hMftpNq9',
+    icon: 'fab fa-discord'
+}, {
+    url: 'https://twitter.com/fluXisGame',
+    icon: 'fab fa-twitter'
+}, {
+    url: 'https://youtube.com/@fluXisGame',
+    icon: 'fab fa-youtube'
+}];
 
-function toggleBlur() {
-    config.blur = !config.blur;
-    saveConfig();
-
-    if (config.blur)
-        enableBlur();
-    else
-        disableBlur();
-}
+const links = [{
+    text: 'Terms',
+    url: '/wiki/legal/terms'
+}, {
+    text: 'Privacy',
+    url: '/wiki/legal/privacy'
+}, {
+    text: 'DMCA',
+    url: '/wiki/legal/dmca'
+}];
 </script>
 
 <template>
-    <div class="footer">
-        <div class="socials">
-            <a href="https://github.com/InventiveRhythm" target="_blank">
-                <i class="fab fa-github"></i>
-            </a>
-            <a href="https://discord.gg/29hMftpNq9" target="_blank">
-                <i class="fab fa-discord"></i>
-            </a>
-            <a href="https://twitter.com/fluXisGame" target="_blank">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="https://youtube.com/@fluXisGame" target="_blank">
-                <i class="fab fa-youtube"></i>
+    <div class="w-full h-24 pb-5 flex flex-col items-center justify-center text-2xs cursor-default absolute bottom-0">
+        <div class="flex flex-wrap justify-center">
+            <a :href="social.url" class="py-1 px-2 hover:text-highlight" target="_blank" v-for="social in socials">
+                <i class="text-base" :class="social.icon"></i>
             </a>
         </div>
-        <div class="links">
-            <RouterLink to="/wiki/legal/terms">Terms</RouterLink>
-            <RouterLink to="/wiki/legal/privacy">Privacy</RouterLink>
-            <RouterLink to="/wiki/legal/dmca">DMCA</RouterLink>
+        <div class="flex flex-wrap justify-center text-sm">
+            <RouterLink class="py-1 px-2 hover:text-highlight" :to="link.url" v-for="link in links">
+                {{ link.text }}
+            </RouterLink>
         </div>
         <span>
-            Copyright © 2022-2024 <a href="https://flux.moe" target="_blank">Flustix</a>
+            Copyright © 2022-{{ new Date().getFullYear() }}
+            <a href="https://flux.moe" target="_blank">flustix</a>
         </span>
-        <div @click="toggleBlur" class="blur-disable">Toggle Blur</div>
     </div>
 </template>
-
-<style lang="scss">
-.footer {
-    width: 100%;
-    height: 100px;
-    padding-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    cursor: default;
-    position: absolute;
-    bottom: 0;
-
-    .socials, .links {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-
-        a {
-            padding: 5px 10px;
-        }
-    }
-
-    .socials {
-        a i {
-            font-size: 16px;
-        }
-    }
-
-    a {
-        &:hover {
-            color: var(--highlight);
-        }
-    }
-
-    .links {
-        font-size: 12px;
-    }
-
-    .blur-disable {
-        cursor: pointer;
-    }
-}
-</style>

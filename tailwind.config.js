@@ -1,4 +1,4 @@
-const plugin = require('tailwindcss/plugin')
+const plugin = require('tailwindcss/plugin');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -14,7 +14,7 @@ module.exports = {
             bronze: '#cd7f32',
             'highlight': 'hsl(240, 100%, 70%)',
             'dark': {
-                'text': "#fff",
+                'text': '#fff',
                 '1': 'hsl(240, 10%, 10%)',
                 '2': 'hsl(240, 10%, 15%)',
                 '3': 'hsl(240, 10%, 20%)',
@@ -23,7 +23,7 @@ module.exports = {
                 '6': 'hsl(240, 10%, 35%)'
             },
             'light': {
-                'text': "hsl(240, 10%, 15%)",
+                'text': 'hsl(240, 10%, 15%)',
                 '1': 'hsl(240, 10%, 90%)',
                 '2': 'hsl(240, 10%, 85%)',
                 '3': 'hsl(240, 10%, 80%)',
@@ -39,11 +39,11 @@ module.exports = {
             },
             'group': {
                 'moderators': '#73d173',
-                'purifier': '#55b2ff',
+                'purifier': '#55b2ff'
             },
             'vote': {
                 'up': '#43AFFC',
-                'down': '#FDC872',
+                'down': '#FDC872'
             }
         },
         extend: {
@@ -53,7 +53,7 @@ module.exports = {
                 'inherit': 'inherit'
             },
             dropShadow: {
-                'text': '0 2px 2px rgba(0, 0, 0, 0.2)',
+                'text': '0 2px 2px rgba(0, 0, 0, 0.2)'
             },
             boxShadow: {
                 'normal': '0 4px 10px rgba(0, 0, 0, 0.2)'
@@ -74,15 +74,18 @@ module.exports = {
                 'inherit': 'inherit'
             },
             fontFamily: {
-                'rank': "YoureGone"
+                'rank': 'YoureGone'
             },
             transitionDuration: {
                 '50': '50ms'
+            },
+            zIndex: {
+                'loading': '400'
             }
         }
     },
     plugins: [
-        plugin(function ({ addComponents , theme }) {
+        plugin(({ addComponents, theme }) => {
             addComponents({
                 '.section-gradient': {
                     background: `linear-gradient(90deg, rgba(0, 0, 0) 0%, rgba(0, 0, 0) 20%, transparent 100%)`
@@ -93,7 +96,7 @@ module.exports = {
                 '.keymode-gradient': {
                     background: `linear-gradient(90deg, var(--tag-keymode-min) 0%, var(--tag-keymode-max) 100%)`
                 }
-            })
+            });
         })
     ]
-}
+};

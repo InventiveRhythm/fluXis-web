@@ -1,5 +1,5 @@
 <script setup>
-import { formatAccuracy, formatScore } from '@/utils/formatting';
+import { FormatAccuracy, FormatScore } from '@/utils/Formatting';
 
 const props = defineProps({
     statistics: {
@@ -18,10 +18,10 @@ const stats = [{
     value: statistics.ptr
 }, {
     name: 'Overall Accuracy',
-    value: formatAccuracy(statistics.ova)
+    value: FormatAccuracy(statistics.ova)
 }, {
     name: 'Ranked Score',
-    value: formatScore(statistics.score)
+    value: FormatScore(statistics.score)
 }, {
     name: 'Max Combo',
     value: `${statistics.combo}x`

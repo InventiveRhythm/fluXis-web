@@ -1,13 +1,13 @@
-<script setup>
-const props = defineProps({
-    mode: Number,
-    difficulty: Number
-});
+<script setup lang="ts">
+const props = defineProps<{
+    mode: number,
+    difficulty: number
+}>();
 </script>
 
 <template>
-    <div :class="'key-mode-icon count-' + mode" :style="difficulty ? '' : ''">
-        <div v-for="i in mode" class="dot"></div>
+    <div :class="'key-mode-icon count-' + mode">
+        <div v-for="_ in mode"></div>
     </div>
 </template>
 
@@ -16,7 +16,7 @@ const props = defineProps({
     position: relative;
     align-items: center;
 
-    .dot {
+    > * {
         --pos-x: 0px;
         --pos-y: 0px;
         top: 50%;
@@ -31,7 +31,7 @@ const props = defineProps({
     }
 
     &.count-4 {
-        .dot {
+        > * {
             background-color: var(--tag-keymode-4);
 
             &:nth-child(1) {
@@ -57,9 +57,9 @@ const props = defineProps({
     }
 
     &.count-5 {
-        .dot {
+        > * {
             background-color: var(--tag-keymode-5);
-            
+
             &:nth-child(1) {
                 --pos-x: -9px;
                 --pos-y: -9px;
@@ -83,7 +83,7 @@ const props = defineProps({
     }
 
     &.count-6 {
-        .dot {
+        > * {
             background-color: var(--tag-keymode-6);
 
             &:nth-child(1) {
@@ -119,7 +119,7 @@ const props = defineProps({
     }
 
     &.count-7 {
-        .dot {
+        > * {
             background-color: var(--tag-keymode-7);
 
             &:nth-child(1) {

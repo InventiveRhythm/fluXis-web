@@ -1,5 +1,7 @@
-<script setup>
+<script setup lang="ts">
 import { reactive, ref } from 'vue';
+
+import type APIUser from '@/api/models/users/APIUser';
 
 import PanelOverlay from '../PanelOverlay.vue';
 import RoundedButton from '@/components/RoundedButton.vue';
@@ -10,19 +12,19 @@ import DefaultBanner from '@/assets/images/defaults/banner.png';
 
 import API from '@/utils/API';
 import Assets from '@/utils/Assets';
-import { registerEvent } from '@/utils/Events';
+import { RegisterEvent } from '@/utils/Events';
 import { state } from '@/utils/State';
 import Utils from '@/utils/Utils';
 
 const react = reactive({
     open: false,
     user: null,
-    avatar: "",
-    banner: "",
-    error: ""
-})
+    avatar: '',
+    banner: '',
+    error: ''
+});
 
-const allowedImages = ["image/png", "image/jpeg"];
+const allowedImages = ['image/png', 'image/jpeg'];
 
 const nick = ref();
 const about = ref();
@@ -30,7 +32,7 @@ const pronouns = ref();
 const avatar = ref();
 const banner = ref();
 
-registerEvent('user-edit-overlay', user => {
+RegisterEvent('user-edit-overlay', user => {
     react.avatar = Assets.Avatar(user);
     react.banner = Assets.Banner(user);
     react.user = user;
@@ -38,21 +40,21 @@ registerEvent('user-edit-overlay', user => {
 });
 
 function Perform() {
-    API.PerformPatch(`/user/${react.user.id}`, {
+    API.PerformPatch<APIUser>(`/user/${react.user.id}`, {
         'nick': nick.value.input.value,
         'about': about.value.input.value,
         'pronouns': pronouns.value.input.value,
         'avatar': GetAsset(react.avatar),
         'banner': GetAsset(react.banner)
     }).then(async res => {
-        if (res.status != 200) {
+        if (!res.IsSuccess()) {
             react.error = res.message;
             return;
         }
 
-        await API.RefreshInfo(state.user.id);
+        await API.RefreshInfo(state.user?.id ?? 0);
         location.reload();
-    })
+    });
 }
 
 function UpdateAvatar() {
@@ -65,9 +67,9 @@ function UpdateBanner() {
 
 function GetAsset(b64) {
     if (!b64)
-        return "";
+        return '';
 
-    return b64.split(",")[1];
+    return b64.split(',')[1];
 }
 </script>
 
@@ -78,16 +80,17 @@ function GetAsset(b64) {
         <IconTextBox ref="about" icon="align-left" placeholder="About Me" maxlength="512" :value="react.user.aboutme" />
         <div class="flex flex-row gap-4">
             <label for="avatar">
-                <img class="rounded-xl size-32 object-cover" :src="react.avatar || DefaultAvatar">
+                <img class="rounded-xl size-32 object-cover" :src="react.avatar || DefaultAvatar" alt="avatar">
             </label>
             <input ref="avatar" class="hidden" type="file" id="avatar" :accept="allowedImages" @change="UpdateAvatar">
             <label for="banner" class="flex-grow">
-                <img class="w-full rounded-xl h-32 object-cover" :src="react.banner || DefaultBanner">
+                <img class="w-full rounded-xl h-32 object-cover" :src="react.banner || DefaultBanner" alt="banner">
             </label>
             <input ref="banner" class="hidden" type="file" id="banner" :accept="allowedImages" @change="UpdateBanner">
         </div>
         <div class="w-full flex justify-center">
-            <RoundedButton class="w-fit flex flex-row items-center justify-center px-6 py-3" @click="Perform">Update!</RoundedButton>
+            <RoundedButton class="w-fit flex flex-row items-center justify-center px-6 py-3" @click="Perform">Update!
+            </RoundedButton>
         </div>
     </PanelOverlay>
 </template>

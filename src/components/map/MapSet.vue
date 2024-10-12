@@ -1,15 +1,18 @@
-<script setup>
+<script setup lang="ts">
 import { RouterLink } from 'vue-router';
+
+import type { APIMapSet } from '@/api/models/maps/APIMapSet';
+import { APIMapSetStatus } from '@/api/models/maps/APIMapSetStatus';
 
 import LoadingImage from '../LoadingImage.vue';
 
 import Assets from '@/utils/Assets';
 
-const props = defineProps({
-    mapset: Object
-});
+const props = defineProps<{
+    mapset: APIMapSet
+}>();
 
-function lowestKeyMode() { 
+function lowestKeyMode() {
     let lowest = -1;
 
     props.mapset.maps.forEach(element => {
@@ -34,7 +37,7 @@ function highestKeyMode() {
     return highest;
 }
 
-function keyModeString() {
+function GetKeyModeString() {
     let lowest = lowestKeyMode();
     let highest = highestKeyMode();
 
@@ -44,15 +47,17 @@ function keyModeString() {
     return lowest + '-' + highest;
 }
 
-function getStatusString() {
+function GetStatusString() {
     switch (props.mapset.status) {
-        case 0:
+        case APIMapSetStatus.Blacklisted:
+            return 'blacklisted';
+        case APIMapSetStatus.Unsubmitted:
             return 'unsubmitted';
-        case 1:
+        case APIMapSetStatus.Pending:
             return 'pending';
-        case 2:
+        case APIMapSetStatus.Impure:
             return 'impure';
-        case 3:
+        case APIMapSetStatus.Pure:
             return 'pure';
         default:
             return 'unknown';
@@ -72,11 +77,19 @@ function getStatusString() {
                     <div class="drop-shadow-text">
                         <span class="line-clamp-1 leading-tight text-lg">{{ mapset.title }}</span>
                         <span class="line-clamp-1 leading-tight text-sm">by {{ mapset.artist }}</span>
-                        <span class="line-clamp-1 leading-tight text-xs opacity-80">uploaded by {{ mapset.creator.username }}</span>
+                        <span
+                            class="line-clamp-1 leading-tight text-xs opacity-80">uploaded by {{ mapset.creator.username
+                            }}</span>
                     </div>
                     <div class="mt-1 flex justify-between text-xs text-black text-opacity-80">
-                        <span class="flex h-5 items-center rounded-full px-1.5 uppercase shadow-normal" :style="'background-color: var(--tag-status-' + getStatusString() + ')'">{{ getStatusString() }}</span>
-                        <span :class="'keymode-gradient flex h-5 items-center rounded-full px-1.5 shadow-normal mode-min-' + lowestKeyMode() + ' mode-max-' + highestKeyMode()">{{ keyModeString() }}K</span>
+                        <span class="flex h-5 items-center rounded-full px-1.5 uppercase shadow-normal"
+                              :style="'background-color: var(--tag-status-' + GetStatusString() + ')'">
+                            {{ GetStatusString() }}
+                        </span>
+                        <span
+                            :class="'keymode-gradient flex h-5 items-center rounded-full px-1.5 shadow-normal mode-min-' + lowestKeyMode() + ' mode-max-' + highestKeyMode()">
+                            {{ GetKeyModeString() }}K
+                        </span>
                     </div>
                 </div>
             </div>

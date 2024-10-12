@@ -5,7 +5,7 @@ import { RouterLink } from 'vue-router';
 import { Marked } from "marked";
 import hljs from 'highlight.js';
 import { markedHighlight } from "marked-highlight";
-import { startLoading, stopLoading } from '../../utils/Loading';
+import { StartLoading, StopLoading } from '@/utils/Loading';
 import Utils from '@/utils/Utils';
 
 const route = useRoute();
@@ -33,7 +33,7 @@ const react = reactive({
     path: pathArray
 });
 
-startLoading();
+StartLoading();
 Utils.SetTitle("/" + path);
 
 const lang = "en";
@@ -78,7 +78,7 @@ function render(data) {
 
     data = marked.parse(data);
     react.article = data;
-    stopLoading();
+    StopLoading();
     setTimeout(postProcess, 100);
 }
 
@@ -104,7 +104,7 @@ function postProcess() {
         
         if (h)
             h.scrollIntoView();
-	};
+	}
 }
 
 function edit() {

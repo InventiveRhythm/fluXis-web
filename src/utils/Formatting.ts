@@ -1,12 +1,12 @@
-function formatAccuracy(accuracy) {
+function FormatAccuracy(accuracy) {
     return `${accuracy.toFixed(2)}%`;
 }
 
-function formatDecimal(decimal) {
+function FormatDecimal(decimal) {
     return (Math.round(decimal * 100) / 100).toFixed(2);
 }
 
-function formatScore(score) {
+function FormatScore(score) {
     if (!score) return '---,---';
 
     return score.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -28,4 +28,4 @@ function FormatNumber(num, digits = 1) {
     return '0';
 }
 
-export { formatAccuracy, formatDecimal, formatScore, FormatNumber };
+export { FormatAccuracy, FormatDecimal, FormatScore, FormatNumber };

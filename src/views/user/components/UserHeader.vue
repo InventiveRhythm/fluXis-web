@@ -8,7 +8,7 @@ import ClubTag from '../../../components/ClubTag.vue';
 import LoadingImage from '@/components/LoadingImage.vue';
 
 import Assets from '@/utils/Assets';
-import { emitEvent } from '@/utils/Events';
+import { EmitEvent } from '@/utils/Events';
 import { state } from '@/utils/State';
 
 // used for people without a group
@@ -25,7 +25,7 @@ const props = defineProps({
 });
 
 function OpenEdit() {
-    emitEvent('user-edit-overlay', props.user);
+    EmitEvent('user-edit-overlay', props.user);
 }
 </script>
 

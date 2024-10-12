@@ -1,5 +1,5 @@
 export default class TimeUtils {
-    static formatSeconds(secs) {
+    static formatSeconds(secs: number): string {
         let months = Math.floor(secs / 2592000);
         let days = Math.floor(secs / 86400);
         let hours = Math.floor(secs / 3600);
@@ -15,7 +15,7 @@ export default class TimeUtils {
         return "just now";
     }
 
-    static formatAgo(secs)  {
+    static formatAgo(secs: number): string {
         let formatted = TimeUtils.formatSeconds(Date.now() / 1000 - secs);
 
         if (formatted !== "just now")
@@ -24,7 +24,7 @@ export default class TimeUtils {
         return formatted;
     }
 
-    static formatDate(secs) {
+    static formatDate(secs: number): string {
         return new Date(secs * 1000).toLocaleDateString('en-GB', {
             day: 'numeric',
             month: 'short',
@@ -32,7 +32,7 @@ export default class TimeUtils {
         });
     }
 
-    static FormatDuration(duration) {
+    static FormatDuration(duration: number): string {
         const hrs = ~~(duration / 3600);
         const mins = ~~((duration % 3600) / 60);
         const secs = ~~duration % 60;

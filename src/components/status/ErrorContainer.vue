@@ -1,13 +1,9 @@
-<script setup>
+<script setup lang="ts">
 import LoadingImage from '../LoadingImage.vue';
 
-defineProps({
-    text: {
-        type: String,
-        required: false,
-        default: ""
-    }
-});
+defineProps<{
+    text?: string
+}>();
 </script>
 
 <template>

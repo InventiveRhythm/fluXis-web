@@ -1,5 +1,5 @@
 <script setup>
-import { getRatingColor, darkenColor } from '@/utils/ColorUtils';
+import { GetRatingColor, DarkenColor } from '@/utils/ColorUtils';
 
 const props = defineProps({
     title: String,
@@ -9,10 +9,10 @@ const props = defineProps({
 
 function GetColor(value, dark) {
     var percent = value / props.max;
-    var col = getRatingColor(percent * 30);
+    var col = GetRatingColor(percent * 30);
 
     if (dark)
-        col = darkenColor(col, .8);
+        col = DarkenColor(col, .8);
 
     return col;
 }

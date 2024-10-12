@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { startLoading, stopLoading } from '../utils/Loading.js'
+import { StartLoading, StopLoading } from '@/utils/Loading'
 
 import WorkInProgress from '../components/WorkInProgress.vue';
 
@@ -187,7 +187,7 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((_, __) => startLoading());
-router.afterEach((_, __) => stopLoading());
+router.beforeEach((_, __) => StartLoading());
+router.afterEach((_, __) => StopLoading());
 
 export default router

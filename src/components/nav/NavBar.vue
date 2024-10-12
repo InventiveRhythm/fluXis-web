@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { RouterLink, } from "vue-router";
 import { reactive } from "vue";
 
@@ -92,7 +92,7 @@ const links = [
     }
 ];
 
-function linkHovered(link) {
+function linkHovered(link: string) {
     const data = links.find(e => e.id == link);
 
     if (!data || !data.sublinks) {

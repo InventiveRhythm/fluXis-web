@@ -1,5 +1,7 @@
-<script setup>
+<script setup lang="ts">
 import { reactive } from 'vue';
+
+import type APIClub from '@/api/models/clubs/APIClub';
 
 import ClubTag from '@/components/ClubTag.vue';
 import LoadingImage from '@/components/LoadingImage.vue';
@@ -10,20 +12,27 @@ import Overlays from '@/utils/Overlays';
 import Utils from '@/utils/Utils';
 import { state } from '@/utils/State';
 
-const react = reactive({
-    clubs: []
-});
+const react = reactive<{
+    clubs?: [APIClub]
+}>({});
 
-Utils.SetTitle("club listing")
+Utils.SetTitle('club listing');
 
-API.PerformGet("/clubs").then(res => {
-    if (res.status != 200) {
+API.PerformGet<[APIClub]>('/clubs').then(res => {
+    if (!res.IsSuccess()) {
         alert(res.message);
         return;
     }
 
     react.clubs = res.data;
-})
+});
+
+function CanCreate() {
+    if (!state.user || !state.user?.club)
+        return false;
+
+    return state.user?.club.id > 0;
+}
 </script>
 
 <template>
@@ -34,9 +43,11 @@ API.PerformGet("/clubs").then(res => {
                     <i class="fa fa-search text-xl"></i>
                 </div>
                 <input class="flex-grow bg-dark-2 focus:outline-none placeholder:text-white placeholder:opacity-60"
-                    placeholder="Search... (doesn't actually work yet)" type="text">
+                       placeholder="Search... (doesn't actually work yet)" type="text">
             </div>
-            <div v-if="state.user && !state.user.club && state.user.club.id > 0" class="size-14 bg-dark-2 rounded-xl flex items-center justify-center transition-transform active:scale-90" @click="Overlays.OpenClubCreate">
+            <div v-if="CanCreate()"
+                 class="size-14 bg-dark-2 rounded-xl flex items-center justify-center transition-transform active:scale-90"
+                 @click="Overlays.OpenClubCreate">
                 <i class="fa fa-plus text-2xl"></i>
             </div>
         </div>
@@ -56,7 +67,8 @@ API.PerformGet("/clubs").then(res => {
                             <ClubTag :club="club" class="text-sm inline" />
                             {{ club.name }}
                         </p>
-                        <p class="text-xs opacity-80">{{ club.count || '??' }} {{ club.count > 1 ? "members" : "member" }}</p>
+                        <p class="text-xs opacity-80">{{ club.count || '??' }} {{ club.count > 1 ? 'members' : 'member'
+                            }}</p>
                     </div>
                 </div>
             </RouterLink>

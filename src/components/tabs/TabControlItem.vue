@@ -1,13 +1,13 @@
-<script setup>
+<script setup lang="ts">
 import { reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
-const props = defineProps({
-    url: String,
-    alternate: String,
-    icon: String,
-    text: String
-});
+const props = defineProps<{
+    url: string,
+    alternate?: string,
+    icon: string,
+    text: string
+}>();
 
 const route = useRoute();
 
@@ -15,14 +15,14 @@ const react = reactive({
     current: false
 });
 
-watch(() => route.path, updateState);
-updateState();
+watch(() => route.path, UpdateState);
+UpdateState();
 
-function updateState() {
+function UpdateState() {
     let routePath = route.path;
 
-    if (routePath.endsWith("/")) {
-        const idx = routePath.lastIndexOf("/");
+    if (routePath.endsWith('/')) {
+        const idx = routePath.lastIndexOf('/');
         routePath = routePath.substring(0, idx);
     }
 

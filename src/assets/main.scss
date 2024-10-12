@@ -83,19 +83,25 @@
     --rank-b: #70d7ff;
     --rank-c: #ff70ff;
     --rank-d: #ff686b;
+
+    --blur: var(--blur-5);
+
+    @for $i from 1 through 10 {
+        --blur-#{$i}: blur(#{$i}px);
+    }
 }
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Renogare Soft';
+    font-family: 'Renogare Soft', system-ui;
     font-weight: 100;
     scroll-margin-top: 100px;
 }
 
 ::-webkit-scrollbar {
-    width: 0px;
+    width: 0;
 }
 
 a {
@@ -140,14 +146,6 @@ input[type='color']::-webkit-color-swatch {
         height: inherit;
         grid-area: 1 / 1;
         z-index: 1;
-    }
-}
-
-.blur-enabled {
-    --blur: var(--blur-5);
-
-    @for $i from 1 through 10 {
-        --blur-#{$i}: blur(#{$i}px);
     }
 }
 

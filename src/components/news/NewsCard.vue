@@ -1,9 +1,9 @@
-<script setup>
+<script setup lang="ts">
 import LoadingImage from '../LoadingImage.vue';
 
-defineProps({
-    data: Object
-});
+defineProps<{
+    data: any
+}>();
 </script>
 
 <template>

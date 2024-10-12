@@ -7,7 +7,7 @@ import UserWrapList from '../components/UserWrapList.vue';
 import MapSetCard from '@/components/map/MapSet.vue'
 
 import API from '@/utils/API';
-import { startLoading, stopLoading } from '@/utils/Loading';
+import { StartLoading, StopLoading } from '@/utils/Loading';
 
 const route = useRoute();
 let id = parseInt(route.params.id);
@@ -18,19 +18,19 @@ let react = reactive({
 });
 
 try {
-    startLoading();
+    StartLoading();
     API.PerformGet(`/user/${id}/maps`).then(res => {
         if (!res.data) return;
 
         react['maps'] = res.data;
     }).finally(() => {
         react.loading = false;
-        stopLoading();
+        StopLoading();
     })
 } catch (err) {
     console.error(err);
     react.loading = false;
-    stopLoading();
+    StopLoading();
 }
 </script>
 

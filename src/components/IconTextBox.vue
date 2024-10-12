@@ -1,12 +1,19 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 
 const input = ref(null);
 
-defineProps({
-    icon: String,
-    changed: Function
-});
+const props = defineProps<{
+    icon: string,
+    changed?: Function
+}>();
+
+function InputChanged(ev: InputEvent) {
+    if (!props.changed)
+        return;
+
+    props.changed(ev.target.value);
+}
 
 defineExpose({ input });
 </script>
@@ -17,6 +24,6 @@ defineExpose({ input });
             <i :class="`fa fa-${icon} text-xl`"></i>
         </div>
         <input class="w-full p-4 pl-12 bg-dark-2 rounded-xl focus:outline-none" ref="input"
-            type="text" v-bind="$attrs" @input="changed($event.target.value)">
+               type="text" v-bind="$attrs" @input="InputChanged">
     </div>
 </template>

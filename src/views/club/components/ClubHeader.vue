@@ -1,12 +1,14 @@
-<script setup>
+<script setup lang="ts">
+import type APIClub from '@/api/models/clubs/APIClub';
+
 import ClubTag from '@/components/ClubTag.vue';
 import LoadingImage from '@/components/LoadingImage.vue';
 
 import Assets from '@/utils/Assets';
 
-const props = defineProps({
-    club: Object
-});
+const props = defineProps<{
+    club: APIClub
+}>();
 </script>
 
 <template>
@@ -23,7 +25,7 @@ const props = defineProps({
                         <ClubTag class="text-xl" :club="club" />
                         <p class="text-3xl line-clamp-1">{{ club.name }}</p>
                     </div>
-                    <p class="opacity-80">{{ club.members.length }} member{{ club.members.length > 1 ? "s" : "" }}</p>
+                    <p class="opacity-80">{{ club.members.length }} member{{ club.members.length > 1 ? 's' : '' }}</p>
                 </div>
             </div>
         </div>

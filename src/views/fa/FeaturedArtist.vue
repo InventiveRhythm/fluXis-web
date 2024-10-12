@@ -6,50 +6,48 @@ import LoadingImage from '@/components/LoadingImage.vue';
 
 import API from '../../utils/API';
 import Utils from '@/utils/Utils';
-import { startLoading, stopLoading } from '../../utils/Loading';
+import { StartLoading, StopLoading } from '@/utils/Loading';
 
 const route = useRoute();
 const id = route.params.id;
 
 const react = reactive({
-    artist: null
+    artist: null,
 });
 
-Utils.SetTitle("loading...")
+Utils.SetTitle('loading...');
 
-startLoading();
+StartLoading();
 
-await API.PerformGet('/artists/' + id)
-    .then(res => {
-        var artist = res.data;
-        react.artist = artist;
-        console.log(artist);
+await API.PerformGet('/artists/' + id).then(res => {
+    const artist = res.data;
+    react.artist = artist;
+    console.log(artist);
 
-        Utils.SetTitle(`${artist.name} - featured artist`)
+    Utils.SetTitle(`${ artist.name } - featured artist`);
 
-        stopLoading();
-    })
-    .catch(err => {
-        stopLoading();
-        console.log(err);
-    });
+    StopLoading();
+}).catch(err => {
+    StopLoading();
+    console.log(err);
+});
 
 function playSong(album, track) {
     // stop all other songs
-    var audioElements = document.getElementsByTagName('audio');
-    for (var i = 0; i < audioElements.length; i++) {
+    const audioElements: HTMLAudioElement[] = document.getElementsByTagName('audio');
+    for (let i = 0; i < audioElements.length; i++) {
         audioElements[i].pause();
     }
 
-    var audio = document.getElementById(`audio-${album}-${track}`);
+    const audio = document.getElementById(`audio-${ album }-${ track }`);
     audio.volume = 0.1;
     audio.play();
 
-    var icon = document.getElementById(`icon-${album}-${track}`);
-    var clone = icon.cloneNode(true);
+    const icon = document.getElementById(`icon-${ album }-${ track }`);
+    const clone = icon.cloneNode(true);
     clone.classList.remove('fa-play');
     clone.classList.add('fa-pause');
-    clone.addEventListener('click', function () {
+    clone.addEventListener('click', function() {
         pauseSong(album, track);
     });
 
@@ -57,17 +55,17 @@ function playSong(album, track) {
 }
 
 function pauseSong(album, track) {
-    var audio = document.getElementById(`audio-${album}-${track}`);
+    const audio: HTMLAudioElement = document.getElementById(`audio-${ album }-${ track }`);
     audio.volume = 0;
     audio.currentTime = audio.duration;
 }
 
 function songFinished(album, track) {
-    var icon = document.getElementById(`icon-${album}-${track}`);
-    var clone = icon.cloneNode(true);
+    const icon: HTMLAudioElement = document.getElementById(`icon-${ album }-${ track }`);
+    const clone: HTMLAudioElement = icon.cloneNode(true);
     clone.classList.remove('fa-pause');
     clone.classList.add('fa-play');
-    clone.addEventListener('click', function () {
+    clone.addEventListener('click', function() {
         playSong(album, track);
     });
 
@@ -80,71 +78,83 @@ function downloadSong(album, track) {
 </script>
 
 <template>
-<div v-if="react.artist" class="w-full flex rounded-3xl bg-dark-2 text-left">
-    <div class="w-80 min-w-80">
-        <div class="size-80">
-            <LoadingImage class="size-full object-cover rounded-3xl" :src="'/featured-artist/' + react.artist.id + '/icon.png'" alt="Artist Image" />
-        </div>
-        <div class="socials">
+    <div v-if="react.artist" class="w-full flex rounded-3xl bg-dark-2 text-left">
+        <div class="w-80 min-w-80">
+            <div class="size-80">
+                <LoadingImage class="size-full object-cover rounded-3xl"
+                              :src="'/featured-artist/' + react.artist.id + '/icon.png'" alt="Artist Image" />
+            </div>
+            <div class="socials">
 
+            </div>
         </div>
-    </div>
-    <div class="w-full p-5">
-        <div class="w-full flex flex-col mb-8">
-            <h1 class="text-5xl">{{ react.artist.name }}</h1>
-            <p class="text-base">{{ react.artist.description }}</p>
-        </div>
-        <div class="w-full flex flex-col items-center content-center gap-5">
-            <div class="w-full h-max overflow-hidden rounded-3xl" v-for="album in react.artist.albums"
-                :style="'--album-accent:' + album.colors.accent + '; --album-accent-opaque:' + album.colors.accent + '88; --album-text:' + album.colors.text + '; --album-text2:' + album.colors.text2 + '; background-color:' + album.colors.bg + '; --album-bg2:' + album.colors.bg2 + '; ' ">
-                <div class="overlap-grid h-24 rounded-3xl">
-                    <LoadingImage class="w-full object-cover blur scale-110" :src="'/featured-artist/' + react.artist.id + '/' + album.id + '/cover.png'" alt="" />
-                    <div class="section-gradient opacity-50"></div>
-                    <div class="section-gradient-custom opacity-50" style="--section-gradient-col: var(--album-accent)"></div>
-                    <div class="flex w-full h-full gap-4">
-                        <div class="size-24">
-                            <LoadingImage class="size-full rounded-3xl object-cover" :src="'/featured-artist/' + react.artist.id + '/' + album.id + '/cover.png'" alt="" />
-                        </div>
-                        <div class="flex flex-col justify-center drop-shadow-text" style="color: var(--album-text);">
-                            <h2 class="text-2xl leading-tight">{{ album.name }}</h2>
-                            <p class="text-base leading-tight">{{ album.tracks.length }} songs</p>
+        <div class="w-full p-5">
+            <div class="w-full flex flex-col mb-8">
+                <h1 class="text-5xl">{{ react.artist.name }}</h1>
+                <p class="text-base">{{ react.artist.description }}</p>
+            </div>
+            <div class="w-full flex flex-col items-center content-center gap-5">
+                <div class="w-full h-max overflow-hidden rounded-3xl" v-for="album in react.artist.albums"
+                     :style="'--album-accent:' + album.colors.accent + '; --album-accent-opaque:' + album.colors.accent + '88; --album-text:' + album.colors.text + '; --album-text2:' + album.colors.text2 + '; background-color:' + album.colors.bg + '; --album-bg2:' + album.colors.bg2 + '; ' ">
+                    <div class="overlap-grid h-24 rounded-3xl">
+                        <LoadingImage class="w-full object-cover blur scale-110"
+                                      :src="'/featured-artist/' + react.artist.id + '/' + album.id + '/cover.png'"
+                                      alt="" />
+                        <div class="section-gradient opacity-50"></div>
+                        <div class="section-gradient-custom opacity-50"
+                             style="--section-gradient-col: var(--album-accent)"></div>
+                        <div class="flex w-full h-full gap-4">
+                            <div class="size-24">
+                                <LoadingImage class="size-full rounded-3xl object-cover"
+                                              :src="'/featured-artist/' + react.artist.id + '/' + album.id + '/cover.png'"
+                                              alt="" />
+                            </div>
+                            <div class="flex flex-col justify-center drop-shadow-text"
+                                 style="color: var(--album-text);">
+                                <h2 class="text-2xl leading-tight">{{ album.name }}</h2>
+                                <p class="text-base leading-tight">{{ album.tracks.length }} songs</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="flex flex-col p-3 gap-1">
-                    <div class="group w-full h-10 flex items-center justify-between px-3 rounded-xl overflow-hidden" style="background-color: var(--album-bg2); color: var(--album-text);" v-for="track in album.tracks">
-                        <div class="flex items-center">
-                            <div class="w-0 group-hover:w-5 opacity-0 group-hover:opacity-100 transition-all">
-                                <i class="fas fa-play" @click="playSong(album.id, track.id)" :id="'icon-' + album.id + '-' + track.id"></i>
-                            </div>
-                            <p class="text-base">{{ track.name }}</p>
-                        </div>
-                        <div class="flex items-center text-right">
-                            <div class="flex flex-col text-xs leading-none" style="color: var(--album-text2);">
-                                <div class="flex gap-1">
-                                    <p>{{ track.bpm }}bpm</p>
-                                    <p style="color: var(--album-text);">{{ track.length }}</p>
+                    <div class="flex flex-col p-3 gap-1">
+                        <div class="group w-full h-10 flex items-center justify-between px-3 rounded-xl overflow-hidden"
+                             style="background-color: var(--album-bg2); color: var(--album-text);"
+                             v-for="track in album.tracks">
+                            <div class="flex items-center">
+                                <div class="w-0 group-hover:w-5 opacity-0 group-hover:opacity-100 transition-all">
+                                    <i class="fas fa-play" @click="playSong(album.id, track.id)"
+                                       :id="'icon-' + album.id + '-' + track.id"></i>
                                 </div>
-                                <p>{{ track.genre }}</p>
+                                <p class="text-base">{{ track.name }}</p>
                             </div>
-                            <div class="w-0 group-hover:w-6 opacity-0 group-hover:opacity-100 transition-all">
-                                <i class="fas fa-download" @click="downloadSong(album.id, track.id)"></i>
+                            <div class="flex items-center text-right">
+                                <div class="flex flex-col text-xs leading-none" style="color: var(--album-text2);">
+                                    <div class="flex gap-1">
+                                        <p>{{ track.bpm }}bpm</p>
+                                        <p style="color: var(--album-text);">{{ track.length }}</p>
+                                    </div>
+                                    <p>{{ track.genre }}</p>
+                                </div>
+                                <div class="w-0 group-hover:w-6 opacity-0 group-hover:opacity-100 transition-all">
+                                    <i class="fas fa-download" @click="downloadSong(album.id, track.id)"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!--audio section-->
+            <!--audio section-->
 
-        <div class="audio">
-            <div v-for="album in react.artist.albums">
-                <audio v-for="track in album.tracks" @ended="songFinished(album.id, track.id)" @pause="songFinished(album.id, track.id)" :id="'audio-' + album.id + '-' + track.id" :src="'/featured-artist/' + react.artist.id + '/' + album.id + '/' + track.id + '/preview.ogg'"></audio>
+            <div class="audio">
+                <div v-for="album in react.artist.albums">
+                    <audio v-for="track in album.tracks" @ended="songFinished(album.id, track.id)"
+                           @pause="songFinished(album.id, track.id)" :id="'audio-' + album.id + '-' + track.id"
+                           :src="'/featured-artist/' + react.artist.id + '/' + album.id + '/' + track.id + '/preview.ogg'"></audio>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </template>
 
 <style lang="scss">
@@ -263,7 +273,7 @@ function downloadSong(album, track) {
                             object-fit: cover;
                             box-shadow: var(--box-shadow);
                         }
-                        
+
                         .text {
                             display: flex;
                             flex-direction: column;
@@ -271,7 +281,7 @@ function downloadSong(album, track) {
                             justify-content: center;
                             text-shadow: var(--text-shadow);
                             color: var(--album-text);
-                            
+
                             h2 {
                                 font-size: 24px;
                             }

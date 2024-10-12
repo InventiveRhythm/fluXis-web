@@ -1,11 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import TimeUtils from '../../utils/TimeUtils';
 
 const props = defineProps({
-  score: {
-    type: Object,
-    required: true,
-  }
+    score: {
+        type: Object,
+        required: true
+    }
 });
 </script>
 
