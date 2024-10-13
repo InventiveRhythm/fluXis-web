@@ -2,7 +2,7 @@ const plugin = require('tailwindcss/plugin');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+    content: [ './index.html', './src/**/*.{vue,js,ts,jsx,tsx}' ],
     theme: {
         colors: {
             white: '#fff',
@@ -20,7 +20,7 @@ module.exports = {
                 '3': 'hsl(240, 10%, 20%)',
                 '4': 'hsl(240, 10%, 25%)',
                 '5': 'hsl(240, 10%, 30%)',
-                '6': 'hsl(240, 10%, 35%)'
+                '6': 'hsl(240, 10%, 35%)',
             },
             'light': {
                 'text': 'hsl(240, 10%, 15%)',
@@ -29,74 +29,86 @@ module.exports = {
                 '3': 'hsl(240, 10%, 80%)',
                 '4': 'hsl(240, 10%, 75%)',
                 '5': 'hsl(240, 10%, 70%)',
-                '6': 'hsl(240, 10%, 65%)'
+                '6': 'hsl(240, 10%, 65%)',
             },
             'accent': {
                 '1': '#3650eb',
                 '2': '#4846d5',
                 '3': '#533ec3',
-                '4': '#5f30a7'
+                '4': '#5f30a7',
             },
             'group': {
                 'moderators': '#73d173',
-                'purifier': '#55b2ff'
+                'purifier': '#55b2ff',
             },
             'vote': {
                 'up': '#43AFFC',
-                'down': '#FDC872'
-            }
+                'down': '#FDC872',
+            },
+            mode: {
+                '4': '#62bafe',
+                '5': '#61f984',
+                '6': '#e3bb45',
+                '7': '#ec3b8d',
+                '8': '#7ae9e9',
+            },
         },
         extend: {
             width: {
                 'panel': 620,
                 'content': 1280, // matches with the xl viewport,
-                'inherit': 'inherit'
+                'inherit': 'inherit',
             },
             dropShadow: {
-                'text': '0 2px 2px rgba(0, 0, 0, 0.2)'
+                'text': '0 2px 2px rgba(0, 0, 0, 0.2)',
             },
             boxShadow: {
-                'normal': '0 4px 10px rgba(0, 0, 0, 0.2)'
+                'normal': '0 4px 10px rgba(0, 0, 0, 0.2)',
             },
             aspectRatio: {
-                header: '3/1'
+                header: '3/1',
             },
             gridRow: {
-                '1': '1'
+                '1': '1',
             },
             gridColumn: {
-                '1': '1'
+                '1': '1',
             },
             fontSize: {
-                '2xs': '0.625rem'
+                '2xs': '0.625rem',
             },
             height: {
-                'inherit': 'inherit'
+                'inherit': 'inherit',
             },
             fontFamily: {
-                'rank': 'YoureGone'
+                'rank': 'YoureGone',
             },
             transitionDuration: {
-                '50': '50ms'
+                '50': '50ms',
             },
             zIndex: {
-                'loading': '400'
-            }
-        }
+                'loading': '400',
+            },
+        },
     },
     plugins: [
         plugin(({ addComponents, theme }) => {
             addComponents({
                 '.section-gradient': {
-                    background: `linear-gradient(90deg, rgba(0, 0, 0) 0%, rgba(0, 0, 0) 20%, transparent 100%)`
+                    background: `linear-gradient(90deg, rgba(0, 0, 0) 0%, rgba(0, 0, 0) 20%, transparent 100%)`,
                 },
                 '.section-gradient-custom': {
-                    background: `linear-gradient(90deg, var(--section-gradient-col) 0%, var(--section-gradient-col) 20%, transparent 100%)`
+                    background: `linear-gradient(90deg, var(--section-gradient-col) 0%, var(--section-gradient-col) 20%, transparent 100%)`,
                 },
                 '.keymode-gradient': {
-                    background: `linear-gradient(90deg, var(--tag-keymode-min) 0%, var(--tag-keymode-max) 100%)`
-                }
+                    background: `linear-gradient(90deg, var(--tag-keymode-min) 0%, var(--tag-keymode-max) 100%)`,
+                },
             });
-        })
-    ]
+        }),
+    ],
+    safelist: [
+        {
+            pattern: /bg-mode-+/,
+        },
+    ],
 };
