@@ -101,8 +101,8 @@ function ChangeMode(mode) {
                     </div>
                 </UserSidebarSection>
             </div>
-            <div class="flex-1 flex flex-col gap-4 text-left mt-5 md:mt-0">
-                <div class="flex flex-col-reverse md:flex-row justify-between items-center gap-3">
+            <div class="w-full lg:w-auto flex-1 flex flex-col gap-4 text-left mt-5 md:mt-0">
+                <div class="flex flex-col-reverse md:flex-row justify-between items-center gap-4">
                     <TabControl>
                         <TabControlItem :url="`/u/${id}/scores`" :alternate="`/u/${id}`"
                                         icon="fa-solid fa-arrow-trend-up"
@@ -111,7 +111,7 @@ function ChangeMode(mode) {
                     </TabControl>
                     <div class="flex flex-row gap-2">
                         <div
-                            class="w-16 h-8 md:w-12 md:h-6 flex flex-col items-center justify-center text-sm text-dark-2 text-opacity-75 rounded-full transition-colors"
+                            class="w-16 h-8 md:w-12 md:h-6 flex flex-col items-center justify-center text-sm text-dark-2 text-opacity-75 rounded-full transition-colors leading-none"
                             :class="[{ 'bg-opacity-0 text-white hover:bg-opacity-60': react.mode != 0 && react.mode != mode }, `bg-mode-${mode}`]"
                             @click="ChangeMode(mode)"
                             v-for="mode in modes">

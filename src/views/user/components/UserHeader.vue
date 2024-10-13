@@ -1,5 +1,7 @@
-<script setup>
+<script setup lang="ts">
 import { RouterLink } from 'vue-router';
+
+import type APIUser from '@/api/models/users/APIUser';
 
 import UserHeaderGroup from './header/UserHeaderGroup.vue';
 import UserHeaderButton from './header/UserHeaderButton.vue';
@@ -15,14 +17,14 @@ import { state } from '@/utils/State';
 // e.g. normal users
 // the header kinda looks dumb without a group tag so we use this
 const defaultGroup = {
-    id: "member",
-    name: "Member",
-    color: "#AA99FF"
+    id: 'member',
+    name: 'Member',
+    color: '#AA99FF'
 };
 
-const props = defineProps({
-    user: Object
-});
+const props = defineProps<{
+    user: APIUser
+}>();
 
 function OpenEdit() {
     EmitEvent('user-edit-overlay', props.user);
@@ -32,17 +34,17 @@ function OpenEdit() {
 <template>
     <div class="w-full md:h-96 xl:h-auto xl:aspect-header xl:rounded-3xl overflow-hidden overlap-grid">
         <LoadingImage class="object-cover h-full md:h-inherit xl:h-auto xl:aspect-header"
-            :src="Assets.Banner(user)" />
+                      :src="Assets.Banner(user)" />
         <div class="bg-dark-2 opacity-50"></div>
         <div class="flex flex-col items-center justify-center py-5 md:py-0">
             <div class="w-full max-w-[1200px] md:px-10 flex flex-col items-center justify-center gap-5">
                 <div class="flex flex-col md:flex-row md:h-32 items-center self-stretch gap-3">
-                    <div class="size-32">
+                    <div class="size-24 md:size-32">
                         <LoadingImage class="size-full rounded-3xl shadow-normal object-cover"
-                            :src="Assets.Avatar(user)" />
+                                      :src="Assets.Avatar(user)" />
                     </div>
                     <div class="flex-1 flex flex-col justify-center items-center gap-1 leading-none drop-shadow-text">
-                        <div class="w-full flex flex-col md:flex-row gap-3 justify-between items-center">
+                        <div class="w-full flex flex-col md:flex-row gap-1 justify-between items-center">
                             <div class="flex gap-3" v-if="user.groups.length > 0">
                                 <UserHeaderGroup :group="group" v-for="group in user.groups" />
                             </div>
@@ -57,13 +59,13 @@ function OpenEdit() {
                         </div>
                         <div class="w-full flex justify-center md:justify-start items-center gap-3">
                             <ClubTag class="text-3xl" :club="user.club" />
-                            <p class="text-5xl" v-if="!user.displayname">{{ user.username }}</p>
-                            <p class="text-5xl" v-if="user.displayname">{{ user.displayname }}</p>
+                            <p class="text-3xl md:text-5xl" v-if="!user.displayname">{{ user.username }}</p>
+                            <p class="text-3xl md:text-5xl" v-if="user.displayname">{{ user.displayname }}</p>
                         </div>
                         <div v-if="user.username || user.pronouns"
-                            class="w-full flex justify-center md:justify-start items-center gap-3">
-                            <p class="text-2xl opacity-80" v-if="user.displayname">{{ user.username }}</p>
-                            <p class="text-xl opacity-60" v-if="user.pronouns">{{ user.pronouns }}</p>
+                             class="w-full flex justify-center md:justify-start items-center gap-3">
+                            <p class="text-xl md:text-2xl opacity-80" v-if="user.displayname">{{ user.username }}</p>
+                            <p class="text-xl md:text-xl opacity-60" v-if="user.pronouns">{{ user.pronouns }}</p>
                         </div>
                     </div>
                 </div>
@@ -93,7 +95,8 @@ function OpenEdit() {
                             Edit
                         </UserHeaderButton>
                         <template v-else>
-                            <UserHeaderButton class="!bg-accent-2 text-dark-2" onclick="alert('Not implemented yet.')" v-if="user.following">
+                            <UserHeaderButton class="!bg-accent-2 text-dark-2" onclick="alert('Not implemented yet.')"
+                                              v-if="user.following">
                                 <i class="fas fa-heart w-5"></i>
                                 Following
                             </UserHeaderButton>
