@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import type { APIScore } from '@/api/models/scores/APIScore';
 
-import LoadingImage from '../LoadingImage.vue';
+import MapBackground from '../images/MapBackground.vue';
 
-import Assets from '@/utils/Assets';
 import { FormatAccuracy, FormatDecimal } from '@/utils/Formatting';
 import TimeUtils from '@/utils/TimeUtils';
 
-const props = defineProps<{
+defineProps<{
     score: APIScore
 }>();
 </script>
@@ -22,7 +21,7 @@ const props = defineProps<{
         </div>
         <!-- thank you chome, that I have to put the same size again because youre too stupid to accept 100% height -->
         <div class="overlap-grid w-full h-12 rounded-lg overflow-hidden">
-            <LoadingImage class="object-cover" :src="Assets.Background(score.map.mapset)" />
+            <MapBackground class="object-cover" :map="score.map" />
             <div class="bg-dark-2 opacity-50"></div>
             <div class="flex flex-row items-center justify-center gap-3 px-3 drop-shadow-text">
                 <div class="flex w-full flex-col items-start justify-center">

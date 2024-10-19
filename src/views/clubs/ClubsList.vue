@@ -3,17 +3,17 @@ import { reactive } from 'vue';
 
 import type APIClub from '@/api/models/clubs/APIClub';
 
+import ClubBanner from '@/components/images/ClubBanner.vue';
+import ClubIcon from '@/components/images/ClubIcon.vue';
 import ClubTag from '@/components/ClubTag.vue';
-import LoadingImage from '@/components/LoadingImage.vue';
 
 import API from '@/utils/API';
-import Assets from '@/utils/Assets';
 import Overlays from '@/utils/Overlays';
 import Utils from '@/utils/Utils';
 import { state } from '@/utils/State';
 
 const react = reactive<{
-    clubs?: [APIClub]
+    clubs?: APIClub[]
 }>({});
 
 Utils.SetTitle('club listing');
@@ -45,7 +45,7 @@ function CanCreate() {
                 <input class="flex-grow bg-dark-2 focus:outline-none placeholder:text-white placeholder:opacity-60"
                        placeholder="Search... (doesn't actually work yet)" type="text">
             </div>
-            <div v-if="CanCreate()"
+            <div v-if="CanCreate()" tabindex="0" role="button" aria-label="create club"
                  class="size-14 bg-dark-2 rounded-xl flex items-center justify-center transition-transform active:scale-90"
                  @click="Overlays.OpenClubCreate">
                 <i class="fa fa-plus text-2xl"></i>
@@ -56,11 +56,11 @@ function CanCreate() {
                 class="flex flex-col w-full h-56 bg-dark-2 transition-all active:scale-95 hover:bg-dark-3 rounded-3xl"
                 :to="`/club/${club.id}`" v-for="club in react.clubs">
                 <div class="w-full h-36">
-                    <LoadingImage class="size-full object-cover rounded-3xl" :src="Assets.ClubBanner(club)" />
+                    <ClubBanner class="size-full object-cover rounded-3xl" :club="club" />
                 </div>
                 <div class="w-full flex-grow flex flex-row items-center p-4 gap-2 text-left">
                     <div class="size-12">
-                        <LoadingImage class="size-full object-cover rounded-lg" :src="Assets.ClubIcon(club)" />
+                        <ClubIcon class="size-full object-cover rounded-lg" :club="club" />
                     </div>
                     <div class="min-w-0 flex-grow">
                         <p class="truncate">

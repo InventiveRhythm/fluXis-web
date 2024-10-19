@@ -1,14 +1,18 @@
 <script setup lang="ts">
 const socials = [{
+    label: 'GitHub',
     url: 'https://github.com/InventiveRhythm',
     icon: 'fab fa-github'
 }, {
+    label: 'Discord',
     url: 'https://discord.gg/29hMftpNq9',
     icon: 'fab fa-discord'
 }, {
+    label: 'Twitter',
     url: 'https://twitter.com/fluXisGame',
     icon: 'fab fa-twitter'
 }, {
+    label: 'YouTube',
     url: 'https://youtube.com/@fluXisGame',
     icon: 'fab fa-youtube'
 }];
@@ -28,7 +32,7 @@ const links = [{
 <template>
     <div class="w-full h-24 pb-5 flex flex-col items-center justify-center text-2xs cursor-default absolute bottom-0">
         <div class="flex flex-wrap justify-center">
-            <a :href="social.url" class="py-1 px-2 hover:text-highlight" target="_blank" v-for="social in socials">
+            <a :href="social.url" class="py-1 px-2 hover:text-highlight" :aria-label="social.label"  target="_blank" v-for="social in socials">
                 <i class="text-base" :class="social.icon"></i>
             </a>
         </div>

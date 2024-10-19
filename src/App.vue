@@ -24,6 +24,8 @@ function stringifyRoute(route) {
 </script>
 
 <template>
+    <NavBar />
+    
     <div
         class="mx-auto grid w-full grid-cols-1 grid-rows-1 pb-32 pt-20 xl:pt-28 text-center xl:w-content transition-all">
         <RouterView v-slot="{ Component, route }">
@@ -46,7 +48,6 @@ function stringifyRoute(route) {
         <Loading />
     </div>
 
-    <NavBar />
     <ContextMenu />
 </template>
 

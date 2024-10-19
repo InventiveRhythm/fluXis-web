@@ -67,7 +67,7 @@ function ShouldShowEdit() {
     return Utils.IsModerator(state.user);
 }
 
-function ChangeMode(mode) {
+function ChangeMode(mode: number) {
     if (react.mode == mode)
         react.mode = 0;
     else
@@ -113,7 +113,7 @@ function ChangeMode(mode) {
                         <div
                             class="w-16 h-8 md:w-12 md:h-6 flex flex-col items-center justify-center text-sm text-dark-2 text-opacity-75 rounded-full transition-colors leading-none"
                             :class="[{ 'bg-opacity-0 text-white hover:bg-opacity-60': react.mode != 0 && react.mode != mode }, `bg-mode-${mode}`]"
-                            @click="ChangeMode(mode)"
+                            @click="ChangeMode(mode)" @keydown.enter="ChangeMode(mode)" role="button" tabindex="0"
                             v-for="mode in modes">
                             {{ mode }}K
                         </div>

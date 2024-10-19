@@ -4,9 +4,9 @@ import { RouterLink } from 'vue-router';
 import type APIUser from '@/api/models/users/APIUser';
 
 import ClubTag from '../ClubTag.vue';
-import LoadingImage from '../LoadingImage.vue';
+import UserBanner from '@/components/images/UserBanner.vue';
+import UserAvatar from '@/components/images/UserAvatar.vue';
 
-import Assets from '@/utils/Assets';
 import { FormatAccuracy } from '@/utils/Formatting';
 import Utils from '@/utils/Utils';
 
@@ -17,14 +17,14 @@ defineProps<{
 
 <template>
     <RouterLink :to="'/u/' + user.id" class="w-full h-20 overlap-grid rounded-xl overflow-hidden">
-        <LoadingImage :src="Assets.Banner(user)" class="size-full object-cover" />
+        <UserBanner :user="user" class="size-full object-cover" />
         <div class="bg-dark-2 opacity-50"></div>
         <div class="flex items-center">
             <div class="flex size-20 items-center justify-center text-xl drop-shadow-text">
                 #{{ user.stats.global }}
             </div>
             <div class="size-20">
-                <LoadingImage :src="Assets.Avatar(user)" class="size-full object-cover rounded-xl" />
+                <UserAvatar :user="user" class="size-full object-cover rounded-xl" />
             </div>
             <div class="flex flex-grow px-4 justify-between items-center drop-shadow-text">
                 <div class="flex flex-col text-left">

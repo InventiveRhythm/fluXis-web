@@ -1,13 +1,8 @@
 import type APIUser from '@/api/models/users/APIUser';
-import { EmitEvent } from './Events';
 
 export default class Utils {
     static SetTitle(title: string) {
         document.title = title + ' | fluXis';
-    }
-
-    static ToggleUserOverlay() {
-        EmitEvent('toggle-user-overlay');
     }
 
     static GetCountryName(code: string): string {

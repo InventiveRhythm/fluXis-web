@@ -16,13 +16,18 @@ import News from '@/news.json';
 const react = reactive<{
     stats: APIStats
 }>({
-    stats: {}
+    stats: {
+        mapsets: 0,
+        online: 0,
+        scores: 0,
+        users: 0
+    }
 });
 
 Utils.SetTitle('home');
 
 API.PerformGet<APIStats>('/stats').then(res => {
-    react.stats = res.data;
+    react.stats = res.data!;
 });
 
 function OpenDownload() {

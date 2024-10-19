@@ -1,5 +1,5 @@
 ﻿import type APIUser from '@/api/models/users/APIUser';
-import type { APIMap } from '@/api/models/maps/APIMap';
+import type APIMap from '@/api/models/maps/APIMap';
 
 export type APIScore = {
     id: number

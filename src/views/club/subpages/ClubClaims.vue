@@ -6,6 +6,7 @@ import APIClubClaim from '@/api/models/clubs/APIClubClaim';
 
 import LoadingContainer from '@/components/status/LoadingContainer.vue';
 import LoadingImage from '@/components/LoadingImage.vue';
+import MapCover from '@/components/images/MapCover.vue';
 
 import Assets from '@/utils/Assets';
 import API from '@/utils/API';
@@ -44,7 +45,7 @@ API.PerformGet<APIClubClaim[]>(`/club/${id}/claims`).then(res => {
         <RouterLink class="w-full h-12 flex flex-row items-center gap-2" :to="`/set/${claim.map.mapset}`"
                     v-for="claim in react.claims">
             <div class="size-12">
-                <LoadingImage class="size-full object-cover rounded-lg" :src="Assets.Cover(claim.map.mapset)" />
+                <MapCover class="size-full object-cover rounded-lg" :map="claim.map" />
             </div>
             <div class="flex-1 min-w-0 flex flex-col">
                 <p class="line-clamp-1">

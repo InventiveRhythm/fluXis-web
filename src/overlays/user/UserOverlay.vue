@@ -1,5 +1,4 @@
 <script setup>
-import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
 import DefaultAvatar from '@/assets/images/defaults/avatar.png';
@@ -7,17 +6,11 @@ import DefaultBanner from '@/assets/images/defaults/banner.png';
 
 import API from '@/utils/API';
 import Assets from '@/utils/Assets';
-import { RegisterEvent } from '@/utils/Events';
 import { state } from '@/utils/State';
+import Overlays from '@/utils/Overlays';
 import Utils from '@/utils/Utils';
 
 const router = useRouter();
-
-const react = reactive({
-    open: false,
-});
-
-RegisterEvent('toggle-user-overlay', () => react.open = !react.open);
 
 function userClick() {
     if (state.user) {
@@ -30,8 +23,9 @@ function userClick() {
 
 <template>
     <Transition name="user-overlay">
-        <div v-if="react.open" class="fixed size-full top-0 left-0 pointer-events-auto bg-black bg-opacity-50"
-             id="user-overlay" @click="react.open = false">
+        <div @keydown.esc="Overlays.UserOverlay.value = false" v-if="Overlays.UserOverlay.value"
+             class="fixed size-full top-0 left-0 pointer-events-auto bg-black bg-opacity-50"
+             id="user-overlay" @click="Overlays.UserOverlay.value = false">
             <div class="w-full md:w-auto wrapper absolute right-0 mt-20">
                 <div class="w-full md:w-80 bg-dark-1 rounded-bl-2xl p-3">
                     <div class="overlap-grid h-40 rounded-lg cursor-pointer group leading-none" @click="userClick">

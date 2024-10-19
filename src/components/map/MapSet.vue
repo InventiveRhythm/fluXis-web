@@ -4,9 +4,8 @@ import { RouterLink } from 'vue-router';
 import type { APIMapSet } from '@/api/models/maps/APIMapSet';
 import { APIMapSetStatus } from '@/api/models/maps/APIMapSetStatus';
 
-import LoadingImage from '../LoadingImage.vue';
-
-import Assets from '@/utils/Assets';
+import MapSetBackground from '@/components/images/MapSetBackground.vue';
+import MapSetCover from '@/components/images/MapSetCover.vue';
 
 const props = defineProps<{
     mapset: APIMapSet
@@ -68,10 +67,10 @@ function GetStatusString() {
 <template>
     <RouterLink class="h-28 w-full" :to="'/set/' + mapset.id" v-if="mapset">
         <div class="overlap-grid W-full h-inherit rounded-2xl bg-dark-3">
-            <LoadingImage class="object-cover" :src="Assets.Background(mapset.id)" />
+            <MapSetBackground class="object-cover" :set="mapset" />
             <div class="flex flex-row bg-dark-2 bg-opacity-60 transition-colors hover:bg-opacity-50">
                 <div class="size-28">
-                    <LoadingImage class="size-full rounded-2xl object-cover" :src="Assets.Cover(mapset.id)" />
+                    <MapSetCover class="size-full rounded-2xl object-cover" :set="mapset" />
                 </div>
                 <div class="flex h-full flex-1 flex-col justify-between p-3 text-left">
                     <div class="drop-shadow-text">

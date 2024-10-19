@@ -1,6 +1,14 @@
+import { ref } from "vue";
+
 import { EmitEvent } from "./Events";
 
 export default class Overlays {
+    static UserOverlay = ref(false);
+
+    static ToggleUserOverlay() {
+        this.UserOverlay.value = !this.UserOverlay.value;
+    }
+
     static OpenClubCreate() {
         EmitEvent('club-overlay', true)
     }

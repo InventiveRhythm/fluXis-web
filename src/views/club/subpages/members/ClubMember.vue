@@ -4,9 +4,8 @@ import { RouterLink } from 'vue-router';
 import type APIClub from '@/api/models/clubs/APIClub';
 import type APIUser from '@/api/models/users/APIUser';
 
-import LoadingImage from '@/components/LoadingImage.vue';
+import UserAvatar from '@/components/images/UserAvatar.vue';
 
-import Assets from '@/utils/Assets';
 import { EmitEvent } from '@/utils/Events';
 import Overlays from '@/utils/Overlays';
 import { state } from '@/utils/State';
@@ -36,8 +35,6 @@ function CanKick() {
         return false;
 
     return state.user?.id == props.club.owner?.id || Utils.IsDeveloper(state.user);
-
-
 }
 
 function OpenContext(e) {
@@ -60,7 +57,7 @@ function OpenContext(e) {
     <RouterLink :to="`/u/${member.id}`" class="w-full flex flex-row items-center gap-2"
                 @contextmenu.prevent="OpenContext">
         <div class="size-12">
-            <LoadingImage class="size-full object-cover rounded-lg" :src="Assets.Avatar(member)" />
+            <UserAvatar class="size-full object-cover rounded-lg" :user="member" />
         </div>
         <div class="flex flex-col">
             <div class="flex gap-1.5">

@@ -1,5 +1,5 @@
 <template>
-    <div class="select-none rounded-full bg-accent-2 hover:bg-accent-3 transition-all active:scale-95 duration-200 hover:duration-75 overflow-hidden">
+    <div role="button" tabindex="0" class="select-none rounded-full bg-accent-2 hover:bg-accent-3 transition-all active:scale-95 duration-200 hover:duration-75 overflow-hidden">
         <slot></slot>
     </div>
 </template>
