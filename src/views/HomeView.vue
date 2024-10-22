@@ -3,7 +3,7 @@ import { reactive } from 'vue';
 
 import type { APIStats } from '@/api/models/other/APIStats';
 
-import HomeVideo from '../assets/images/home/fluxis.mp4';
+import HomeVideo from '../assets/images/home/bg.mp4';
 import NewsCard from '../components/news/NewsCard.vue';
 import RoundedButton from '@/components/RoundedButton.vue';
 
