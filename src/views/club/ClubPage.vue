@@ -17,7 +17,7 @@ import ErrorContainer from '@/components/status/ErrorContainer.vue';
 
 import API from '@/utils/API';
 import Utils from '@/utils/Utils';
-import { FormatAccuracy } from '@/utils/Formatting';
+import { FormatAccuracy, FormatScore } from '@/utils/Formatting';
 import { StartLoading, StopLoading } from '@/utils/Loading';
 import { state } from '@/utils/State';
 import { EmitEvent } from '@/utils/Events';
@@ -112,8 +112,16 @@ function CanLeave() {
                     <p class="text-2xl">Statistics</p>
                     <div class="flex flex-col gap-1 text-sm">
                         <div class="flex flex-row items-center justify-between">
+                            <p class="opacity-80">Rank</p>
+                            <p>#{{ react.club.stats?.rank }}</p>
+                        </div>
+                        <div class="flex flex-row items-center justify-between">
                             <p class="opacity-80">Overall Rating</p>
                             <p>{{ react.club.stats?.ovr }}</p>
+                        </div>
+                        <div class="flex flex-row items-center justify-between">
+                            <p class="opacity-80">Total Score</p>
+                            <p>{{ FormatScore(react.club.stats?.score) }}</p>
                         </div>
                         <div class="flex flex-row items-center justify-between">
                             <p class="opacity-80">Claimed Maps</p>
