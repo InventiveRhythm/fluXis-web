@@ -17,7 +17,6 @@
     "flag-icons": "^6.7.0",
     "highlight.js": "^11.9.0",
     "install": "^0.13.0",
-    "marked": "^5.0.5",
     "marked-highlight": "^2.1.1",
     "npm": "^10.8.1",
     "typescript": "^5.6.3",
@@ -29,6 +28,7 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
     "autoprefixer": "^10.4.19",
+    "marked": "^14.1.4",
     "node-sass": "^8.0.0",
     "postcss": "^8.4.38",
     "sass": "^1.62.1",
