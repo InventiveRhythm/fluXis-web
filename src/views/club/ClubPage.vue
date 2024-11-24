@@ -98,12 +98,12 @@ function CanLeave() {
             <div class="w-80 min-w-80 flex flex-col gap-7 text-left">
                 <div class="w-full flex flex-col gap-4">
                     <RoundedButton v-if="CanEdit()" @click="OpenEdit"
-                                   class="px-6 py-2 text-white text-opacity-75 text-center bg-dark-2 hover:bg-dark-3">
+                                   class="bg-dark-2 px-6 py-2 text-center text-dark-text text-opacity-75 hover:bg-dark-3">
                         <i class="fa fa-pencil mr-1"></i>
                         Edit
                     </RoundedButton>
                     <RoundedButton v-if="CanLeave()" @click="OpenLeave"
-                                   class="px-6 py-2 text-white text-center text-opacity-75 bg-dark-2 hover:text-dark-2 hover:bg-red">
+                                   class="px-6 py-2 text-center text-dark-text text-opacity-75 bg-dark-2 hover:text-dark-2 hover:bg-red">
                         <i class="fa fa-door-open mr-1"></i>
                         Leave
                     </RoundedButton>

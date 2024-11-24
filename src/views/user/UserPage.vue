@@ -84,7 +84,7 @@ function ChangeMode(mode: number) {
         <div class="w-full flex flex-col lg:flex-row justify-center items-start p-3 gap-5">
             <div class="w-full lg:w-80 flex flex-col justify-center gap-5">
                 <RoundedButton v-if="ShouldShowEdit()" @click="OpenEdit"
-                               class="px-6 py-2 text-white text-opacity-75 text-center bg-dark-2 hover:bg-dark-3">
+                               class="px-6 py-2 text-dark-text text-opacity-75 text-center bg-dark-2 hover:bg-dark-3">
                     <i class="fa fa-pencil mr-1"></i>
                     Edit
                 </RoundedButton>
@@ -111,7 +111,7 @@ function ChangeMode(mode: number) {
                     </TabControl>
                     <div class="flex flex-row gap-2">
                         <div
-                            class="w-16 h-8 md:w-12 md:h-6 flex flex-col items-center justify-center text-sm text-dark-2 text-opacity-75 rounded-full transition-colors leading-none"
+                            class="w-16 h-8 md:w-12 md:h-6 flex flex-col items-center justify-center text-sm text-black text-opacity-75 rounded-full transition-colors leading-none"
                             :class="[{ 'bg-opacity-0 text-white hover:bg-opacity-60': react.mode != 0 && react.mode != mode }, `bg-mode-${mode}`]"
                             @click="ChangeMode(mode)" @keydown.enter="ChangeMode(mode)" role="button" tabindex="0"
                             v-for="mode in modes">

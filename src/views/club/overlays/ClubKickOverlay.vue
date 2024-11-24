@@ -43,7 +43,7 @@ function Perform() {
                   :open="react.open" :voidclick="() => react.open = false">
         <div class="w-full flex justify-center">
             <RoundedButton
-                class="w-fit flex flex-row items-center justify-center px-6 py-3 text-white text-center text-opacity-75 bg-dark-2 hover:text-dark-2 hover:bg-red"
+                class="w-fit flex flex-row items-center justify-center px-6 py-3 text-dark-text text-center text-opacity-75 bg-dark-2 hover:text-dark-2 hover:bg-red"
                 @click="Perform">Yes, do it.
             </RoundedButton>
         </div>

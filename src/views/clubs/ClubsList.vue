@@ -42,7 +42,7 @@ function CanCreate() {
                 <div class="size-6 flex items-center justify-center">
                     <i class="fa fa-search text-xl"></i>
                 </div>
-                <input class="flex-grow bg-dark-2 focus:outline-none placeholder:text-white placeholder:opacity-60"
+                <input class="flex-grow bg-dark-2 focus:outline-none placeholder:text-dark-text placeholder:opacity-60"
                        placeholder="Search... (doesn't actually work yet)" type="text">
             </div>
             <div v-if="CanCreate()" tabindex="0" role="button" aria-label="create club"

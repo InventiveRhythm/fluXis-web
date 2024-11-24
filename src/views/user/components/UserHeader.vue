@@ -93,7 +93,7 @@ function OpenEdit() {
                             Edit
                         </UserHeaderButton>
                         <template v-else>
-                            <UserHeaderButton class="!bg-accent-2 text-dark-2" onclick="alert('Not implemented yet.')"
+                            <UserHeaderButton class="!bg-primary text-dark-2" onclick="alert('Not implemented yet.')"
                                               v-if="user.following">
                                 <i class="fas fa-heart w-5"></i>
                                 Following

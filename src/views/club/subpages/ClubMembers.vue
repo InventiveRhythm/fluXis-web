@@ -40,7 +40,7 @@ async function invite() {
     <div class="flex flex-col items-center gap-3">
         <ClubMember :club="club" :member="member" v-for="member in club.members" />
         <RoundedButton v-if="state.user && state.user?.id === club.owner?.id" @click="invite"
-                       class="px-6 py-2 text-white text-opacity-75 mt-3">Invite...
+                       class="px-6 py-2 text-dark-text text-opacity-75 mt-3">Invite...
         </RoundedButton>
     </div>
 </template>

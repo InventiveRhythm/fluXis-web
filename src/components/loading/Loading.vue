@@ -25,19 +25,19 @@ RegisterEvent('loading', (status: boolean) => loading.value = status);
     0% {
         stroke-dasharray: 1, 200;
         stroke-dashoffset: 0;
-        stroke: var(--accent-secondary);
+        @apply stroke-primary;
     }
 
     50% {
         stroke-dasharray: 89, 200;
         stroke-dashoffset: -35;
-        stroke: var(--highlight);
+        @apply stroke-highlight;
     }
 
     100% {
         stroke-dasharray: 89, 200;
         stroke-dashoffset: -124;
-        stroke: var(--accent-secondary);
+        @apply stroke-primary;
     }
 }
 </style>

@@ -46,7 +46,7 @@ function OpenDownload() {
                 <br>
                 with a focus on creativity and expression.
             </h3>
-            <RoundedButton class="flex px-4 py-2 gap-2 mt-3" @click=OpenDownload>
+            <RoundedButton class="flex px-4 py-2 gap-2 mt-3 bg-primary hover:bg-secondary !text-dark-2" @click=OpenDownload>
                 <i class="fa fa-download flex items-center"></i>
                 <p>Download</p>
             </RoundedButton>

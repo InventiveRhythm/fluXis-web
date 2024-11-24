@@ -91,7 +91,7 @@ function acceptInvite() {
                     <ClubTag class="text-xl" :club="react.invite.club"></ClubTag>
                     <p class="text-2xl">{{ react.invite.club.name }}</p>
                 </div>
-                <RoundedButton @click="acceptInvite" class="px-6 py-2 text-white text-opacity-75 mt-6">
+                <RoundedButton @click="acceptInvite" class="px-6 py-2 text-dark-text text-opacity-75 mt-6">
                     Accept Invite
                 </RoundedButton>
             </div>
