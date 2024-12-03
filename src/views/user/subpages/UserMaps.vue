@@ -43,21 +43,21 @@ try {
     <p v-if="react.loading">loading...</p>
     <div class="flex flex-col gap-5" v-else>
         <UserSection title="Pure">
-            <p v-if="!react.maps.ranked || react.maps.ranked.length === 0" class="px-3 opacity-60">This user has no pure
+            <p v-if="!react.maps.ranked || react.maps.ranked.length === 0" class="text-sm opacity-80 px-2">This user has no pure
                 maps.</p>
             <UserWrapList v-else>
                 <MapSetCard v-for="map in react.maps.ranked" :mapset="map" />
             </UserWrapList>
         </UserSection>
         <UserSection title="Impure/Unsubmitted">
-            <p v-if="!react.maps.unranked || react.maps.unranked.length === 0" class="px-3 opacity-60">This user has no
+            <p v-if="!react.maps.unranked || react.maps.unranked.length === 0" class="text-sm opacity-80 px-2">This user has no
                 impure/unsubmitted maps.</p>
             <UserWrapList v-else>
                 <MapSetCard v-for="map in react.maps.unranked" :mapset="map" />
             </UserWrapList>
         </UserSection>
         <UserSection title="Guest Difficulties">
-            <p v-if="!react.maps.guest_diffs || react.maps.guest_diffs.length === 0" class="px-3 opacity-60">This user
+            <p v-if="!react.maps.guest_diffs || react.maps.guest_diffs.length === 0" class="text-sm opacity-80 px-2">This user
                 has no
                 guest difficulties.</p>
             <UserWrapList v-else>

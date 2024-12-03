@@ -38,14 +38,16 @@ try {
     <p v-if="react.loading">loading...</p>
     <div class="flex flex-col gap-5" v-else>
         <UserSection title="Best">
-            <UserContentList>
+            <UserContentList v-if="react.scores.best_scores.length > 0">
                 <ScoreCard v-for="score in react.scores.best_scores.splice(0, 8)" :score="score" />
             </UserContentList>
+            <p class="text-sm opacity-80 px-2" v-else>Nothing here yet...</p>
         </UserSection>
         <UserSection title="Recent">
-            <UserContentList>
+            <UserContentList v-if="react.scores.best_scores.length > 0">
                 <ScoreCard v-for="score in react.scores.recent_scores.splice(0, 6)" :score="score" />
             </UserContentList>
+            <p class="text-sm opacity-80 px-2" v-else>Nothing here yet...</p>
         </UserSection>
     </div>
 </template>

@@ -17,7 +17,12 @@ export default class APIUser {
 
     public created?: number;
     public lastlogin?: number;
-    public socials?: any;
+    public socials?: {
+        twitter: string
+        twitch: string
+        youtube: string
+        discord: string
+    };
     public stats?: any;
     public following?: boolean;
     public email?: string;
