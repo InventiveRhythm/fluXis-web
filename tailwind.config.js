@@ -90,6 +90,9 @@ module.exports = {
                 '.keymode-gradient': {
                     background: `linear-gradient(90deg, var(--tag-keymode-min) 0%, var(--tag-keymode-max) 100%)`,
                 },
+                '.home-graph-mask': {
+                    'mask-image': 'linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0) 98%)'
+                }
             });
         }),
     ],

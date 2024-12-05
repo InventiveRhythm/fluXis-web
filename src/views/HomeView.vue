@@ -6,6 +6,7 @@ import type { APIStats } from '@/api/models/other/APIStats';
 import HomeVideo from '../assets/images/home/bg.mp4';
 import NewsCard from '../components/news/NewsCard.vue';
 import RoundedButton from '@/components/RoundedButton.vue';
+import OnlineGraph from './home/OnlineGraph.vue';
 
 import API from '@/utils/API';
 import { FormatNumber } from '@/utils/Formatting';
@@ -51,7 +52,10 @@ function OpenDownload() {
                 <p>Download</p>
             </RoundedButton>
         </div>
-        <div class="absolute bottom-5 left-5 w-fit h-fit text-left text-xs">
+        <div class="absolute -bottom-2 -left-2 flex flex-row items-end">
+            <OnlineGraph class="home-graph-mask" />
+        </div>
+        <div class="absolute bottom-5 left-5 w-fit h-fit text-left text-xs drop-shadow-md">
             <span class="font-bold">{{ FormatNumber(react.stats.users) }}</span>
             registered users,
             <span class="font-bold">{{ react.stats.online }}</span>
