@@ -145,11 +145,6 @@ const router = createRouter({
       component: () => import('../views/mapset/MapSetPage.vue')
     },
     {
-      path: '/stats/online',
-      name: 'online-stats',
-      component: () => import('../views/home/OnlineStats.vue')
-    },
-    {
       path: '/stats/registrations',
       name: 'registration-stats',
       component: () => import('../views/stats/users/CreationStats.vue')
