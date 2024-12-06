@@ -79,7 +79,7 @@ function downloadSong(album: string, track: string) {
 </script>
 
 <template>
-    <div v-if="react.artist" class="w-full flex rounded-2xl bg-dark-2 text-left">
+    <div v-if="react.artist" class="w-full flex text-left">
         <div class="w-80 min-w-80 bg-dark-3 rounded-2xl h-fit">
             <div class="size-80">
                 <LoadingImage class="size-full object-cover rounded-2xl"
