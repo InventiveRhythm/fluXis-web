@@ -45,6 +45,12 @@ module.exports = {
                 text: 'var(--album-text)',
                 text2: 'var(--album-text2)',
                 accent: 'var(--album-accent)',
+            },
+            social: {
+                youtube: '#ff0000',
+                spotify: '#1ed760',
+                soundcloud: '#ff5500',
+                twitter: '#1DA1F2'
             }
         },
         extend: {
@@ -82,6 +88,9 @@ module.exports = {
             },
             zIndex: {
                 loading: '400'
+            },
+            lineHeight: {
+                '0': 0
             }
         }
     },

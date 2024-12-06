@@ -6,6 +6,7 @@ import type { FeaturedArtist } from '@/api/models/artists/FeaturedArtist';
 
 import LoadingImage from '@/components/LoadingImage.vue';
 
+import FeaturedArtistSocial from './components/FeaturedArtistSocial.vue';
 import FeaturedAlbum from './components/FeaturedAlbum.vue';
 
 import API from '../../utils/API';
@@ -85,8 +86,12 @@ function downloadSong(album: string, track: string) {
                 <LoadingImage class="size-full object-cover rounded-2xl"
                     :src="'/featured-artist/' + react.artist.id + '/icon.png'" alt="Artist Image" />
             </div>
-            <div class="w-full h-fit">
-
+            <div class="flex flex-row flex-wrap h-fit w-full has-[div]:p-2">
+                <a v-if="react.artist.youtube" class="min-w-16 flex-1" target="_blank" :href="`https://youtube.com/${react.artist.youtube}`"><FeaturedArtistSocial class="bg-social-youtube text-social-youtube" name="YouTube" /></a>
+                <a v-if="react.artist.spotify" class="min-w-16 flex-1" target="_blank" :href="`https://open.spotify.com/artist/${react.artist.spotify}`"><FeaturedArtistSocial class="bg-social-spotify text-social-spotify" name="Spotify" /></a>
+                <a v-if="react.artist.soundcloud" class="min-w-16 flex-1" target="_blank" :href="`https://soundcloud.com/${react.artist.soundcloud}`"><FeaturedArtistSocial class="bg-social-soundcloud text-social-soundcloud" name="SoundCloud" /></a>
+                <a v-if="react.artist.twitter" class="min-w-16 flex-1" target="_blank" :href="`https://twitter.com/${react.artist.twitter}`"><FeaturedArtistSocial class="bg-social-twitter text-social-twitter" name="Twitter" /></a>
+                <RouterLink :to="`/u/${react.artist.fluxis}`" class="min-w-16 flex-1" v-if="react.artist.fluxis"><FeaturedArtistSocial class="bg-primary text-primary" base="https://fluxis.flux.moe/u/" name="fluXis" :id="'1'" /></RouterLink>
             </div>
         </div>
         <div class="w-full p-5">
