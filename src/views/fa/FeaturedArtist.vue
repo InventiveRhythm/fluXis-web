@@ -94,7 +94,7 @@ function downloadSong(album: string, track: string) {
                 <RouterLink :to="`/u/${react.artist.fluxis}`" class="min-w-16 flex-1" v-if="react.artist.fluxis"><FeaturedArtistSocial class="bg-primary text-primary" base="https://fluxis.flux.moe/u/" name="fluXis" :id="'1'" /></RouterLink>
             </div>
         </div>
-        <div class="w-full p-5">
+        <div class="w-full px-5">
             <div class="w-full flex flex-col mb-8">
                 <h1 class="text-5xl">{{ react.artist.name }}</h1>
                 <p class="text-base">{{ react.artist.description }}</p>
