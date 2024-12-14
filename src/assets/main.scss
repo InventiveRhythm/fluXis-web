@@ -13,6 +13,11 @@
     src: url('font/youregone.ttf');
 }
 
+@font-face {
+    font-family: 'MOBO';
+    src: url('font/mobo.otf');
+}
+
 @import url('style/codeblocks.scss');
 
 :root {
@@ -72,7 +77,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Renogare Soft', system-ui;
+    font-family: 'Renogare Soft', 'MOBO', "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 5 Free", "Font Awesome 5 Brands", "FontAwesome", system-ui;
     scroll-margin-top: 100px;
 }
 
