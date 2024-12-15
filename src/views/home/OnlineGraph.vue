@@ -1,18 +1,29 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
-import { Line } from 'vue-chartjs'
-import { Chart as ChartJS, Title, Tooltip, Legend, CategoryScale, LinearScale, LineElement, PointElement, type ChartOptions, type ChartData, Filler } from 'chart.js'
+import { reactive } from 'vue';
+import { Line } from 'vue-chartjs';
+import {
+    Chart as ChartJS,
+    Title,
+    Tooltip,
+    Legend,
+    CategoryScale,
+    LinearScale,
+    LineElement,
+    PointElement,
+    type ChartOptions,
+    type ChartData,
+    Filler
+} from 'chart.js';
 
 import type APIOnlineUserStat from '@/api/models/stats/APIOnlineUserStat';
 
 import API from '@/utils/API';
-import Utils from '@/utils/Utils';
 
-ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, LineElement, PointElement, Filler)
+ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, LineElement, PointElement, Filler);
 
 const react = reactive<{
-    data?: ChartData<"line">,
-    options: ChartOptions<"line">
+    data?: ChartData<'line'>,
+    options: ChartOptions<'line'>
 }>({
     options: {
         responsive: false,
@@ -51,78 +62,78 @@ const react = reactive<{
             }
         }
     }
-})
+});
 
 API.PerformGet<APIOnlineUserStat[]>('/stats/users/online').then(data => {
-    if (!data.data) return
+    if (!data.data) return;
 
-    const current = new Date()
-    const max = 12 * 60 * 60 * 1000
+    const current = new Date();
+    const max = 12 * 60 * 60 * 1000;
 
-    data.data.sort((a, b) => a.time - b.time)
+    data.data.sort((a, b) => a.time - b.time);
 
     const dates = data.data.map(date => {
-        const d = new Date(0)
-        d.setUTCSeconds(date.time)
-        return d
-    })
+        const d = new Date(0);
+        d.setUTCSeconds(date.time);
+        return d;
+    });
 
     let idx = 0;
     const peaks: any = {};
     const cur: any = {};
 
     dates.forEach((date: Date) => {
-        let key = `${date.getHours()}-${date.getDay()}-${date.getMonth()}-${date.getFullYear()}`
+        let key = `${date.getHours()}-${date.getDay()}-${date.getMonth()}-${date.getFullYear()}`;
 
         if (current.getTime() - date.getTime() > max)
-            key = '!' + key
+            key = '!' + key;
 
         if (!cur[key]) {
-            let lastVal = 0
-            const keys = Object.keys(cur)
+            let lastVal = 0;
+            const keys = Object.keys(cur);
 
             // get last value, if available
             if (keys.length > 0) {
-                const last = keys[keys.length - 1]
+                const last = keys[keys.length - 1];
 
                 if (last != key) {
-                    lastVal = cur[last]
+                    lastVal = cur[last];
                 }
             }
 
-            cur[key] = lastVal
-            peaks[key] = 0
+            cur[key] = lastVal;
+            peaks[key] = 0;
         }
 
-        const change = data.data![idx]
+        const change = data.data![idx];
 
         if (change.state)
-            cur[key]++
+            cur[key]++;
         else
-            cur[key]--
+            cur[key]--;
 
-        peaks[key] = Math.max(cur[key], peaks[key])
-        idx++
-    })
+        peaks[key] = Math.max(cur[key], peaks[key]);
+        idx++;
+    });
 
     let list: any[] = Object.keys(peaks).map(key => {
         return {
             x: key,
             y: peaks[key]
-        }
-    })
+        };
+    });
 
     // remove all which start with !
-    list = list.filter(x => !x.x.startsWith('!'))
+    list = list.filter(x => !x.x.startsWith('!'));
 
     // replace last with current count
-    const curKeys = Object.keys(cur)
-    const lastKey = curKeys[curKeys.length - 1]
+    const curKeys = Object.keys(cur);
+    const lastKey = curKeys[curKeys.length - 1];
     list.pop();
     list.push({
         x: lastKey,
         y: cur[lastKey]
-    })
+    });
 
     react.data = {
         labels: [],
@@ -140,10 +151,8 @@ API.PerformGet<APIOnlineUserStat[]>('/stats/users/online').then(data => {
                 pointStyle: false
             }
         ]
-    }
+    };
 });
-
-Utils.SetTitle("online users");
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
-import { useRoute, useRouter, RouterLink } from 'vue-router';
-import { marked, type RendererObject } from "marked";
+import { useRoute, RouterLink } from 'vue-router';
+import { marked, type RendererObject } from 'marked';
 
 import MarkdownView from '@/components/markdown/MarkdownView.vue';
 
@@ -44,69 +44,58 @@ const react = reactive<{
 });
 
 StartLoading();
-Utils.SetTitle("/" + path);
+Utils.SetTitle('/' + path);
 
-const lang = "en";
+const lang = 'en';
 
 fetch('/fluxis-wiki/' + path + '/' + lang + '.md')
     .then(response => response.text())
     .then(render);
 
 function render(data: string) {
-    if (!data) return render("We couldn't find the page you were looking for.\n\n[Go back to the wiki home page](/wiki/home)");
+    if (!data) return render('We couldn\'t find the page you were looking for.\n\n[Go back to the wiki home page](/wiki/home)');
 
     let title = data.match(/# (.*)/);
     if (title) {
-        Utils.SetTitle(title[1] + " - wiki");
+        Utils.SetTitle(title[1] + ' - wiki');
         react.path[react.path.length - 1].title = title[1];
     }
 
-    let sections = data.split("\n").filter(line => line.startsWith("## ") || line.startsWith("### "));
+    let sections = data.split('\n').filter(line => line.startsWith('## ') || line.startsWith('### '));
     if (sections) {
         react.contents = sections.map(section => {
-            console.log(section);
-            const link = section.replace(/#/g, "").toLowerCase().trim().replace(/[^\w]+/g, '-');
-            const title = section.replace(/#/g, "").trim();
+            const link = section.replace(/#/g, '').toLowerCase().trim().replace(/\W+/g, '-');
+            const title = section.replace(/#/g, '').trim();
 
             return {
                 link: link,
                 title: title,
-                isH3: section.startsWith("### ")
-            }
+                isH3: section.startsWith('### ')
+            };
         });
     }
 
     const config: RendererObject = {
         link: (link) => {
             if (link.href.startsWith('/')) {
-                return `<RouterLink to="${link.href}">${link.text}</RouterLink>`
+                return `<RouterLink to="${link.href}">${link.text}</RouterLink>`;
             }
 
-            return false
-        },
-    }
+            return false;
+        }
+    };
 
-    /* const marked = new Marked(
-        markedHighlight({
-            langPrefix: 'hljs language-',
-            highlight(code, lang, info) {
-                const language = hljs.getLanguage(lang) ? lang : 'plaintext';
-                return hljs.highlight(code, { language }).value;
-            }
-        })
-    ); */
-
-    marked.use({ renderer: config })
+    marked.use({ renderer: config });
 
     react.article = marked.parse(data).toString();
     StopLoading();
 }
 
 function edit() {
-    const repo = "https://github.com/InventiveRhythm/fluXis-wiki";
+    const repo = 'https://github.com/InventiveRhythm/fluXis-wiki';
 
     const path = route.path.split('/').slice(2).join('/').toLowerCase();
-    const url = repo + "/edit/main/" + path + ".md";
+    const url = repo + '/edit/main/' + path + '/en.md';
 
     window.open(url, '_blank');
 }
@@ -127,7 +116,7 @@ function edit() {
                 </p>
             </div>
             <a @click="edit"
-                class="hidden md:block px-4 py-2 text-sm text-right bg-primary rounded-lg rounded-tr-xl text-dark-2">
+               class="hidden md:block px-4 py-2 text-sm text-right bg-primary rounded-lg rounded-tr-xl text-dark-2">
                 <i class="fa fa-github mr-1"></i>
                 Edit this page
             </a>
@@ -136,7 +125,7 @@ function edit() {
             <div class="hidden lg:block w-60 bg-dark-3 rounded-lg rounded-bl-xl p-4">
                 <p class="mb-1 text-sm opacity-80">Contents</p>
                 <a class="text-sm mb-1 hover:text-highlight" v-for="content in react.contents"
-                    :href="'#' + content.link">
+                   :href="'#' + content.link">
                     <p :class="{ 'pl-4': content.isH3 }">{{ content.title }}</p>
                 </a>
             </div>

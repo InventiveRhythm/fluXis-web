@@ -47,12 +47,13 @@ function OpenDownload() {
                 <br>
                 with a focus on creativity and expression.
             </h3>
-            <RoundedButton class="flex px-4 py-2 gap-2 mt-3 bg-primary hover:bg-secondary !text-dark-2" @click=OpenDownload>
+            <RoundedButton class="flex px-4 py-2 gap-2 mt-3 bg-primary hover:bg-secondary !text-dark-2"
+                           @click=OpenDownload>
                 <i class="fa fa-download flex items-center"></i>
                 <p>Download</p>
             </RoundedButton>
         </div>
-        <div class="absolute -bottom-2 -left-2 flex flex-row items-end">
+        <div class="absolute -bottom-2 -left-2 flex flex-row items-end pointer-events-none">
             <OnlineGraph class="home-graph-mask" />
         </div>
         <div class="absolute bottom-5 left-5 w-fit h-fit text-left text-xs drop-shadow-md">

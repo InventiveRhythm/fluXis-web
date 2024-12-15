@@ -78,5 +78,38 @@ function MoveToHash() {
             @apply text-sm;
         }
     }
+
+    pre {
+        @apply bg-dark-2 p-2 rounded-lg mt-2 overflow-x-auto;
+    }
+
+    code {
+        @apply bg-dark-2 rounded-md;
+
+        span {
+            @apply font-mono;
+        }
+    }
+
+    table {
+        @apply mt-2 border-collapse;
+
+        img {
+            @apply mt-0 inline;
+        }
+
+        th,
+        td {
+            @apply border-2 border-dark-text px-2;
+        }
+
+        th {
+            @apply py-4;
+        }
+
+        td {
+            @apply py-3;
+        }
+    }
 }
 </style>
