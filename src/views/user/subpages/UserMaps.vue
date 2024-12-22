@@ -4,12 +4,13 @@ import { reactive } from 'vue';
 
 import APIUserMaps from '@/api/models/users/APIUserMaps';
 
+import LoadingContainer from '@/components/status/LoadingContainer.vue';
+
 import UserSection from '../components/UserSection.vue';
 import UserWrapList from '../components/UserWrapList.vue';
 import MapSetCard from '@/components/map/MapSet.vue';
 
 import API from '@/utils/API';
-import { StartLoading, StopLoading } from '@/utils/Loading';
 
 const route = useRoute();
 let id = route.params.id;
@@ -23,24 +24,21 @@ let react = reactive<{
 });
 
 try {
-    StartLoading();
     API.PerformGet<APIUserMaps>(`/user/${id}/maps`).then(res => {
         if (!res.data) return;
 
         react['maps'] = res.data;
     }).finally(() => {
         react.loading = false;
-        StopLoading();
     });
 } catch (err) {
     console.error(err);
     react.loading = false;
-    StopLoading();
 }
 </script>
 
 <template>
-    <p v-if="react.loading">loading...</p>
+    <LoadingContainer v-if="react.loading" />
     <div class="flex flex-col gap-5" v-else>
         <UserSection title="Pure">
             <p v-if="!react.maps.ranked || react.maps.ranked.length === 0" class="text-sm opacity-80 px-2">This user has no pure
