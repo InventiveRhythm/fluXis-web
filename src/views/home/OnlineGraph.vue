@@ -81,6 +81,7 @@ API.PerformGet<APIOnlineUserStat[]>('/stats/users/online').then(data => {
     let idx = 0;
     const peaks: any = {};
     const cur: any = {};
+    let correction: number = 0
 
     dates.forEach((date: Date) => {
         let key = `${date.getHours()}-${date.getDay()}-${date.getMonth()}-${date.getFullYear()}`;
@@ -113,13 +114,14 @@ API.PerformGet<APIOnlineUserStat[]>('/stats/users/online').then(data => {
             cur[key]--;
 
         peaks[key] = Math.max(cur[key], peaks[key]);
+        correction = Math.min(cur[key], correction)
         idx++;
     });
 
     let list: any[] = Object.keys(peaks).map(key => {
         return {
             x: key,
-            y: peaks[key]
+            y: peaks[key] - correction
         };
     });
 
@@ -132,7 +134,7 @@ API.PerformGet<APIOnlineUserStat[]>('/stats/users/online').then(data => {
     list.pop();
     list.push({
         x: lastKey,
-        y: cur[lastKey]
+        y: cur[lastKey] - correction
     });
 
     react.data = {
