@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const input = ref(null);
+const input = ref<HTMLInputElement>();
 
 const props = defineProps<{
     icon: string,
     changed?: Function
 }>();
 
-function InputChanged(ev: InputEvent) {
+function InputChanged(ev: any) {
     if (!props.changed)
         return;
 
-    props.changed(ev.target.value);
+    props.changed(((ev as InputEvent)?.target as HTMLInputElement)?.value);
 }
 
 defineExpose({ input });

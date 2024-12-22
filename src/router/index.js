@@ -121,7 +121,7 @@ const router = createRouter({
     {
       path: '/maps',
       name: 'maps',
-      component: WorkInProgress
+      component: () => import('@/views/map-browser/MapBrowser.vue')
     },
     {
       path: '/oauth',
