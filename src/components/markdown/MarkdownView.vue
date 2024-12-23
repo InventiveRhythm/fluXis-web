@@ -44,14 +44,18 @@ function MoveToHash() {
 
 <style lang="scss">
 .md-content {
-    @apply flex flex-col gap-3 max-w-full;
+    @apply max-w-full;
+
+    * {
+        @apply  box-content;
+    }
 
     h1 {
-        @apply text-2xl;
+        @apply text-4xl mb-4;
     }
 
     h2 {
-        @apply text-xl;
+        @apply text-2xl mt-8 mb-4;
     }
 
     h3 {
@@ -67,12 +71,12 @@ function MoveToHash() {
     }
 
     >p {
-        @apply text-sm;
+        @apply text-sm my-4;
     }
 
     ul,
     ol {
-        @apply list-inside list-disc;
+        @apply list-inside list-disc mt-2;
 
         li {
             @apply text-sm;
@@ -80,7 +84,7 @@ function MoveToHash() {
     }
 
     pre {
-        @apply bg-dark-2 p-4 rounded-lg mt-2 overflow-x-auto;
+        @apply bg-dark-2 p-4 rounded-lg my-2 overflow-x-auto;
 
         code {
             @apply bg-dark-2 p-0;
@@ -92,7 +96,7 @@ function MoveToHash() {
     }
 
     table {
-        @apply mt-2 border-collapse;
+        @apply w-full mt-2;
 
         img {
             @apply mt-0 inline;
@@ -110,6 +114,10 @@ function MoveToHash() {
         th {
             @apply bg-dark-2 border-b-2 border-dark-1;
         }
+    }
+
+    blockquote {
+        @apply bg-dark-2 p-6 rounded-2xl border-highlight border-2;
     }
 }
 </style>

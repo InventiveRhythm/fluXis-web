@@ -129,7 +129,7 @@ function edit() {
                     <p :class="{ 'pl-4': content.isH3 }">{{ content.title }}</p>
                 </a>
             </div>
-            <div class="flex-1 max-w-full overflow-scroll p-4 bg-dark-3 text-sm rounded-lg rounded-br-xl">
+            <div class="flex-1 max-w-full overflow-scroll p-6 bg-dark-3 text-sm rounded-lg rounded-br-xl">
                 <MarkdownView v-if="react.article" :content="react.article" />
             </div>
         </div>
