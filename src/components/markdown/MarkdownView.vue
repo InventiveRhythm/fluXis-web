@@ -63,7 +63,7 @@ function MoveToHash() {
     }
 
     a {
-        @apply text-primary hover:underline
+        @apply text-highlight hover:underline
     }
 
     >p {
@@ -80,15 +80,15 @@ function MoveToHash() {
     }
 
     pre {
-        @apply bg-dark-2 p-2 rounded-lg mt-2 overflow-x-auto;
+        @apply bg-dark-2 p-4 rounded-lg mt-2 overflow-x-auto;
+
+        code {
+            @apply bg-dark-2 p-0;
+        }
     }
 
     code {
-        @apply bg-dark-2 rounded-md;
-
-        span {
-            @apply font-mono;
-        }
+        @apply bg-dark-1 rounded-md text-dark-text font-mono font-bold px-2 py-1;
     }
 
     table {
@@ -100,15 +100,15 @@ function MoveToHash() {
 
         th,
         td {
-            @apply border-2 border-dark-text px-2;
+            @apply p-2;
+        }
+
+        tr {
+            @apply odd:bg-dark-2 even:bg-dark-1;
         }
 
         th {
-            @apply py-4;
-        }
-
-        td {
-            @apply py-3;
+            @apply bg-dark-2 border-b-2 border-dark-1;
         }
     }
 }
