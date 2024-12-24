@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router';
+
 import type { APIScore } from '@/api/models/scores/APIScore';
 
 import MapBackground from '../images/MapBackground.vue';
@@ -12,14 +14,14 @@ defineProps<{
 </script>
 
 <template>
-    <div class="flex flex-row h-12 w-full rounded-lg overflow-hidden"
+    <RouterLink :to="`/set/${score.map.mapset}`" class="flex flex-row h-12 w-full rounded-lg overflow-hidden"
          :style="'background-color: var(--rank-' + score.grade.toLowerCase() + ');'">
         <div class="size-12 flex items-center justify-center text-dark-2">
             <p class="text-2xl font-rank even:-ml-3 even:opacity-60" v-for="letter in score.grade.split('')">
                 {{ letter }}
             </p>
         </div>
-        <!-- thank you chome, that I have to put the same size again because youre too stupid to accept 100% height -->
+        <!-- thank you chome, that I have to put the same size again because you're too stupid to accept 100% height -->
         <div class="overlap-grid w-full h-12 rounded-lg overflow-hidden">
             <MapBackground class="object-cover" :map="score.map" />
             <div class="bg-dark-2 opacity-50"></div>
@@ -43,5 +45,5 @@ defineProps<{
                 </div>
             </div>
         </div>
-    </div>
+    </RouterLink>
 </template>
