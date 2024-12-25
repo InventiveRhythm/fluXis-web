@@ -6,6 +6,7 @@ import DefaultBanner from '@/assets/images/defaults/banner.png';
 
 import API from '@/utils/API';
 import Assets from '@/utils/Assets';
+import { Localize } from '@/utils/Localization';
 import { state } from '@/utils/State';
 import Overlays from '@/utils/Overlays';
 import Utils from '@/utils/Utils';
@@ -18,6 +19,15 @@ function userClick() {
     } else {
         API.OpenLogin();
     }
+}
+
+function SwitchLocale() {
+    if (state.locale == "en") {
+        state.locale = "de"
+        return
+    }
+
+    state.locale = "en"
 }
 </script>
 
@@ -47,19 +57,21 @@ function userClick() {
                             </div>
 
                             <p v-if="state.user && state.user.displayname" class="text-xs drop-shadow-text opacity-80">
-                                {{ state.user.username }}</p>
+                                {{ state.user.username }}
+                            </p>
                         </div>
                     </div>
-                    <div class="flex flex-col mt-2" v-if="state.user && Utils.IsModerator(state.user)">
+                    <div class="flex flex-col mt-2 gap-2" v-if="state.user && Utils.IsModerator(state.user)">
                         <RouterLink class="bg-dark-2 py-1 px-3 rounded-lg transition-colors text-sm hover:bg-dark-3"
                             to="/management">
                             Management
                         </RouterLink>
-                    </div>
-                    <div class="flex flex-col mt-2" v-if="state.user">
+                        <div class="bg-dark-2 py-1 px-3 rounded-lg transition-colors text-sm hover:bg-dark-3" @click="SwitchLocale">
+                            {{ Localize("overlays.locale") }}
+                        </div>
                         <RouterLink class="bg-dark-2 py-1 px-3 rounded-lg transition-colors text-sm hover:bg-dark-3"
-                            to="/logout">
-                            Log out
+                            to="/logout" v-if="state.user">
+                            {{ Localize("user.logout") }}
                         </RouterLink>
                     </div>
                 </div>

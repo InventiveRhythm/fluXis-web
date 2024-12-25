@@ -17,39 +17,38 @@ import ErrorContainer from '@/components/status/ErrorContainer.vue';
 
 import API from '@/utils/API';
 import Utils from '@/utils/Utils';
+import { Localize } from '@/utils/Localization';
 import { FormatAccuracy, FormatScore } from '@/utils/Formatting';
 import { StartLoading, StopLoading } from '@/utils/Loading';
 import { state } from '@/utils/State';
 import { EmitEvent } from '@/utils/Events';
+import { APIError } from '@/api/models/APIError';
 
 const route = useRoute();
 const id = route.params.id;
 
-const react = reactive({
-    loading: true,
-    error: '',
-    club: APIClub.CreateDummy()
+const react = reactive<{
+    loading: boolean
+    error?: string
+    club?: APIClub
+}>({
+    loading: true
 });
 
 StartLoading();
 
-try {
-    await API.PerformGet<APIClub>(`/club/${id}`).then(res => {
-        if (!res.IsSuccess() || !res.data) {
-            react.error = res.message;
-            return;
-        }
+await API.PerformGet<APIClub>(`/club/${id}`).then(res => {
+    if (!res.IsSuccess() || !res.data) {
+        throw new APIError(res)
+    }
 
-        react.club = res.data;
-        Utils.SetTitle(res.data.name + ' - club info');
-    });
-} catch (err: any) {
-    react.error = err;
-    console.error(err);
-}
-
-react.loading = false;
-StopLoading();
+    react.club = res.data;
+    Utils.SetTitle(res.data.name + ' - club info');
+}).catch((ex: Error) => react.error = ex.message)
+    .finally(() => {
+        react.loading = false
+        StopLoading();
+    })
 
 function OpenEdit() {
     EmitEvent('club-edit-overlay', react.club);
@@ -87,9 +86,11 @@ function CanLeave() {
             <div class="flex-1 flex flex-col gap-4 text-left">
                 <TabControl>
                     <TabControlItem :url="`/club/${id}/members`" :alternate="`/club/${id}`"
-                                    icon="fa-solid fa-user-group" text="Members" />
-                    <TabControlItem :url="`/club/${id}/scores`" icon="fa-solid fa-arrow-trend-up" text="Scores" />
-                    <TabControlItem :url="`/club/${id}/claims`" icon="fa-solid fa-star" text="Claims" />
+                        icon="fa-solid fa-user-group" :text="Localize('club.members')" />
+                    <TabControlItem :url="`/club/${id}/scores`" icon="fa-solid fa-arrow-trend-up"
+                        :text="Localize('club.scores')" />
+                    <TabControlItem :url="`/club/${id}/claims`" icon="fa-solid fa-star"
+                        :text="Localize('club.claims')" />
                 </TabControl>
                 <RouterView v-slot="{ Component }">
                     <component :is="Component" :club="react.club" />
@@ -98,37 +99,37 @@ function CanLeave() {
             <div class="w-80 min-w-80 flex flex-col gap-7 text-left">
                 <div class="w-full flex flex-col gap-4">
                     <RoundedButton v-if="CanEdit()" @click="OpenEdit"
-                                   class="bg-dark-2 px-6 py-2 text-center text-dark-text text-opacity-75 hover:bg-dark-3">
+                        class="bg-dark-2 px-6 py-2 text-center text-dark-text text-opacity-75 hover:bg-dark-3">
                         <i class="fa fa-pencil mr-1"></i>
-                        Edit
+                        {{ Localize("generic.edit") }}
                     </RoundedButton>
                     <RoundedButton v-if="CanLeave()" @click="OpenLeave"
-                                   class="px-6 py-2 text-center text-dark-text text-opacity-75 bg-dark-2 hover:text-dark-2 hover:bg-red">
+                        class="px-6 py-2 text-center text-dark-text text-opacity-75 bg-dark-2 hover:text-dark-2 hover:bg-red">
                         <i class="fa fa-door-open mr-1"></i>
-                        Leave
+                        {{ Localize("club.leave") }}
                     </RoundedButton>
                 </div>
                 <div class="flex flex-col gap-2">
-                    <p class="text-2xl">Statistics</p>
+                    <p class="text-2xl">{{ Localize("stats.title") }}</p>
                     <div class="flex flex-col gap-1 text-sm">
                         <div class="flex flex-row items-center justify-between">
-                            <p class="opacity-80">Rank</p>
+                            <p class="opacity-80">{{ Localize("stats.rank") }}</p>
                             <p>#{{ react.club.stats?.rank }}</p>
                         </div>
                         <div class="flex flex-row items-center justify-between">
-                            <p class="opacity-80">Overall Rating</p>
+                            <p class="opacity-80">{{ Localize("stats.overall") }}</p>
                             <p>{{ react.club.stats?.ovr }}</p>
                         </div>
                         <div class="flex flex-row items-center justify-between">
-                            <p class="opacity-80">Total Score</p>
+                            <p class="opacity-80">{{ Localize("stats.score") }}</p>
                             <p>{{ FormatScore(react.club.stats?.score) }}</p>
                         </div>
                         <div class="flex flex-row items-center justify-between">
-                            <p class="opacity-80">Claimed Maps</p>
+                            <p class="opacity-80">{{ Localize("stats.claims.count") }}</p>
                             <p>{{ react.club.stats?.claims }}</p>
                         </div>
                         <div class="flex flex-row items-center justify-between">
-                            <p class="opacity-80">Claimed%</p>
+                            <p class="opacity-80">{{ Localize("stats.claims.percent") }}</p>
                             <p>{{ FormatAccuracy(react.club.stats['claim-percent']) }}</p>
                         </div>
                     </div>

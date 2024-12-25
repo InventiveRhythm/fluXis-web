@@ -7,6 +7,8 @@ import { APIMapSetStatus } from '@/api/models/maps/APIMapSetStatus';
 import MapSetBackground from '@/components/images/MapSetBackground.vue';
 import MapSetCover from '@/components/images/MapSetCover.vue';
 
+import { Localize } from '@/utils/Localization';
+
 const props = defineProps<{
     mapset: APIMapSet
 }>();
@@ -75,10 +77,10 @@ function GetStatusString() {
                 <div class="flex h-full flex-1 flex-col justify-between p-3 text-left">
                     <div class="drop-shadow-text">
                         <span class="line-clamp-1 leading-tight text-lg">{{ mapset.title }}</span>
-                        <span class="line-clamp-1 leading-tight text-sm">by {{ mapset.artist }}</span>
-                        <span
-                            class="line-clamp-1 leading-tight text-xs opacity-80">uploaded by {{ mapset.creator.username
-                            }}</span>
+                        <span class="line-clamp-1 leading-tight text-sm">{{ Localize("mapset.artist.by", mapset.artist) }}</span>
+                        <span class="line-clamp-1 leading-tight text-xs opacity-80">
+                            {{ Localize("mapset.uploaded.by", mapset.creator.username) }}
+                        </span>
                     </div>
                     <div class="mt-1 flex justify-between text-xs text-black text-opacity-80">
                         <span class="flex h-5 items-center rounded-full px-1.5 uppercase shadow-normal"

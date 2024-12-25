@@ -15,77 +15,77 @@ const react = reactive({
 
 const links = [
     {
-        text: "Home",
+        text: "nav.home",
         id: "home",
         to: "/",
         icon: "home",
         sublinks: [
             {
-                text: "News",
+                text: "nav.news",
                 to: "/news",
             },
             {
-                text: "Team",
+                text: "nav.team",
                 to: "/team",
             },
             {
-                text: "Changelog",
+                text: "nav.changelogs",
                 to: "/changelog",
             },
             {
-                text: "Download",
+                text: "generic.download",
                 to: "/download",
             }
         ],
     },
     {
-        text: "Maps",
+        text: "nav.maps",
         id: "maps",
         to: "/maps",
         icon: "map",
         sublinks: [
             {
-                text: "Map Listing",
+                text: "nav.maplisting",
                 to: "/maps",
             },
             {
-                text: "Featured Artists",
+                text: "nav.featured",
                 to: "/artists",
             }
         ],
     },
     {
-        text: "Rankings",
+        text: "nav.ranks",
         id: "ranks",
         to: "/rankings/overall",
         icon: "trophy",
         sublinks: [
             {
-                text: "Overall Rating",
+                text: "stats.overall",
                 to: "/rankings/overall",
             },
             {
-                text: "Potential Rating",
+                text: "stats.potential",
                 to: "/rankings/potential",
             },
             {
-                text: "Most Played Maps",
+                text: "nav.mostplayed",
                 to: "/rankings/mostPlayed",
             },
             {
-                text: "Country Rankings",
+                text: "nav.country",
                 to: "/rankings/country",
             }
         ],
     },
     {
-        text: "Clubs",
+        text: "nav.clubs",
         id: "clubs",
         to: "/clubs",
         icon: "circle-nodes",
     },
     {
-        text: "Wiki",
+        text: "nav.wiki",
         id: "wiki",
         to: "/wiki",
         icon: "book",

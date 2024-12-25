@@ -5,7 +5,9 @@ import ClubBanner from '@/components/images/ClubBanner.vue';
 import ClubIcon from '@/components/images/ClubIcon.vue';
 import ClubTag from '@/components/ClubTag.vue';
 
-const props = defineProps<{
+import { Localize } from '@/utils/Localization';
+
+defineProps<{
     club: APIClub
 }>();
 </script>
@@ -24,7 +26,9 @@ const props = defineProps<{
                         <ClubTag class="text-xl" :club="club" />
                         <p class="text-3xl line-clamp-1">{{ club.name }}</p>
                     </div>
-                    <p class="opacity-80">{{ club.members.length }} member{{ club.members.length > 1 ? 's' : '' }}</p>
+                    <p class="opacity-80" v-if="club.members">
+                        {{ Localize(club.members.length > 1 ? "club.members.count" : "club.members.count.singular", club.members.length) }}
+                    </p>
                 </div>
             </div>
         </div>

@@ -5,10 +5,8 @@ import { RouterLink, useRoute } from 'vue-router';
 import APIClubClaim from '@/api/models/clubs/APIClubClaim';
 
 import LoadingContainer from '@/components/status/LoadingContainer.vue';
-import LoadingImage from '@/components/LoadingImage.vue';
 import MapCover from '@/components/images/MapCover.vue';
 
-import Assets from '@/utils/Assets';
 import API from '@/utils/API';
 import { GetRatingColor } from '@/utils/ColorUtils';
 import { FormatAccuracy, FormatDecimal } from '@/utils/Formatting';

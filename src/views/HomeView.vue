@@ -9,6 +9,7 @@ import RoundedButton from '@/components/RoundedButton.vue';
 import OnlineGraph from './home/OnlineGraph.vue';
 
 import API from '@/utils/API';
+import { Localize } from '@/utils/Localization';
 import { FormatNumber } from '@/utils/Formatting';
 import Utils from '@/utils/Utils';
 
@@ -50,7 +51,7 @@ function OpenDownload() {
             <RoundedButton class="flex px-4 py-2 gap-2 mt-3 bg-primary hover:bg-secondary !text-dark-2"
                            @click=OpenDownload>
                 <i class="fa fa-download flex items-center"></i>
-                <p>Download</p>
+                <p>{{ Localize('generic.download') }}</p>
             </RoundedButton>
         </div>
         <div class="absolute -bottom-2 -left-2 flex flex-row items-end pointer-events-none">

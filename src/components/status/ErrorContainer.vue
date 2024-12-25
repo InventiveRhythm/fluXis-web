@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import LoadingImage from '../LoadingImage.vue';
 
+import { Localize } from '@/utils/Localization';
+
 defineProps<{
     text?: string
 }>();
@@ -11,7 +13,7 @@ defineProps<{
         <div class="size-24 mb-4">
             <LoadingImage class="size-full" src="https://cdn.discordapp.com/emojis/1214056479871471656.png?size=2048" />
         </div>
-        <p>Something went wrong...</p>
+        <p>{{ Localize("status.error") }}</p>
         <p class="opacity-80 text-xs">{{ text }}</p>
     </div>
 </template>
