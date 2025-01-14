@@ -28,10 +28,7 @@ API.PerformGet<[APIClub]>('/clubs').then(res => {
 });
 
 function CanCreate() {
-    if (!state.user || !state.user?.club)
-        return false;
-
-    return state.user?.club.id > 0;
+    return state.user && !state.user?.club;
 }
 </script>
 
