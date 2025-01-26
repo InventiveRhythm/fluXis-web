@@ -3,16 +3,17 @@ import { RouterView, useRoute } from 'vue-router';
 import { reactive } from 'vue';
 
 import APIUser from '@/api/models/users/APIUser';
+import { APIError } from '@/api/models/APIError';
 
 import RoundedButton from '@/components/RoundedButton.vue';
 import TabControl from '../../components/tabs/TabControl.vue';
 import TabControlItem from '../../components/tabs/TabControlItem.vue';
+import ErrorContainer from '@/components/status/ErrorContainer.vue';
 
 import API from '@/utils/API';
 import { EmitEvent } from '@/utils/Events';
 import { state } from '@/utils/State';
 import { StartLoading, StopLoading } from '@/utils/Loading';
-import TimeUtils from '@/utils/TimeUtils';
 import Utils from '@/utils/Utils';
 
 import UserHeader from './components/UserHeader.vue';
@@ -26,34 +27,31 @@ const modes = [4, 5, 6, 7, 8];
 const route = useRoute();
 let id = route.params.id;
 
-let react = reactive({
+let react = reactive<{
+    loading: boolean
+    error?: string
+    user?: APIUser
+    mode: number
+}>({
     loading: true,
-    user: APIUser.CreateDummy(),
-    maps: null,
-    scores: null,
     mode: 0
 });
 
-await loadStuff();
+await load();
 
-async function loadStuff() {
+async function load() {
     StartLoading();
 
-    try {
-        await API.PerformGet<APIUser>(`/user/${id}?mode=${react.mode}`).then(res => {
-            if (!res.IsSuccess()) return;
+    await API.PerformGet<APIUser>(`/user/${id}?mode=${react.mode}`).then(res => {
+        if (!res.IsSuccess())
+            throw new APIError(res);
 
-            react.user = res.data!;
-            react.user['lastloginString'] = TimeUtils.formatAgo(res.data!.lastlogin!);
-        });
-    } catch (err) {
-        console.error(err);
-    }
+        react.user = res.data!;
 
-    if (react.user && react.user.username)
-        Utils.SetTitle(react.user.username + ' - user info');
+        if (react.user && react.user.username)
+            Utils.SetTitle(react.user.username + ' - user info');
+    }).catch(e => react.error = e.message).finally(() => react.loading = false);
 
-    react.loading = false;
     StopLoading();
 }
 
@@ -62,7 +60,7 @@ function OpenEdit() {
 }
 
 function ShouldShowEdit() {
-    if (!state.user || state.user?.id == react.user.id)
+    if (!state.user || state.user?.id == react.user?.id)
         return false;
 
     return Utils.IsModerator(state.user);
@@ -74,14 +72,14 @@ function ChangeMode(mode: number) {
     else
         react.mode = mode;
 
-    loadStuff();
+    load();
 }
 
 function AnySocials() {
-    return react.user.socials?.twitter
-        || react.user.socials?.twitch
-        || react.user.socials?.youtube
-        || react.user.socials?.discord
+    return react.user?.socials?.twitter
+        || react.user?.socials?.twitch
+        || react.user?.socials?.youtube
+        || react.user?.socials?.discord
 }
 </script>
 
@@ -153,8 +151,5 @@ function AnySocials() {
             </div>
         </div>
     </div>
-    <div v-if="!react.loading && !react.user" class="pt-20">
-        <h1 class="text-2xl">User not found</h1>
-        <h4 class="opacity-80">The user you are looking for does not exist or has been deleted.</h4>
-    </div>
+    <ErrorContainer :text="react.error" v-if="!react.loading && !react.user" />
 </template>

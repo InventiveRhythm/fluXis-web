@@ -12,6 +12,7 @@ import UserAvatar from '@/components/images/UserAvatar.vue';
 
 import { EmitEvent } from '@/utils/Events';
 import { state } from '@/utils/State';
+import TimeUtils from '@/utils/TimeUtils';
 
 // used for people without a group
 // e.g. normal users
@@ -52,7 +53,7 @@ function OpenEdit() {
                             </div>
                             <div class="text-base" v-else-if="user.lastlogin">
                                 <span class="opacity-80">Last online</span>
-                                {{ user.lastloginString }}
+                                {{ TimeUtils.formatAgo(user.lastlogin) }}
                             </div>
                         </div>
                         <div class="w-full flex justify-center md:justify-start items-center gap-3">
