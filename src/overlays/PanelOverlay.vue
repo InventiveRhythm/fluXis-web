@@ -5,13 +5,13 @@ const content = ref();
 
 const props = defineProps<{
     title: string,
-    error: string,
+    error?: string,
     open: boolean,
     voidclick: Function,
     width?: string
 }>();
 
-function VoidClick(e) {
+function VoidClick(e: MouseEvent) {
     if (content.value.contains(e.target))
         return;
 

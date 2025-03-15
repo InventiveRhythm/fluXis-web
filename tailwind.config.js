@@ -39,13 +39,6 @@ module.exports = {
                 7: '#ec3b8d',
                 8: '#7ae9e9'
             },
-            fa: {
-                bg: 'var(--album-bg)',
-                bg2: 'var(--album-bg2)',
-                text: 'var(--album-text)',
-                text2: 'var(--album-text2)',
-                accent: 'var(--album-accent)',
-            },
             social: {
                 youtube: '#ff0000',
                 spotify: '#1ed760',

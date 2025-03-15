@@ -8,14 +8,14 @@ import { state } from '@/utils/State';
 import Utils from '@/utils/Utils';
 
 let allowed = true;
-let reason = "";
+let reason = '';
 
 if (!state.user) {
-    allowed = false
-    reason = "Please log in to view this..."
+    allowed = false;
+    reason = 'Please log in to view this...';
 } else if (!Utils.IsModerator(state.user)) {
-    allowed = false
-    reason = "You are not allowed to access this."
+    allowed = false;
+    reason = 'You are not allowed to access this.';
 }
 </script>
 
@@ -25,6 +25,7 @@ if (!state.user) {
             <div class="w-56 flex flex-col gap-2">
                 <SidebarButton link="/management" text="Home" icon="house" />
                 <SidebarSeparator />
+                <SidebarButton link="/management/artists" text="Featured Artists" icon="star" />
                 <SidebarButton link="/management/users" text="Users" icon="users" />
             </div>
             <div class="flex-1 text-left">
