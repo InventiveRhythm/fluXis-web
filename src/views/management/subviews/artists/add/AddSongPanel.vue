@@ -32,7 +32,7 @@ const emit = defineEmits<{
 }>();
 
 function Perform() {
-    API.PerformPost<FeaturedArtistTrack>(`/artists/${props.artist.id}/albums/${react.album?.id}/songs`, {
+    API.PerformPost<FeaturedArtistTrack>(`/artists/${props.artist.id}/albums/${react.album?.id}/tracks`, {
         id: id.value?.input?.value,
         name: name.value?.input?.value,
         length: length.value?.input?.value,
