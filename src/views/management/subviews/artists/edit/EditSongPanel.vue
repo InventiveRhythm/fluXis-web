@@ -32,10 +32,10 @@ function Perform() {
 
     var track: FeaturedArtistTrack = {
         id: react.track?.id,
-        name: '',
-        length: '',
-        bpm: '',
-        genre: ''
+        name: name.value?.input?.value ?? react.track.name,
+        length: length.value?.input?.value ?? react.track.length,
+        bpm: bpm.value?.input?.value ?? react.track.bpm,
+        genre: genre.value?.input?.value ?? react.track.genre
     };
 
     API.PerformPatch<FeaturedArtistTrack>(
