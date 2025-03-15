@@ -33,9 +33,11 @@ function Perform() {
     API.PerformPost<FeaturedArtistAlbum>(`/artists/${props.artist.id}/albums`, {
         id: id.value?.input?.value,
         name: name.value?.input?.value,
-        year: year.value?.input?.value,
-        month: month.value?.input?.value,
-        day: day.value?.input?.value
+        release: {
+            year: year.value?.input?.value,
+            month: month.value?.input?.value,
+            day: day.value?.input?.value
+        }
     })
         .then((res) => {
             if (!res.IsSuccess() || !res.data) throw new APIError(res);
