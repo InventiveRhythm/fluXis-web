@@ -13,6 +13,7 @@
     "@tsconfig/node20": "^20.1.4",
     "@vue/tsconfig": "^0.5.1",
     "chart.js": "^4.4.0",
+    "chroma.ts": "^1.0.10",
     "highlight.js": "^11.9.0",
     "install": "^0.13.0",
     "marked-highlight": "^2.1.1",
