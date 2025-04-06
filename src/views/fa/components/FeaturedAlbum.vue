@@ -14,6 +14,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
     (e: 'play', id: string, state: boolean): void;
+    (e: 'download', id: string): void;
 }>();
 
 function CoverImage() {
@@ -65,6 +66,7 @@ function ColorStyle() {
             <FeaturedTrack
                 :playing="current[0] == album.id && current[1] == track.id"
                 @play="(state) => emit('play', track.id, state)"
+                @download="emit('download', track.id)"
                 :album="album"
                 :track="track"
                 v-for="track in album.tracks"

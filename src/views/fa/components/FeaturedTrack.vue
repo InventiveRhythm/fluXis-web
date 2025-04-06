@@ -10,6 +10,7 @@ defineProps<{
 
 const emit = defineEmits<{
     (e: 'play', state: boolean): void
+    (e: 'download'): void
 }>();
 </script>
 
@@ -27,7 +28,7 @@ const emit = defineEmits<{
                 <p>{{ track.bpm }}bpm <span class="text-fa-text">{{ track.length }}</span></p>
                 <p>{{ track.genre }}</p>
             </div>
-            <i class="fa fa-download opacity-0 w-0 transition-all group-hover:opacity-100 group-hover:w-6"></i>
+            <i class="fa fa-download opacity-0 w-0 transition-all group-hover:opacity-100 group-hover:w-6" @click="emit('download')"></i>
         </div>
     </div>
 </template>

@@ -18,7 +18,7 @@ const react = reactive<{
 
 Utils.SetTitle('club listing');
 
-API.PerformGet<[APIClub]>('/clubs').then(res => {
+API.PerformGet<APIClub[]>('/clubs').then(res => {
     if (!res.IsSuccess()) {
         alert(res.message);
         return;

@@ -80,7 +80,7 @@ function TrackFinished(album: string, track: string) {
 }
 
 function downloadSong(album: string, track: string) {
-    alert(`Downloading is still in development!`);
+    window.open(`/featured-artist/${react.artist?.id}/${album}/${track}/audio.ogg`, '_blank')
 }
 </script>
 
@@ -141,6 +141,7 @@ function downloadSong(album: string, track: string) {
             <div class="w-full flex flex-col items-center content-center gap-5">
                 <FeaturedAlbum
                     @play="(id, state) => (state ? PauseTrack(album.id, id) : PlayTrack(album.id, id))"
+                    @download="id => downloadSong(album.id, id)"
                     :artist="react.artist"
                     :album="album"
                     v-for="album in react.artist.albums"

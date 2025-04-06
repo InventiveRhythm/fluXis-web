@@ -12,11 +12,11 @@ export default defineConfig({
     strictPort: true
   },
 
-  plugins: [vue(), vueDevTools(), sentryVitePlugin({
+  plugins: [vue(), vueDevTools(), /* sentryVitePlugin({
     org: "choccymilk",
     project: "fluxis-web",
     url: "https://sentry.flux.moe/"
-  })],
+  }) */],
 
   resolve: {
     alias: {
