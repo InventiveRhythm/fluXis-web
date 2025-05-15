@@ -82,7 +82,7 @@ function getAsset(b64) {
             icon="font"
             :changed="(i) => (name = i)"
             placeholder="Name"
-            maxlength="16"
+            maxlength="24"
             :value="react.club.name"
         />
         <div class="flex flex-row gap-4">

@@ -98,7 +98,7 @@ function getAsset(b64: string) {
                     class="w-[332px] p-4 pl-12 bg-dark-2 rounded-xl focus:outline-none"
                     placeholder="Name"
                     type="text"
-                    maxlength="16"
+                    maxlength="24"
                 />
             </div>
         </div>
