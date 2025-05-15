@@ -33,7 +33,7 @@ API.PerformGet<APIStats>('/stats').then(res => {
 });
 
 function OpenDownload() {
-    window.open('https://github.com/InventiveRhythm/fluXis/releases/latest/download/install.exe');
+    window.open('https://store.steampowered.com/app/3440100');
 }
 </script>
 
