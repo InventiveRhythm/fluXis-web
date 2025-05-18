@@ -76,11 +76,14 @@ function MoveToHash() {
 
     ul,
     ol {
-        @apply list-inside list-disc mt-2;
+       @apply list-inside list-disc mt-2;
 
         li {
-            @apply text-sm;
+            @apply text-sm mt-1;
         }
+	ul,ol {
+	    @apply ml-4 mt-1;
+	}
     }
 
     pre {
