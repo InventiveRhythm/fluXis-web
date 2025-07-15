@@ -3,7 +3,8 @@ import { reactive } from 'vue';
 
 import type { APIStats } from '@/api/models/other/APIStats';
 
-import HomeVideo from '../assets/images/home/bg.mp4';
+import HomeVideoMp4 from '../assets/images/home/bg.mp4';
+import HomeVideoWebm from '../assets/images/home/bg.webm';
 import NewsCard from '../components/news/NewsCard.vue';
 import RoundedButton from '@/components/RoundedButton.vue';
 import OnlineGraph from './home/OnlineGraph.vue';
@@ -39,7 +40,10 @@ function OpenDownload() {
 
 <template>
     <div class="overlap-grid relative w-full h-96 rounded-b-3xl xl:rounded-3xl overflow-hidden">
-        <video :src="HomeVideo" class="future loadFade object-cover blur-sm scale-105" autoplay muted loop></video>
+        <video id="home-video" class="future loadFade object-cover blur-sm scale-105" autoplay muted loop>
+            <source :src="HomeVideoWebm" type="video/webm">
+            <source :src="HomeVideoMp4" type="video/mp4">
+        </video>
         <div class="bg-dark-2 opacity-60"></div>
         <div class="flex flex-col justify-center items-center lg:items-start lg:text-left px-16">
             <h1 class="text-6xl">fluXis</h1>
