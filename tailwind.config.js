@@ -1,22 +1,34 @@
-const plugin = require('tailwindcss/plugin');
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+    content: ['./app.vue', './{components,layouts,pages}/**/*.{vue,js,ts,jsx,tsx}'],
     theme: {
         colors: {
-            white: '#fff',
+            white: '#FFF',
             black: '#000',
             transparent: 'transparent',
-            red: '#f55',
-            gold: '#d4af37',
-            silver: '#c0c0c0',
-            bronze: '#cd7f32',
+
+            red: 'hsl(0, 100%, 66.66%)',
+            orange: 'hsl(20, 100%, 66.66%)',
+            yellow: 'hsl(40, 100%, 66.66%)',
+            lime: 'hsl(80, 100%, 66.66%)',
+            green: 'hsl(120, 100%, 66.66%)',
+            aqua: 'hsl(160, 100%, 66.66%)',
+            cyan: 'hsl(200, 100%, 66.66%)',
+            blue: 'hsl(240, 100%, 66.66%)',
+            purple: 'hsl(280, 100%, 66.66%)',
+            pink: 'hsl(320, 100%, 66.66%)',
+
+            gold: '#D4AF37',
+            silver: '#C0C0C0',
+            bronze: '#CD7F32',
+
             highlight: 'hsl(240, 60%, 70%)',
             primary: 'hsl(240, 66%, 66%)',
             secondary: 'hsl(284, 55%, 58%)',
+
             dark: {
                 text: 'hsl(237, 62%, 93%)',
+                foreground: 'hsl(240, 20%, 60%)',
                 1: 'hsl(240, 20%, 12%)',
                 2: 'hsl(240, 20%, 15%)',
                 3: 'hsl(240, 20%, 18%)',
@@ -24,25 +36,42 @@ module.exports = {
                 5: 'hsl(240, 20%, 24%)',
                 6: 'hsl(240, 20%, 27%)'
             },
-            group: {
-                moderators: '#73d173',
-                purifier: '#55b2ff'
-            },
             vote: {
                 up: '#43AFFC',
                 down: '#FDC872'
             },
+            status: {
+                pure: '#55B2FF',
+                impure: '#FF7B74',
+                pending: '#F7B373',
+                unsubmitted: '#888888'
+            },
             mode: {
-                4: '#62bafe',
-                5: '#61f984',
-                6: '#e3bb45',
-                7: '#ec3b8d',
-                8: '#7ae9e9'
+                1: '#333346',
+                2: '#A53541',
+                3: '#FF7A5A',
+                4: '#62BAFE',
+                5: '#61F984',
+                6: '#E3BB45',
+                7: '#EC3B8D',
+                8: '#7AE9E9',
+                9: '#F7C5BB',
+                10: '#8C4451'
+            },
+            rank: {
+                x: '#a9a9a9',
+                ss: '#ffc14a',
+                s: '#ce9b3d',
+                aa: '#84ff70',
+                a: '#69ca5a',
+                b: '#70d7ff',
+                c: '#ff70ff',
+                d: '#ff686b'
             },
             social: {
-                youtube: '#ff0000',
-                spotify: '#1ed760',
-                soundcloud: '#ff5500',
+                youtube: '#FF0000',
+                spotify: '#1ED760',
+                soundcloud: '#FF5500',
                 twitter: '#1DA1F2'
             }
         },
@@ -74,7 +103,8 @@ module.exports = {
                 inherit: 'inherit'
             },
             fontFamily: {
-                rank: 'YoureGone'
+                rank: 'YoureGone',
+                base: ['Renogare Soft', 'MOBO']
             },
             transitionDuration: {
                 50: '50ms'
@@ -83,12 +113,12 @@ module.exports = {
                 loading: '400'
             },
             lineHeight: {
-                '0': 0
+                0: 0
             }
         }
     },
     plugins: [
-        plugin(({ addComponents, theme }) => {
+        /* plugin(({ addComponents, theme }) => {
             addComponents({
                 '.section-gradient': {
                     background: `linear-gradient(90deg, rgba(0, 0, 0) 0%, rgba(0, 0, 0) 20%, transparent 100%)`
@@ -104,11 +134,23 @@ module.exports = {
                         'linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0) 98%)'
                 }
             });
-        })
+        }) */
     ],
     safelist: [
         {
             pattern: /bg-mode-+/
+        },
+        {
+            pattern: /from-mode-+/
+        },
+        {
+            pattern: /to-mode-+/
+        },
+        {
+            pattern: /bg-status-+/
+        },
+        {
+            pattern: /bg-rank-+/
         }
     ]
 };

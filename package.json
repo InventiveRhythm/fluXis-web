@@ -1,37 +1,27 @@
 {
-  "name": "web",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@sentry/vite-plugin": "^2.22.5",
-    "@sentry/vue": "^8.32.0",
-    "@tsconfig/node20": "^20.1.4",
-    "@vue/tsconfig": "^0.5.1",
-    "chart.js": "^4.4.0",
-    "chroma.ts": "^1.0.10",
-    "highlight.js": "^11.9.0",
-    "install": "^0.13.0",
-    "marked-highlight": "^2.1.1",
-    "npm": "^10.8.1",
-    "typescript": "^5.6.3",
-    "vite-plugin-vue-devtools": "^7.7.2",
-    "vue": "^3.2.47",
-    "vue-chartjs": "^5.2.0",
-    "vue-router": "^4.1.6",
-    "vue-tsc": "^2.1.6"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^4.0.0",
-    "autoprefixer": "^10.4.19",
-    "marked": "^14.1.4",
-    "postcss": "^8.4.38",
-    "sass": "^1.62.1",
-    "tailwindcss": "^3.4.3",
-    "vite": "^4.1.4"
-  }
+    "name": "fluxis-web",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt dev",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare"
+    },
+    "dependencies": {
+        "chroma.ts": "^1.0.10",
+        "marked": "^15.0.12",
+        "nuxt": "^3.16.2",
+        "vue": "^3.5.13",
+        "vue-router": "^4.5.0"
+    },
+    "devDependencies": {
+        "@nuxt/icon": "1.11.0",
+        "@nuxt/image": "1.10.0",
+        "@nuxtjs/mdc": "^0.17.0",
+        "@nuxtjs/tailwindcss": "^6.13.2",
+        "prettier-plugin-tailwindcss": "^0.6.11",
+        "sass": "^1.86.3"
+    }
 }

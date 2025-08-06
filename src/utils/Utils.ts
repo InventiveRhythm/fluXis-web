@@ -1,39 +1,7 @@
-import type APIUser from '@/api/models/users/APIUser';
+import { stringifyQuery } from 'vue-router';
+import type APIUser from '~/models/users/APIUser';
 
 export default class Utils {
-    static SetTitle(title: string) {
-        document.title = title + ' | fluXis';
-    }
-
-    static GetCountryName(code: string): string {
-        if (!code) return 'Unknown';
-
-        const names = new Intl.DisplayNames(['en'], { type: 'region' });
-        return names.of(code.toUpperCase()) || 'Unknown';
-    }
-
-    static GetB64FromInput(input: HTMLInputElement, allowedTypes: string[], callback: Function) {
-        if (!input.files)
-            return;
-
-        const file = input.files[0];
-
-        if (!file) return;
-
-        if (!allowedTypes.includes(file.type)) {
-            var types = allowedTypes.map(t => t.split('/')[1]);
-            alert(`Invalid type! Only ${types.join('/')} is supported.`);
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = function() {
-            var res = reader.result;
-            callback(res);
-        };
-    }
-
     static GetIconForGroup(group: string): string {
         switch (group) {
             case 'contributors':
@@ -54,19 +22,58 @@ export default class Utils {
     }
 
     static IsModerator(user?: APIUser): boolean {
-        if (!user || !user.groups)
-            return false;
+        if (!user || !user.groups) return false;
 
-        if (this.IsDeveloper(user))
-            return true;
+        if (this.IsDeveloper(user)) return true;
 
-        return user.groups.some(g => g.id == 'moderators');
+        return user.groups.some((g) => g.id == 'moderators');
+    }
+
+    static IsPurifier(user?: APIUser): boolean {
+        if (!user || !user.groups) return false;
+        if (this.IsDeveloper(user)) return true;
+
+        return user.groups.some((g) => g.id == 'purifier');
     }
 
     static IsDeveloper(user?: APIUser): boolean {
-        if (!user || !user.groups)
-            return false;
+        if (!user || !user.groups) return false;
 
-        return user.groups.some(g => g.id == 'dev');
+        return user.groups.some((g) => g.id == 'dev');
+    }
+
+    static async CopyAndShare(url: string, name: string, notify = true) {
+        if (!navigator.share) {
+            navigator.clipboard.writeText(url);
+
+            if (notify) alert('Link copied to clipboard.');
+
+            return;
+        }
+
+        const data = {
+            title: name,
+            url: url
+        };
+
+        navigator.share(data);
+    }
+
+    static GetCountryName(code: string): string {
+        if (!code) return 'Unknown';
+
+        const names = new Intl.DisplayNames(['en'], { type: 'region' });
+        return names.of(code.toUpperCase()) || 'Unknown';
+    }
+
+    static SetMetadata(title: string, description: string, image?: string) {
+        useSeoMeta({
+            title: title,
+            ogTitle: title,
+            ogDescription: description,
+            ogSiteName: 'fluXis',
+            themeColor: '#8585e0',
+            ogImage: image
+        });
     }
 }

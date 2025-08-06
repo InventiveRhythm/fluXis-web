@@ -1,5 +1,0 @@
-/* tailwind apparently needs a normal css file to work */
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
