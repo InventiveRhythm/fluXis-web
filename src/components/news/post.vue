@@ -15,7 +15,7 @@ defineProps<{
             <LoadingImage class="w-full object-cover" :src="post.image" />
             <div class="flex size-full flex-row items-end justify-between p-2 text-2xs">
                 <div class="rounded-full bg-dark-2 px-3 py-1">
-                    <p class="opacity-75">{{ formatting.Date(post.time) }}</p>
+                    <p class="opacity-75">{{ Formatting.Date(post.time) }}</p>
                 </div>
                 <div class="rounded-full bg-dark-2 px-3 py-1">
                     <p class="opacity-75" v-if="post.type == APINewsType.News">NEWS</p>
