@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import HomeVideo from '@/assets/image/home-bg.mp4';
+import HomeVideoMp4 from '@/assets/image/home-bg.mp4';
+import HomeVideoWebm from '@/assets/image/home-bg.webm';
 import LogoText from '@/assets/image/logo-text.png';
 import { APINewsType, type APINewsPost } from '~/models/other/APINewsPost';
 import API from '~/utils/api';
@@ -35,7 +36,10 @@ const news: APINewsPost[] = [
 <template>
     <div>
         <div class="overlap-grid h-96 w-full overflow-hidden rounded-b-3xl xl:rounded-3xl">
-            <video :src="HomeVideo" class="scale-105 object-cover blur-sm" autoplay muted loop></video>
+            <video class="scale-105 object-cover blur-sm" autoplay muted loop playsinline preload="auto">
+                <source :src="HomeVideoWebm" type="video/webm">
+                <source :src="HomeVideoMp4" type="video/mp4">
+            </video>
             <div class="bg-dark-2 opacity-60"></div>
             <div class="flex flex-col items-center justify-center px-16 lg:items-start lg:text-left">
                 <img :src="LogoText" class="mb-2 h-16" />
