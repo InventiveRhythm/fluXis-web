@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import API from './utils/api';
 
-API.Setup(false);
+API.Setup(import.meta.dev);
+// API.Setup(false); // <- use this if you don't have a local server (REMEMBER TO REVERT!)
 
 if (API.TokenCookie.value) await API.RefreshInfo();
 else API.Logout();
