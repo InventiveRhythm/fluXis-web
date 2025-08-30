@@ -67,8 +67,8 @@ const news: APINewsPost[] = [
                 <span class="opacity-75">mapsets</span>
             </div>
         </div>
-        <div class="mt-3 flex w-full flex-wrap items-center justify-center">
+        <!-- <div class="mt-3 flex w-full flex-wrap items-center justify-center">
             <NewsPost v-for="post in news" :post="post" />
-        </div>
+        </div> -->
     </div>
 </template>
