@@ -110,6 +110,13 @@ async function RefreshRating() {
                 <MapSetSidebarSection title="Statistics">
                     <MapSetSidebarStats :map="current" />
                 </MapSetSidebarSection>
+                <MapSetSidebarSection title="Claimed by" v-if="current.claim_owned">
+                    <MapSetSidebarClaim :claim="current.claim_owned" />
+                    <div v-if="current.claim_your_club && current.claim_your_club.club.id != current.claim_owned.club.id">
+                        <p class="mb-2">Your Club</p>
+                        <MapSetSidebarClaim :claim="current.claim_your_club" />
+                    </div>
+                </MapSetSidebarSection>
             </div>
         </div>
 

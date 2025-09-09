@@ -1,4 +1,6 @@
-﻿import APIUser from '../users/APIUser';
+﻿import type { APIClubClaim } from '../clubs/APIClubClaim';
+import APIUser from '../users/APIUser';
+import type { APIMapClaim } from './APIMapClaim';
 import type { APIMapEffectType } from './APIMapEffectType';
 
 export type APIMap = {
@@ -24,4 +26,6 @@ export type APIMap = {
     health: number;
     effects: APIMapEffectType;
     has_voted_rate: boolean;
+    claim_owned?: APIMapClaim;
+    claim_your_club?: APIMapClaim;
 };
