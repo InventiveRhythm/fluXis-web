@@ -1,32 +1,109 @@
 <script setup lang="ts">
+import type IconTextbox from '~/components/icon-textbox.vue';
+import type { APIResponseErrors } from '~/models/APIResponse';
 import type APIClub from '~/models/clubs/APIClub';
+import API from '~/utils/api';
 import Assets from '~/utils/assets';
 
-const imageAccept = 'image/png, image/jpeg';
+const imageAccept = ['image/png', 'image/jpeg'];
+const imageAcceptString = imageAccept.join(', ');
 const club = ref<APIClub>();
+const loading = ref<boolean>(false);
+const error = ref<APIResponseErrors>();
+
+const nameInput = ref<InstanceType<typeof IconTextbox>>();
+
+const colorStart = ref<string>();
+const colorEnd = ref<string>();
+const iconString = ref<string>();
+const bannerString = ref<string>();
 
 function Open(c: APIClub) {
     club.value = c;
+
+    colorStart.value = c.colors[0].color;
+    colorEnd.value = c.colors[1].color;
 }
 
-function UpdateIcon() {}
-function UpdateBanner() {}
+function UpdateColor(v: string, end: boolean) {
+    if (end) colorEnd.value = v;
+    else colorStart.value = v;
+}
+
+async function Perform() {
+    const name = nameInput.value?.input?.value;
+
+    if (loading.value || !club.value || !name) return;
+
+    loading.value = true;
+
+    const { error: err } = await API.PerformPatch<APIClub>(`/club/${club.value?.id}`, {
+        name: name,
+        icon: GetAssetB64(iconString.value),
+        banner: GetAssetB64(bannerString.value),
+        'color-start': colorStart.value,
+        'color-end': colorEnd.value
+    });
+
+    loading.value = false;
+
+    if (err) {
+        error.value = err;
+        return;
+    }
+
+    location.reload();
+}
+
+function GetAssetB64(input?: string) {
+    if (!input) return '';
+    return input.split(',')[1];
+}
 
 defineExpose({ Open });
 </script>
 
 <template>
-    <Panel title="Edit Club" :open="club != null" @close="club = undefined">
-        <IconTextbox icon="font" placeholder="Name" maxlength="16" />
+    <Panel title="Edit Club" :open="club != null" :error="error?._request" @close="club = undefined" icon="fa fa-pencil">
+        <IconTextbox ref="nameInput" icon="font" placeholder="Name" maxlength="32" :value="club!.name" />
         <div class="flex flex-row gap-4" v-if="club">
-            <label for="icon">
-                <img class="size-32 rounded-xl object-cover" :src="Assets.ClubIcon(club)" alt="club icon" />
+            <label for="icon" class="overlap-grid group size-32">
+                <img class="size-32 rounded-xl object-cover" :src="iconString || Assets.ClubIcon(club)" alt="club icon" />
+                <ClickToChange />
             </label>
-            <input ref="icon" class="hidden" type="file" id="icon" :accept="imageAccept" @change="UpdateIcon" />
-            <label for="banner" class="flex-grow">
-                <img class="h-32 w-full rounded-xl object-cover" :src="Assets.ClubBanner(club)" alt="club banner" />
+            <input
+                ref="icon"
+                class="hidden"
+                type="file"
+                id="icon"
+                :accept="imageAcceptString"
+                @change="(e) => utils.GetBase64FromInput(e.target as HTMLInputElement, imageAccept, (v) => (iconString = v))"
+            />
+            <label for="banner" class="overlap-grid group h-32 flex-grow">
+                <img class="h-full w-full rounded-xl object-cover" :src="bannerString || Assets.ClubBanner(club)" alt="club banner" />
+                <ClickToChange />
             </label>
-            <input ref="banner" class="hidden" type="file" id="banner" :accept="imageAccept" @change="UpdateBanner" />
+            <input
+                ref="banner"
+                class="hidden"
+                type="file"
+                id="banner"
+                :accept="imageAcceptString"
+                @change="(e) => utils.GetBase64FromInput(e.target as HTMLInputElement, imageAccept, (v) => (bannerString = v))"
+            />
+        </div>
+        <div class="flex gap-2" v-if="club">
+            <ColorPicker :color="colorStart" class="size-12 rounded-lg border-none" @input="(v) => UpdateColor(v, false)" />
+            <div
+                class="h-12 flex-1 rounded-lg"
+                :style="{
+                    background: `linear-gradient(90deg, ${colorStart}, ${colorEnd})`
+                }"
+            ></div>
+            <ColorPicker :color="colorEnd" class="size-12 rounded-lg border-none" @input="(v) => UpdateColor(v, true)" />
+        </div>
+        <div class="flex flex-row justify-end">
+            <Button class="bg-highlight px-5 py-2 text-dark-2" :class="{ 'opacity-50': loading }" @click="Perform">Save & Update</Button>
         </div>
     </Panel>
 </template>

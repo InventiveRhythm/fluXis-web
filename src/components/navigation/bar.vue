@@ -21,10 +21,10 @@ const links: NavLink[] = [
         to: '/',
         icon: 'home',
         sublinks: [
-            {
+            /* {
                 text: 'nav.news',
                 to: '/news'
-            },
+            }, */
             {
                 text: 'nav.team',
                 to: '/team'

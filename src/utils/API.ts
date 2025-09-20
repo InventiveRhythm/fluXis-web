@@ -90,8 +90,7 @@ export default class API {
         const { data: user, error } = await API.PerformGet<APIUser>(`/users/@me`);
 
         if (error) {
-            if (error._status == 401)
-                this.CurrentUser.value = undefined;    
+            if (error._status == 401) this.CurrentUser.value = undefined;
 
             return;
         }
@@ -110,8 +109,9 @@ async function tryPerform<T, E = APIResponseErrors>(endpoint: string, method: st
     } catch (ex: any) {
         if (ex instanceof APIError) {
             let err = ex.response.errors;
-            if (!err) err = { _request: ex.message };
+            if (!err) err = {};
 
+            err._request = ex.message;
             err._status = ex.response.status;
             return { data: null, error: err as E };
         }
