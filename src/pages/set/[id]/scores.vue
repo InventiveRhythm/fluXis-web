@@ -60,11 +60,19 @@ function GetPlace(score: APIScore) {
                 <td>
                     <NuxtLink :to="`/u/${score.user.id}`">{{ score.user.username }}</NuxtLink>
                 </td>
-                <td class="text-center">{{ score.grade }}</td>
-                <td>{{ formatting.Accuracy(score.accuracy) }}</td>
+                <td class="text-center">
+                    <div class="flex size-8 items-center justify-center">
+                        <span
+                        class="font-rank text-xl even:-ml-2.5 even:opacity-80" :class="`bg-rank-${score.grade.toLowerCase()}`"
+                        style="-webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;"
+                        v-for="letter in score.grade.split('')">{{ letter }}
+                        </span>
+                    </div>
+                </td>
+                <td>{{ Formatting.Accuracy(score.accuracy) }}</td>
                 <td>{{ score.maxcombo }}x</td>
                 <td>{{ score.pr.toFixed(0) }}pr</td>
-                <td>{{ formatting.TimeAgo(score.time, true) }}</td>
+                <td>{{ Formatting.TimeAgo(score.time, true) }}</td>
                 <td>{{ score.mods.replaceAll(',', ' ') }}</td>
             </tr>
         </table>
