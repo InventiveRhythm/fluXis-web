@@ -1,15 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     compatibilityDate: '2024-11-01',
-    srcDir: 'src',
     devtools: { enabled: true },
     modules: ['@nuxt/icon', '@nuxt/image', '@nuxtjs/tailwindcss', '@nuxtjs/mdc'],
-    experimental: {
-        asyncContext: true
-    },
+    srcDir: 'src',
     app: {
         pageTransition: {
-            name: 'fade'
+            name: 'fade',
+            mode: 'out-in',
+            type: 'transition'
         },
         layoutTransition: {
             name: 'layout'
@@ -21,18 +20,10 @@ export default defineNuxtConfig({
             script: [{ src: 'https://kit.fontawesome.com/560d9e0b95.js', crossorigin: 'anonymous' }]
         }
     },
+    experimental: {
+        asyncContext: true
+    },
     devServer: {
         port: 2432
-    },
-    vite: {
-        $server: {
-            build: {
-                rollupOptions: {
-                    output: {
-                        preserveModules: true
-                    }
-                }
-            }
-        }
     }
 });
