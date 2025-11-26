@@ -6,17 +6,19 @@ definePageMeta({
     alias: '/set/:id'
 });
 
-defineProps<{
+const props = defineProps<{
     mapset: APIMapSet;
     map: APIMap;
 }>();
+
+const { data: api_description } = await API.PerformGet<string>(`/mapset/${props.mapset.id}/description`);
+const description = api_description ?? "No Description Provided.";
 </script>
 
 <template>
     <div class="flex w-full flex-col gap-3 pt-2">
         <MapSetInfoSection title="Description">
-            <p class="text-sm" v-if="mapset.description">{{ mapset.description }}</p>
-            <p class="text-sm italic" v-else>No description provided.</p>
+            <MapSetDescription :text=description :mapset=mapset />
         </MapSetInfoSection>
         <MapSetInfoSection title="Source">
             <p class="text-sm" v-if="map.source">{{ map.source }}</p>
