@@ -2,6 +2,7 @@ import { marked, type RendererObject } from 'marked';
 import ParsedMarkdown from '~/models/markdown/ParsedMarkdown';
 import ParsedSection from '~/models/markdown/ParsedSection';
 import ParsedSubSection from '~/models/markdown/ParsedSubSection';
+import Sanitizer from './sanitize';
 
 export default class Markdown {
     static FootnoteRegex = /\[\^(\d{1,2})\]/g;
@@ -36,8 +37,8 @@ export default class Markdown {
         return data;
     }
 
-    static Render(md: string): string {
-        md = md.replaceAll('<', '&lt;');
+    static async Render(md: string, sanitize: boolean = true): Promise<string> {
+        md = sanitize ? await Sanitizer.Sanitize(md) : md.replaceAll('<', '&lt;');
 
         const config: RendererObject = {
             heading: (head) => {

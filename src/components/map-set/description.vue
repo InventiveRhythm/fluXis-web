@@ -1,22 +1,33 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import type { APIMapSet } from '~/models/maps/APIMapSet';
 import Markdown from '~/utils/markdown';
 
 const props = defineProps<{
-  text: string;
   mapset: APIMapSet
 }>();
 
 const MAX_CHARACTERS = 2000;
+const MAX_HEIGHT = '400px';
 
+const isLoaded = ref(false);
 const isEditing = ref(false);
 const isSaving = ref(false);
 const editedText = ref('');
+const renderedMarkdownContent = ref('');
 
-const renderedMarkdown = computed(() => {
-  const content = editedText.value || props.text;
-  return Markdown.Render(content);
+const { data: api_description } = await API.PerformGet<string>(`/mapset/${props.mapset.id}/description`).finally(() => isLoaded.value = true);
+const text = api_description ?? "No Description Provided.";
+
+watch(() => text, async (newText) => {
+  const content = editedText.value || newText || '';
+  renderedMarkdownContent.value = await Markdown.Render(content, false);
+}, { immediate: true });
+
+watch(editedText, async (newText) => {
+  if (newText) {
+    renderedMarkdownContent.value = await Markdown.Render(newText, false);
+  }
 });
 
 const canEdit = computed(() => {
@@ -38,7 +49,7 @@ const toggleMode = () => {
   if (isEditing.value) {
     isEditing.value = false;
   } else {
-    editedText.value = editedText.value || props.text;
+    editedText.value = editedText.value || text || '';
     isEditing.value = true;
   }
 };
@@ -54,9 +65,9 @@ const saveDescription = async () => {
   try {
     isSaving.value = true;
     
-    await API.PerformPatch<string>(
+    await API.PerformPatch<string | null>(
       `/mapset/${props.mapset.id}/description`,
-      JSON.stringify(editedText.value)
+      JSON.stringify(editedText.value || null)
     );
     
     isEditing.value = false;
@@ -70,10 +81,12 @@ const saveDescription = async () => {
 
 <template>
   <div class="relative p-4">
+    <LoadingIndicator v-if="!isLoaded" />
+
     <button
       v-if="canEdit"
       @click="toggleMode"
-      class="absolute top-4 right-4 hover:opacity-70 transition-opacity"
+      class="absolute top-4 right-10 hover:opacity-70 transition-opacity z-10"
       :title="isEditing ? 'Preview' : 'Edit description'"
     >
       <i :class="isEditing ? 'fa-solid fa-book' : 'fa-solid fa-pen'" class="text-sm"></i>
@@ -81,8 +94,20 @@ const saveDescription = async () => {
 
     <!-- view mode -->
 
-    <div v-if="!isEditing">
-      <MDC :value="renderedMarkdown" class="max-w-none"></MDC>
+    <div v-if="!isEditing" class="overflow-hidden">
+      <div 
+        v-if="text" 
+        v-html="renderedMarkdownContent" 
+        class="max-w-none markdown-content overflow-y-auto"
+        :style="{ maxHeight: MAX_HEIGHT, maxWidth: MAX_HEIGHT }"
+      ></div>
+      <p 
+        v-else 
+        class="text-gray-500 italic"
+        :style="{ maxHeight: MAX_HEIGHT, maxWidth: MAX_HEIGHT }"
+      >
+        No description provided.
+      </p>
     </div>
 
     <!-- edit mode -->
@@ -125,5 +150,20 @@ const saveDescription = async () => {
 textarea {
   resize: vertical;
   font-family: inherit;
+}
+
+.markdown-content :deep(p) {
+  margin-bottom: 1rem;
+}
+
+.markdown-content :deep(h1),
+.markdown-content :deep(h2),
+.markdown-content :deep(h3) {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.markdown-content.overflowing::after {
+  opacity: 1;
 }
 </style>
