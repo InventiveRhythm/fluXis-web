@@ -10,6 +10,38 @@ export default class Markdown {
     static BlockquoteRegex = /\{: \.(\w+) \}/g;
     static ImageRegex = /!\[([^\]]*)\]\(([^)]+)\)/g;
 
+    static AllowedImageDomains: string[] = [
+        'flux.moe',
+        'catbox.moe',
+        'imgur.com'
+    ];
+
+    static isImageAllowed(url: string): boolean {
+        try {
+            if (url.startsWith('/')) {
+                return true;
+            }
+
+            if (url.startsWith('//')) {
+                return true;
+            }
+
+            const urlObj = new URL(url, window?.location?.href || '');
+            const hostname = urlObj.hostname;
+
+            const currentDomain = window?.location?.hostname || '';
+            if (hostname === currentDomain || hostname.endsWith('.' + currentDomain)) {
+                return true;
+            }
+
+            return this.AllowedImageDomains.some(domain => {
+                return hostname === domain || hostname.endsWith('.' + domain);
+            });
+        } catch {
+            return false;
+        }
+    }
+
     static Parse(md: string): ParsedMarkdown {
         const data = new ParsedMarkdown(md);
         data.images = [];
@@ -42,15 +74,17 @@ export default class Markdown {
                 const alt = match[1];
                 const src = match[2];
                 
-                if (!data.images) {
-                    data.images = [];
+                if (this.isImageAllowed(src)) {
+                    if (!data.images) {
+                        data.images = [];
+                    }
+                    
+                    data.images.push(new ParsedImage(
+                        src,
+                        alt,
+                        index + 1
+                    ));
                 }
-                
-                data.images.push(new ParsedImage(
-                    src,
-                    alt,
-                    index + 1
-                ));
             });
         });
 
@@ -94,6 +128,10 @@ export default class Markdown {
                 return `<MarkdownBlockquote type="${type}">${content}</MarkdownBlockquote>`;
             },
             image: (image) => {
+                if (!this.isImageAllowed(image.href)) {
+                    return '';
+                }
+
                 const escapedAlt = image.text.replace(/\"/g, '&quot;');
                 const escapedHref = image.href.replace(/\"/g, '&quot;');
                 return `<img src="${escapedHref}" alt="${escapedAlt}"></MarkdownImage>`;
