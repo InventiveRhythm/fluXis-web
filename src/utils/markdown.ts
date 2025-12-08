@@ -38,7 +38,7 @@ export default class Markdown {
     }
 
     static async Render(md: string, sanitize: boolean = true): Promise<string> {
-        md = sanitize ? await Sanitizer.Sanitize(md) : md.replaceAll('<', '&lt;');
+        md = md.replaceAll('<', '&lt;');
 
         const config: RendererObject = {
             heading: (head) => {
@@ -141,6 +141,6 @@ export default class Markdown {
             });
         }
 
-        return html;
+        return sanitize ? Sanitizer.Sanitize(html) : html;
     }
 }
