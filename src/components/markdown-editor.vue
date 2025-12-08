@@ -13,6 +13,11 @@ const props = defineProps<{
   cancelButtonText?: string;
 }>();
 
+const emit = defineEmits<{
+  'update:modelValue': [value: string];
+  'save': [value: string];
+}>();
+
 const MAX_CHARACTERS = props.maxCharacters ?? 2000;
 const MAX_HEIGHT = props.maxHeight ?? '400px';
 const MIN_HEIGHT = props.minHeight ?? '200px';
@@ -50,9 +55,12 @@ const isOverLimit = computed(() => {
 
 const toggleMode = () => {
   if (isEditing.value) {
+    emit('update:modelValue', editedText.value);
     isEditing.value = false;
   } else {
-    editedText.value = props.modelValue || '';
+    if (!editedText.value) {
+      editedText.value = props.modelValue || '';
+    }
     isEditing.value = true;
   }
 };
@@ -67,6 +75,8 @@ const handleSave = async () => {
   
   try {
     isSaving.value = true;
+    emit('save', editedText.value);
+    emit('update:modelValue', editedText.value);
     isEditing.value = false;
   } catch (error) {
     console.error('Failed to save:', error);

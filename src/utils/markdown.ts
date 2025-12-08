@@ -2,16 +2,20 @@ import { marked, type RendererObject } from 'marked';
 import ParsedMarkdown from '~/models/markdown/ParsedMarkdown';
 import ParsedSection from '~/models/markdown/ParsedSection';
 import ParsedSubSection from '~/models/markdown/ParsedSubSection';
+import ParsedImage from '~/models/markdown/ParsedImage';
 import Sanitizer from './sanitize';
 
 export default class Markdown {
     static FootnoteRegex = /\[\^(\d{1,2})\]/g;
     static BlockquoteRegex = /\{: \.(\w+) \}/g;
+    static ImageRegex = /!\[([^\]]*)\]\(([^)]+)\)/g;
 
     static Parse(md: string): ParsedMarkdown {
         const data = new ParsedMarkdown(md);
+        data.images = [];
+        const lines = md.split('\n');
 
-        data.raw.split('\n').forEach((line) => {
+        lines.forEach((line, index) => {
             if (line.startsWith('## ')) {
                 const text = line.slice(3);
                 const id = line
@@ -32,6 +36,22 @@ export default class Markdown {
                     .replace(/[^\w]+/g, '-');
                 last.subs.push(new ParsedSubSection(text, id));
             }
+
+            const imageMatches = [...line.matchAll(Markdown.ImageRegex)];
+            imageMatches.forEach((match) => {
+                const alt = match[1];
+                const src = match[2];
+                
+                if (!data.images) {
+                    data.images = [];
+                }
+                
+                data.images.push(new ParsedImage(
+                    src,
+                    alt,
+                    index + 1
+                ));
+            });
         });
 
         return data;
@@ -73,7 +93,11 @@ export default class Markdown {
 
                 return `<MarkdownBlockquote type="${type}">${content}</MarkdownBlockquote>`;
             },
-            image: (image) => `<MarkdownImage path="${image.href}" alt="${image.text}"></MarkdownImage>`
+            image: (image) => {
+                const escapedAlt = image.text.replace(/\"/g, '&quot;');
+                const escapedHref = image.href.replace(/\"/g, '&quot;');
+                return `<img src="${escapedHref}" alt="${escapedAlt}"></MarkdownImage>`;
+            }
         };
 
         marked.use({ renderer: config });
