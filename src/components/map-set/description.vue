@@ -36,6 +36,7 @@ const handleSave = async (value: string) => {
     v-model="description"
     :can-edit="canEdit"
     :max-characters="2000"
+    :sanitize="true"
     max-height="400px"
     placeholder="No description provided."
     @save="handleSave"

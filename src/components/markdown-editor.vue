@@ -11,6 +11,7 @@ const props = defineProps<{
   minHeight?: string;
   saveButtonText?: string;
   cancelButtonText?: string;
+  sanitize?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -23,6 +24,7 @@ const MAX_HEIGHT = props.maxHeight ?? '400px';
 const MIN_HEIGHT = props.minHeight ?? '200px';
 const SAVE_TEXT = props.saveButtonText ?? 'Save';
 const CANCEL_TEXT = props.cancelButtonText ?? 'Cancel';
+const SANITIZE = props.sanitize ?? true;
 
 const isEditing = ref(false);
 const isSaving = ref(false);
@@ -34,14 +36,14 @@ watch(() => props.modelValue, async (newValue) => {
   if (!isEditing.value) {
     isRendering.value = true;
     const content = newValue || '';
-    renderedMarkdownContent.value = await Markdown.Render(content, true);
+    renderedMarkdownContent.value = await Markdown.Render(content, SANITIZE);
     isRendering.value = false;
   }
 }, { immediate: true });
 
 watch(editedText, async (newText) => {
   if (newText) {
-    renderedMarkdownContent.value = await Markdown.Render(newText, true);
+    renderedMarkdownContent.value = await Markdown.Render(newText, SANITIZE);
   }
 });
 
