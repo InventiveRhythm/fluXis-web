@@ -69,10 +69,10 @@ function GetPlace(score: APIScore) {
                         </span>
                     </div>
                 </td>
-                <td>{{ Formatting.Accuracy(score.accuracy) }}</td>
+                <td>{{ formatting.Accuracy(score.accuracy) }}</td>
                 <td>{{ score.maxcombo }}x</td>
                 <td>{{ score.pr.toFixed(0) }}pr</td>
-                <td>{{ Formatting.TimeAgo(score.time, true) }}</td>
+                <td>{{ formatting.TimeAgo(score.time, true) }}</td>
                 <td>{{ score.mods.replaceAll(',', ' ') }}</td>
             </tr>
         </table>
