@@ -76,4 +76,25 @@ export default class Utils {
             ogImage: image
         });
     }
+
+    static GetBase64FromInput(input: HTMLInputElement, types: string[], cb: (v: string) => void) {
+        if (!input.files) return;
+
+        const file = input.files[0];
+
+        if (!file) return;
+
+        if (!types.includes(file.type)) {
+            var types = types.map((t) => t.split('/')[1]);
+            alert(`Invalid type! Only ${types.join('/')} is supported.`);
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            var res = reader.result;
+            cb(<string>res);
+        };
+    }
 }

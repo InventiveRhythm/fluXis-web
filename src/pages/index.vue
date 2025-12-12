@@ -5,9 +5,16 @@ import LogoText from '@/assets/image/logo-text.png';
 import { APINewsType, type APINewsPost } from '~/models/other/APINewsPost';
 import API from '~/utils/api';
 
+const { data: stats } = await API.PerformGet<{
+    users: number;
+    online: number;
+    scores: number;
+    mapsets: number;
+}>('/stats');
+
 const news: APINewsPost[] = [
     {
-        id: "a",
+        id: 'a',
         image: '/images/news-1.jpg',
         title: 'An interesting title',
         blurb: 'very cool content thats extremely long so i can test line wrappings. css sucks i wish there was a better way to do this shit',
@@ -15,7 +22,7 @@ const news: APINewsPost[] = [
         type: APINewsType.News
     },
     {
-        id: "a",
+        id: 'a',
         image: '/images/news-2.jpg',
         title: 'certified hashbrown moment',
         blurb: 'pretend i put lorem ipsum in here. too lazy to actually generate some',
@@ -23,7 +30,7 @@ const news: APINewsPost[] = [
         type: APINewsType.News
     },
     {
-        id: "a",
+        id: 'a',
         image: '/images/news-3.jpg',
         title: 'i am going insane',
         blurb: "i'm running out of ideas for this",
@@ -51,9 +58,21 @@ const news: APINewsPost[] = [
                     </Button>
                 </a>
             </div>
+            <div class="absolute bottom-5 left-5 !h-fit w-fit text-left text-xs" v-if="stats">
+                {{ formatting.Number(stats.users) }}
+                <span class="opacity-75">registered users,</span>
+                {{ formatting.Number(stats.online) }}
+                <span class="opacity-75">currently online</span>
+                <br />
+                <span class="opacity-75">with</span>
+                {{ formatting.Number(stats.scores) }}
+                <span class="opacity-75">scores on</span>
+                {{ formatting.Number(stats.mapsets) }}
+                <span class="opacity-75">mapsets</span>
+            </div>
         </div>
-        <div class="mt-3 flex w-full flex-wrap items-center justify-center">
+        <!-- <div class="mt-3 flex w-full flex-wrap items-center justify-center">
             <NewsPost v-for="post in news" :post="post" />
-        </div>
+        </div> -->
     </div>
 </template>

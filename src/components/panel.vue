@@ -10,13 +10,8 @@ defineProps<{
     error?: string;
     open: boolean;
     width?: string;
+    icon?: string;
 }>();
-
-function VoidClick(e: MouseEvent) {
-    if (content.value.contains(e.target)) return;
-
-    emit('close');
-}
 </script>
 
 <template>
@@ -24,12 +19,21 @@ function VoidClick(e: MouseEvent) {
         <Transition name="panel-overlay">
             <div
                 class="pointer-events-auto fixed left-0 top-0 z-20 flex h-screen w-screen select-none items-center justify-center bg-dark-1 bg-opacity-80 backdrop-blur-md"
-                @click="VoidClick"
                 v-if="open"
             >
                 <div :class="`flex flex-col ${width ?? 'w-panel'} gap-4 rounded-2xl bg-dark-3 p-6`" ref="content">
                     <div>
-                        <p class="w-full break-words text-2xl">{{ title }}</p>
+                        <div class="flex flex-row items-center justify-between">
+                            <div class="flex flex-row items-center gap-3">
+                                <div class="flex size-5 items-center justify-center" v-if="icon">
+                                    <i :class="icon"></i>
+                                </div>
+                                <p class="w-full break-words text-xl">{{ title }}</p>
+                            </div>
+                            <div class="flex size-7 items-center justify-center rounded-md hover:bg-dark-text/20" @click="emit('close')">
+                                <i class="fa fa-times"></i>
+                            </div>
+                        </div>
                         <p class="text-red" v-if="error">{{ error }}</p>
                     </div>
                     <slot></slot>
