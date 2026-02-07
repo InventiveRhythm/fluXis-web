@@ -42,7 +42,7 @@ const news: APINewsPost[] = [
 
 <template>
     <div>
-        <div class="overlap-grid h-96 w-full overflow-hidden rounded-b-3xl xl:rounded-3xl">
+        <div class="overlap-grid relative h-96 w-full overflow-hidden rounded-b-3xl xl:rounded-3xl">
             <video class="scale-105 object-cover blur-sm" autoplay muted loop playsinline preload="auto">
                 <source :src="HomeVideoWebm" type="video/webm">
                 <source :src="HomeVideoMp4" type="video/mp4">
