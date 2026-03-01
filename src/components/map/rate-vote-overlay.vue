@@ -15,10 +15,18 @@ const emit = defineEmits<{
 const open = ref<boolean>(false);
 const errors = ref<APIResponseErrors>();
 
-const base = ref<InstanceType<typeof IconTextbox>>();
-const read = ref<InstanceType<typeof IconTextbox>>();
-const track = ref<InstanceType<typeof IconTextbox>>();
-const percept = ref<InstanceType<typeof IconTextbox>>();
+const base = ref<number>();
+const read = ref<number>();
+const track = ref<number>();
+const percept = ref<number>();
+
+const rating = computed<number>(() => {
+    const baseNum = base.value ?? 0;
+    const readNum = read.value ?? 0;
+    const trackNum = track.value ?? 0;
+    const perceptNum = percept.value ?? 0;
+    return baseNum + ((readNum + trackNum + perceptNum) / 3) * 2;
+});
 
 function Open() {
     open.value = true;
@@ -26,10 +34,10 @@ function Open() {
 
 async function Perform() {
     var { data, error } = await API.PerformPost<number>(`/map/${props.map.id}/rate`, {
-        base: base.value?.input?.value,
-        read: read.value?.input?.value,
-        track: track.value?.input?.value,
-        percept: percept.value?.input?.value
+        base: base.value,
+        read: read.value,
+        track: track.value,
+        percept: percept.value,
     });
 
     if (error) errors.value = error;
@@ -44,10 +52,13 @@ defineExpose({ Open});
 
 <template>
     <Panel title="Rate Vote" :open="open" :error="errors?._request" @close="open = false">
-        <IconTextbox ref="base" icon="id-card-clip" placeholder="Chart Difficulty (0-20)" :error="errors?.base" />
-        <IconTextbox ref="read" icon="id-card-clip" placeholder="Read Difficulty (0-5)" :error="errors?.read" />
-        <IconTextbox ref="track" icon="id-card-clip" placeholder="Track Difficulty (0-5)" :error="errors?.track" />
-        <IconTextbox ref="percept" icon="id-card-clip" placeholder="Perception Difficulty (0-5)" :error="errors?.percept" />
-        <Button class="w-fit bg-dark-2 px-4 py-2" @click="Perform">Vote</Button>
+        <IconTextbox type="number" step="0.1" v-model.number="base" icon="id-card-clip" placeholder="Chart Difficulty (0-20)" :error="errors?.base" />
+        <IconTextbox type="number" step="0.1" v-model.number="read" icon="id-card-clip" placeholder="Read Difficulty (0-5)" :error="errors?.read" />
+        <IconTextbox type="number" step="0.1" v-model.number="track" icon="id-card-clip" placeholder="Track Difficulty (0-5)" :error="errors?.track" />
+        <IconTextbox type="number" step="0.1" v-model.number="percept" icon="id-card-clip" placeholder="Perception Difficulty (0-5)" :error="errors?.percept" />
+        <div class="flex flex-row justify-between items-center">
+            <Button class="w-fit bg-dark-2 px-4 py-2" @click="Perform">Vote</Button>
+            <p>Your Rating: <span :style="{ color: GetRatingColor(rating) as string }">{{ rating.toFixed(2) }}</span></p>
+        </div>
     </Panel>
 </template>
