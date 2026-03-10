@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
-import Markdown from '~/utils/markdown';
+import Markdown, { MarkdownTagFilter } from '~/utils/markdown';
+import API from '~/utils/api';
 
 const props = withDefaults(defineProps<{
     modelValue: string;
@@ -16,6 +17,7 @@ const props = withDefaults(defineProps<{
     saveButtonText?: string;
     cancelButtonText?: string;
     sanitize?: boolean;
+    filter?: MarkdownTagFilter;
     onSave?: (value: string) => Promise<void>;
 }>(), {
     maxCharacters: 2000,
@@ -24,6 +26,7 @@ const props = withDefaults(defineProps<{
     saveButtonText: 'Save',
     cancelButtonText: 'Cancel',
     sanitize: true,
+    filter: () => new MarkdownTagFilter('blacklist', []),
     renderDebounce: 300,
     placeholder: 'No content provided.',
     editPlaceholder: 'Enter content...',
@@ -105,7 +108,8 @@ const wrapInline = (before: string, after: string, placeholder: string) => {
     const selected = editBuffer.value.slice(start, end) || placeholder;
     const replacement = `${before}${selected}${after}`;
 
-    editBuffer.value = editBuffer.value.slice(0, start) + replacement + editBuffer.value.slice(end);
+    textarea.setRangeText(replacement, start, end, 'end');
+    textarea.dispatchEvent(new Event('input'));
 
     nextTick(() => {
         textarea.focus();
@@ -123,86 +127,47 @@ const prependLine = (prefix: string) => {
     const end = textarea.selectionEnd;
     const before = editBuffer.value.slice(0, start);
     const selected = editBuffer.value.slice(start, end);
-    const after = editBuffer.value.slice(end);
 
     const lineStart = before.lastIndexOf('\n') + 1;
     const already_prefixed = editBuffer.value.slice(lineStart).startsWith(prefix);
 
+    let replacement: string;
     if (already_prefixed) {
-        const removed = before.slice(0, lineStart) + before.slice(lineStart).replace(prefix, '') + selected.replace(new RegExp(`^${prefix}`, 'gm'), '') + after;
-        editBuffer.value = removed;
+        replacement = (before.slice(lineStart) + selected).replace(new RegExp(`^${prefix}`, 'gm'), '');
+        textarea.setRangeText(replacement, lineStart, end, 'end');
     } else {
-        const lines = selected ? selected.split('\n').map(l => `${prefix}${l}`).join('\n') : `${prefix}`;
-        editBuffer.value = before + lines + after;
+        replacement = selected ? selected.split('\n').map(l => `${prefix}${l}`).join('\n') : prefix;
+        textarea.setRangeText(replacement, start, end, 'end');
     }
 
+    textarea.dispatchEvent(new Event('input'));
     nextTick(() => textarea.focus());
 };
 
+const isTagAllowed = (tag?: string): boolean =>
+    tag ? props.filter.isAllowed(tag) : true;
+
 const toolbarActions = [
-	{
-        label: 'H1',
-        title: 'Heading 1',
-        text: true,
-        action: () => prependLine('# '),
-    },
-    {
-        label: 'H2',
-        title: 'Heading 2',
-        text: true,
-        action: () => prependLine('## '),
-    },
-    {
-        label: 'H3',
-        title: 'Heading 3',
-        text: true,
-        action: () => prependLine('### '),
-    },
+    { label: 'H1', title: 'Heading 1', text: true, tag: 'h1', action: () => prependLine('# ') },
+    { label: 'H2', title: 'Heading 2', text: true, tag: 'h2', action: () => prependLine('## ') },
+    { label: 'H3', title: 'Heading 3', text: true, tag: 'h3', action: () => prependLine('### ') },
     { divider: true },
-    {
-        icon: 'fa-solid fa-bold',
-        title: 'Bold',
-        action: () => wrapInline('**', '**', 'bold text'),
-    },
-    {
-        icon: 'fa-solid fa-italic',
-        title: 'Italic',
-        action: () => wrapInline('*', '*', 'italic text'),
-    },
+    { icon: 'fa-solid fa-bold', title: 'Bold', action: () => wrapInline('**', '**', 'bold text') },
+    { icon: 'fa-solid fa-italic', title: 'Italic', action: () => wrapInline('*', '*', 'italic text') },
     { divider: true },
-    {
-        icon: 'fa-solid fa-code',
-        title: 'Inline code',
-        action: () => wrapInline('`', '`', 'code'),
-    },
-    {
-		icon: 'fa-solid fa-file-code',
-		title: 'Code block',
-		action: () => wrapInline('```\n', '\n```', 'code'),
-	},
+    { icon: "fa-solid fa-align-center", title: 'Align Center', tag: 'center', action: () => wrapInline('[center]\n', '\n[/center]', 'centered text') },
+    { icon: 'fa-solid fa-eye-slash', title: 'Spoiler', tag: 'spoiler', action: () => wrapInline('[spoiler=Spoiler]', '[/spoiler]', 'hidden text') },
+    { icon: 'fa-solid fa-palette', title: 'Color', tag: 'color', action: () => wrapInline('[color=red]', '[/color]', 'colored text') },
     { divider: true },
-	{
-		icon: 'fa-solid fa-list-ul',
-		title: 'Bullet list',
-		action: () => prependLine('- '),
-	},
-	{
-		icon: 'fa-solid fa-list-ol',
-		title: 'Ordered list',
-		action: () => prependLine('1. '),
-	},
-	{ divider: true },
-    {
-        icon: 'fa-solid fa-link',
-        title: 'Link',
-        action: () => wrapInline('[', '](url)', 'link text'),
-    },
+    { icon: 'fa-solid fa-code', title: 'Inline code', tag: 'code', action: () => wrapInline('`', '`', 'code') },
+    { icon: 'fa-solid fa-file-code', title: 'Code block',  tag: 'code', action: () => wrapInline('```\n', '\n```', 'code') },
     { divider: true },
-    {
-        icon: 'fa-solid fa-image',
-        title: 'Upload image',
-        action: () => fileInputRef.value?.click(),
-    },
+    { icon: 'fa-solid fa-list-ul', title: 'Bullet list', tag: 'ul', action: () => prependLine('- ') },
+    { icon: 'fa-solid fa-list-ol', title: 'Ordered list', tag: 'ol', action: () => prependLine('1. ') },
+    { divider: true },
+    { icon: 'fa-solid fa-link', title: 'Link', tag: 'a', action: () => wrapInline('[', '](url)', 'link text') },
+    { divider: true },
+    { icon: 'fa-solid fa-image', title: 'Upload image', tag: 'img', action: () => fileInputRef.value?.click() },
 ] as const;
 
 const insertAt = (text: string, pos: number): number => {
@@ -343,9 +308,11 @@ const handlePaste = async (e: ClipboardEvent) => {
                 <!-- Toolbar -->
                 <div class="flex items-center gap-1 mb-2 flex-wrap">
                     <template v-for="(item, i) in toolbarActions" :key="i">
-                        <div v-if="'divider' in item" class="w-px h-4 bg-dark-5 mx-1" />
+                        <template v-if="'divider' in item">
+                            <div class="w-px h-4 bg-dark-5 mx-1" />
+                        </template>
                         <button
-                            v-else
+                            v-else-if="isTagAllowed('tag' in item ? item.tag : undefined)"
                             @click="item.action"
                             :title="item.title"
                             class="w-7 h-7 flex items-center justify-center rounded hover:bg-dark-5 transition-colors text-gray-400 hover:text-white"
@@ -422,22 +389,29 @@ textarea {
 .markdown-content :deep(p) { margin-bottom: 1rem; }
 
 .markdown-content :deep(a) {
+    @apply text-highlight;
+}
+
+.markdown-content :deep(a:hover) {
     @apply text-highlight underline;
 }
 
-.markdown-content :deep(ul) {
+.markdown-content :deep(ul),
+.markdown-content :deep(ol) {
     list-style-type: disc;
     padding-left: 1.5rem;
     margin-bottom: 1rem;
 }
 
-.markdown-content :deep(ol) {
-    list-style-type: decimal;
-    padding-left: 1.5rem;
-    margin-bottom: 1rem;
-}
+.markdown-content :deep(ol) { list-style-type: decimal; }
 
 .markdown-content :deep(li) { margin-bottom: 0.15rem; }
+
+.markdown-content :deep(li > ul),
+.markdown-content :deep(li > ol) {
+    margin-bottom: 0;
+    margin-top: 0.15rem;
+}
 
 .markdown-content :deep(h1) { font-size: 1.875rem; }
 .markdown-content :deep(h2) { font-size: 1.5rem; }
@@ -478,5 +452,13 @@ textarea {
 .markdown-content :deep(ol li[id^="note-"]) {
     font-size: 0.875rem;
     opacity: 0.7;
+}
+
+.markdown-content :deep(details) {
+    @apply bg-dark-1 rounded-md px-4 my-2;
+}
+
+.markdown-content :deep(summary) {
+    @apply cursor-pointer py-2 text-silver hover:text-white transition-colors select-none;
 }
 </style>

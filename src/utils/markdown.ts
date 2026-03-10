@@ -1,9 +1,29 @@
-import { marked, type RendererObject } from 'marked';
+import { marked, type RendererObject, type Tokens } from 'marked';
 import ParsedMarkdown from '~/models/markdown/ParsedMarkdown';
 import ParsedSection from '~/models/markdown/ParsedSection';
 import ParsedSubSection from '~/models/markdown/ParsedSubSection';
 import ParsedImage from '~/models/markdown/ParsedImage';
 import Sanitizer from './sanitize';
+
+export class MarkdownTagFilter {
+    mode: 'blacklist' | 'whitelist';
+    tags: string[];
+
+    constructor(mode: 'blacklist' | 'whitelist', tags: string[]) {
+        this.mode = mode;
+        this.tags = tags;
+    }
+
+    isAllowed(tag: string): boolean {
+        return this.mode === 'blacklist'
+            ? !this.tags.includes(tag)
+            : this.tags.includes(tag);
+    }
+
+    isBlocked(tag: string): boolean {
+        return !this.isAllowed(tag);
+    }
+}
 
 export default class Markdown {
     static FootnoteRegex = /\[\^(\d{1,2})\]/g;
@@ -15,6 +35,12 @@ export default class Markdown {
         'catbox.moe',
         'imgur.com'
     ];
+
+    static CustomTags: Record<string, { inline?: boolean; render: (inner: string, attr?: string) => string }> = {
+        center: { render: (inner) => `<div class="text-center">${inner}</div>` },
+        spoiler: { render: (inner, attr) => `<details><summary>${attr || 'Spoiler'}</summary>${inner}</details>` },
+        color: { inline: true, render: (inner, attr) => `<span data-color="${attr || 'inherit'}">${inner}</span>` },
+    };
 
     static isImageAllowed(url: string): boolean {
         try {
@@ -91,21 +117,69 @@ export default class Markdown {
         return data;
     }
 
-    static async Render(md: string, sanitize: boolean = true): Promise<string> {
+    static async Render(md: string, sanitize: boolean = true, filter: MarkdownTagFilter = new MarkdownTagFilter('blacklist', [])): Promise<string> {
         md = md.replaceAll('<', '&lt;');
+
+        const extracted_customtags: Array<{ placeholder: string; tag: string | null; inner: string; attr?: string }> = [];
+
+        // extract custom tags
+        for (const [tag, def] of Object.entries(Markdown.CustomTags)) {
+            // bbcode style
+            const regex = new RegExp(`\\[${tag}(?:=([^\\]]+))?\\]([\\s\\S]*?)\\[\\/${tag}\\]`, 'gi');
+
+            if (def.inline) {
+                md = md.replace(regex, (_, attr, inner) => {
+                    if (filter.isBlocked(tag)) return inner;
+                    return def.render(inner, attr);
+                });
+            } else {
+                md = md.replace(regex, (_, attr, inner) => {
+                    if (filter.isBlocked(tag)) {
+                        const placeholder = `CUSTOM_TAG_${tag.toUpperCase()}_${extracted_customtags.length}`;
+                        extracted_customtags.push({ placeholder, tag: null, inner, attr });
+                        return placeholder;
+                    }
+                    const placeholder = `CUSTOM_TAG_${tag.toUpperCase()}_${extracted_customtags.length}`;
+                    extracted_customtags.push({ placeholder, tag, inner, attr });
+                    return placeholder;
+                });
+            }
+        }
+
+        // we need to recurse nested lists
+        const renderList = (list: Tokens.List): string => {
+            const tag = list.ordered ? 'ol' : 'ul';
+
+            const items = list.items.map(item => {
+                let content = '';
+
+                item.tokens?.forEach(token => {
+                    if (token.type === 'list') {
+                        content += renderList(token as Tokens.List);
+                    } else if (token.type === 'text') {
+                        content += (token as Tokens.Text).text;
+                    }
+                });
+
+                return `<li>${content}</li>`;
+            }).join('\n');
+
+            return `<${tag}>${items}</${tag}>`;
+        };
 
         const config: RendererObject = {
             heading: (head) => {
-                if (head.depth === 1)
-                    return `<h1>${head.text}</h1>`;
-                if (head.depth === 2)
-                    return `<h2>${head.text}</h2>`;
-                if (head.depth === 3)
-                    return `<h3>${head.text}</h3>`;
+                if (filter.isBlocked(`h${head.depth}`)) return head.text;
 
                 return `<h${head.depth}>${head.text}</h${head.depth}>`;
             },
+            list: (list) => {
+                if (filter.isBlocked(list.ordered ? 'ol' : 'ul')) return list.raw;
+                return renderList(list);
+            },
             link: (link) => {
+                if (filter.isBlocked('a')) return ''; // if we block links I think it would better to just not render them
+                
                 if (link.href.startsWith('/')) {
                     return `<NuxtLink to="${link.href}">${link.text}</NuxtLink>`;
                 }
@@ -113,10 +187,14 @@ export default class Markdown {
                 return false;
             },
             code: (code) => {
+                if (filter.isBlocked('code')) return code.text;
+
                 const lines = code.text.split('\n');
                 return `<pre><code class="language-${code.lang}">${lines.join('\n')}</code></pre>`;
             },
             blockquote: (block) => {
+                if (filter.isBlocked('blockquote')) return block.text;
+
                 let content = block.text;
                 let type = 'tip';
                 const matches = [...content.matchAll(Markdown.BlockquoteRegex)];
@@ -128,9 +206,7 @@ export default class Markdown {
                 return `<blockquote class="blockquote-${type}">${content}</blockquote>`;
             },
             image: (image) => {
-                if (!this.isImageAllowed(image.href)) {
-                    return '';
-                }
+                if (filter.isBlocked('img') || !this.isImageAllowed(image.href)) return '';
 
                 const escapedAlt = image.text.replace(/\"/g, '&quot;');
                 const escapedHref = image.href.replace(/\"/g, '&quot;');
@@ -140,6 +216,13 @@ export default class Markdown {
 
         marked.use({ renderer: config });
         let html = marked.parse(md).toString();
+
+        // replace the placeholders with html
+        for (const { placeholder, tag, inner, attr } of extracted_customtags) {
+            const innerHtml = await Markdown.Render(inner, false, filter);
+            const final = tag ? Markdown.CustomTags[tag].render(innerHtml, attr) : innerHtml;
+            html = html.replace(new RegExp(`<p>\\s*${placeholder}\\s*<\\/p>|${placeholder}`), final);
+        }
 
         // footnote stuff
         const matches = [...html.matchAll(Markdown.FootnoteRegex)];
@@ -203,6 +286,11 @@ export default class Markdown {
             });
         }
 
-        return sanitize ? Sanitizer.Sanitize(html) : html;
+        let finalHtml = sanitize ? Sanitizer.Sanitize(html) : html;
+
+        // important because style attr is blocked inside the sanitization
+        finalHtml = html.replace(/data-color="([^"]+)"/g, 'style="color:$1"');
+
+        return finalHtml;
     }
 }

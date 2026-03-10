@@ -14,6 +14,7 @@ export default class Sanitizer {
     'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
     'strong', 'em', 'b', 'i', 'u', 's', 'strike', 'del',
     'blockquote', 'code', 'pre',
+    'details', 'summary',
     'ul', 'ol', 'li',
     'a', 'img',
     'table', 'thead', 'tbody', 'tr', 'th', 'td',
