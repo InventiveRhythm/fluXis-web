@@ -29,7 +29,7 @@ function CreateGradient() {
     </p>
 </template>
 
-<style>
+<style scoped>
 .club-tag {
     color: var(--text-color);
 }

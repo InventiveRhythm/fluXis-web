@@ -10,7 +10,7 @@ defineProps<{
 <template>
     <div class="grid grid-cols-4">
         <MapSetSidebarStatsNumber text="Length" :value="formatting.Duration(map.length / 1000)" />
-        <MapSetSidebarStatsNumber text="BPM" :value="map.bpm" />
+        <MapSetSidebarStatsNumber text="BPM" :value="formatting.Number(map.bpm, 2)" />
         <MapSetSidebarStatsNumber text="Hits" :value="map.notes" />
         <MapSetSidebarStatsNumber text="LNs" :value="map['long-notes']" />
     </div>

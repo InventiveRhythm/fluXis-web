@@ -156,6 +156,10 @@ async function PostComment() {
 
 <style lang="scss">
 .comment-content {
+    p:not(:first-child) {
+        @apply mt-3;
+    }
+
     ul,
     ol {
         @apply list-disc list-inside;

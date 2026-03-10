@@ -10,9 +10,9 @@ else API.Logout();
 
 <template>
     <NuxtLoadingIndicator color="#8585e0" />
-    <NuxtRouteAnnouncer />
+    <!-- <NuxtRouteAnnouncer /> -->
 
-    <div class="grid *:col-1 *:row-1">
+    <div>
         <NuxtLayout>
             <NuxtPage />
         </NuxtLayout>
@@ -22,6 +22,10 @@ else API.Logout();
 </template>
 
 <style>
+html {
+    @apply scroll-m-16 scroll-smooth;
+}
+
 body {
     @apply bg-dark-1 font-base text-dark-text selection:bg-highlight selection:text-dark-1;
     overflow-x: hidden;
@@ -47,11 +51,7 @@ body {
 
 .fade-enter-active,
 .fade-leave-active {
-    transition:
-        opacity 0.3s,
-        transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    transition-delay: 0ms;
-    transform-origin: top center;
+    transition: all 300ms;
 }
 
 .fade-enter-to,
@@ -59,14 +59,9 @@ body {
     opacity: 1;
 }
 
-.fade-enter-to {
-    transition-delay: 100ms;
-}
-
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;
-    /* transform: scale(0.98); */
 }
 
 .layout-enter-active,
