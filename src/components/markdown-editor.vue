@@ -421,6 +421,10 @@ textarea {
 
 .markdown-content :deep(p) { margin-bottom: 1rem; }
 
+.markdown-content :deep(a) {
+    @apply text-highlight underline;
+}
+
 .markdown-content :deep(ul) {
     list-style-type: disc;
     padding-left: 1.5rem;
@@ -440,10 +444,39 @@ textarea {
 .markdown-content :deep(h3) { font-size: 1.25rem; }
 
 .markdown-content :deep(img) { max-width: 100%; height: auto; }
-.markdown-content :deep(pre) { overflow-x: auto; max-width: 100%; }
-.markdown-content :deep(code) { word-break: break-word; }
 
-.markdown-content :deep(a) {
-    @apply text-highlight underline;
+.markdown-content :deep(pre) {
+    @apply bg-dark-2 p-4 rounded-lg my-2 overflow-x-auto;
+}
+
+.markdown-content :deep(pre) code {
+    @apply bg-dark-2 p-0;
+}
+
+.markdown-content :deep(code) {
+    @apply bg-dark-1 rounded-md text-dark-text font-mono font-bold px-2 py-1;
+}
+
+.markdown-content :deep(blockquote) {
+    border-left: 3px solid;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
+.markdown-content :deep(blockquote.blockquote-warning) { border-color: orange; }
+.markdown-content :deep(blockquote.blockquote-tip) { border-color: var(--color-highlight); }
+.markdown-content :deep(blockquote.blockquote-danger) { border-color: red; }
+
+.markdown-content :deep(.footnote-ref) {
+    @apply text-highlight;
+    text-decoration: none;
+    font-size: 0.75rem;
+    vertical-align: super;
+}
+
+.markdown-content :deep(ol li[id^="note-"]) {
+    font-size: 0.875rem;
+    opacity: 0.7;
 }
 </style>

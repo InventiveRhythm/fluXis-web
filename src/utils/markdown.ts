@@ -113,23 +113,19 @@ export default class Markdown {
                 return false;
             },
             code: (code) => {
-                const text = code.text;
-                const lines = text.split('\n');
-                return `<MarkdownCodeBlock lang="${code.lang}"><span>${lines.join('</span><span>')}</span></MarkdownCodeBlock>`;
+                const lines = code.text.split('\n');
+                return `<pre><code class="language-${code.lang}">${lines.join('\n')}</code></pre>`;
             },
             blockquote: (block) => {
                 let content = block.text;
                 let type = 'tip';
-
                 const matches = [...content.matchAll(Markdown.BlockquoteRegex)];
-
                 if (matches.length > 0) {
                     const match = matches[0];
                     type = match[1];
                     content = content.replace(match[0], '').trim();
                 }
-
-                return `<MarkdownBlockquote type="${type}">${content}</MarkdownBlockquote>`;
+                return `<blockquote class="blockquote-${type}">${content}</blockquote>`;
             },
             image: (image) => {
                 if (!this.isImageAllowed(image.href)) {
@@ -203,7 +199,7 @@ export default class Markdown {
                 const raw = m[0];
                 const num = m[1];
 
-                html = html.replace(raw, `<MarkdownFootnote :num="${num}"></MarkdownFootnote>`);
+                html = html.replace(raw, `<sup><a href="#note-${num}" class="footnote-ref">[${num}]</a></sup>`);
             });
         }
 
