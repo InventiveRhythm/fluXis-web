@@ -96,10 +96,14 @@ export default class Markdown {
 
         const config: RendererObject = {
             heading: (head) => {
-                if (head.depth == 2 || head.depth == 3)
-                    return `<MarkdownHeader text="${head.text.replace(/\"/g, '&quot;')}" :level="${head.depth}"></MarkdownHeader>`;
+                if (head.depth === 1)
+                    return `<h1>${head.text}</h1>`;
+                if (head.depth === 2)
+                    return `<h2>${head.text}</h2>`;
+                if (head.depth === 3)
+                    return `<h3>${head.text}</h3>`;
 
-                return false;
+                return `<h${head.depth}>${head.text}</h${head.depth}>`;
             },
             link: (link) => {
                 if (link.href.startsWith('/')) {

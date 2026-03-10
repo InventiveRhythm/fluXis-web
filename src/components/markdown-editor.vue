@@ -140,6 +140,12 @@ const prependLine = (prefix: string) => {
 };
 
 const toolbarActions = [
+	{
+        label: 'H1',
+        title: 'Heading 1',
+        text: true,
+        action: () => prependLine('# '),
+    },
     {
         label: 'H2',
         title: 'Heading 2',
@@ -175,11 +181,17 @@ const toolbarActions = [
 		action: () => wrapInline('```\n', '\n```', 'code'),
 	},
     { divider: true },
-    {
-        icon: 'fa-solid fa-quote-left',
-        title: 'Blockquote',
-        action: () => prependLine('> '),
-    },
+	{
+		icon: 'fa-solid fa-list-ul',
+		title: 'Bullet list',
+		action: () => prependLine('- '),
+	},
+	{
+		icon: 'fa-solid fa-list-ol',
+		title: 'Ordered list',
+		action: () => prependLine('1. '),
+	},
+	{ divider: true },
     {
         icon: 'fa-solid fa-link',
         title: 'Link',
@@ -409,12 +421,23 @@ textarea {
 
 .markdown-content :deep(p) { margin-bottom: 1rem; }
 
-.markdown-content :deep(h1),
-.markdown-content :deep(h2),
-.markdown-content :deep(h3) {
-    margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
+.markdown-content :deep(ul) {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
 }
+
+.markdown-content :deep(ol) {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.markdown-content :deep(li) { margin-bottom: 0.15rem; }
+
+.markdown-content :deep(h1) { font-size: 1.875rem; }
+.markdown-content :deep(h2) { font-size: 1.5rem; }
+.markdown-content :deep(h3) { font-size: 1.25rem; }
 
 .markdown-content :deep(img) { max-width: 100%; height: auto; }
 .markdown-content :deep(pre) { overflow-x: auto; max-width: 100%; }
