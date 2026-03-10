@@ -442,4 +442,8 @@ textarea {
 .markdown-content :deep(img) { max-width: 100%; height: auto; }
 .markdown-content :deep(pre) { overflow-x: auto; max-width: 100%; }
 .markdown-content :deep(code) { word-break: break-word; }
+
+.markdown-content :deep(a) {
+    @apply text-highlight underline;
+}
 </style>
