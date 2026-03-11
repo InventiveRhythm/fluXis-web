@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, nextTick } from 'vue';
 import Markdown, { MarkdownTagFilter } from '~/utils/markdown';
 import API from '~/utils/api';
+import MarkdownViewer from '~/components/markdown/viewer.vue';
 
 const props = withDefaults(defineProps<{
     modelValue: string;
@@ -13,7 +14,7 @@ const props = withDefaults(defineProps<{
     minHeight?: string;
     placeholder?: string;
     editPlaceholder?: string;
-	loadingPlaceholder?: string;
+    loadingPlaceholder?: string;
     saveButtonText?: string;
     cancelButtonText?: string;
     sanitize?: boolean;
@@ -30,7 +31,7 @@ const props = withDefaults(defineProps<{
     renderDebounce: 300,
     placeholder: 'No content provided.',
     editPlaceholder: 'Enter content...',
-	loadingPlaceholder: 'Loading...',
+    loadingPlaceholder: 'Loading...',
 });
 
 const emit = defineEmits<{
@@ -40,35 +41,28 @@ const emit = defineEmits<{
 
 const isEditing = ref(false);
 const isSaving = ref(false);
-const isRendering = ref(true);
 const isDragging = ref(false);
-const renderedMarkdownContent = ref('');
 
 const savedText = ref(props.modelValue || '');
 const editBuffer = ref(props.modelValue || '');
+
 const hasUnsavedChanges = computed(() => !isEditing.value && editBuffer.value !== savedText.value);
-
-const textareaRef = ref<HTMLTextAreaElement | null>(null);
-const fileInputRef = ref<HTMLInputElement | null>(null);
-
 const charactersRemaining = computed(() => props.maxCharacters - editBuffer.value.length);
 const isOverLimit = computed(() => editBuffer.value.length > props.maxCharacters);
 const isDisabled = computed(() => isSaving.value || props.loading);
 
-watch(() => props.modelValue, async (newValue) => {
-    if (isEditing.value) return;
-    isRendering.value = true;
-    renderedMarkdownContent.value = await Markdown.Render(newValue || '', props.sanitize);
-    isRendering.value = false;
-}, { immediate: true });
+const textareaRef = ref<HTMLTextAreaElement | null>(null);
+const fileInputRef = ref<HTMLInputElement | null>(null);
 
-let debounceTimer: ReturnType<typeof setTimeout>;
+watch(() => props.modelValue, (newValue) => {
+    if (!isEditing.value) {
+        editBuffer.value = newValue;
+        savedText.value = newValue;
+    }
+});
 
-watch(editBuffer, (newText) => {
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(async () => {
-        renderedMarkdownContent.value = await Markdown.Render(newText || '', props.sanitize);
-    }, props.renderDebounce);
+watch(editBuffer, (newValue) => {
+    emit('update:modelValue', newValue);
 });
 
 const toggleMode = () => {
@@ -88,7 +82,6 @@ const handleSave = async () => {
         await props.onSave?.(editBuffer.value);
         savedText.value = editBuffer.value;
         emit('save', editBuffer.value);
-        emit('update:modelValue', editBuffer.value);
         isEditing.value = false;
     } catch (error) {
         console.error('Failed to save:', error);
@@ -97,7 +90,7 @@ const handleSave = async () => {
     }
 };
 
-// toolbar helper functions
+// toolbar helpers
 
 const wrapInline = (before: string, after: string, placeholder: string) => {
     const textarea = textareaRef.value;
@@ -148,19 +141,19 @@ const isTagAllowed = (tag?: string): boolean =>
     tag ? props.filter.isAllowed(tag) : true;
 
 const toolbarActions = [
-    { label: 'H1', title: 'Heading 1', text: true, tag: 'h1', action: () => prependLine('# ') },
-    { label: 'H2', title: 'Heading 2', text: true, tag: 'h2', action: () => prependLine('## ') },
-    { label: 'H3', title: 'Heading 3', text: true, tag: 'h3', action: () => prependLine('### ') },
+    { label: 'H1', title: 'Heading 1', tag: 'h1', action: () => prependLine('# ') },
+    { label: 'H2', title: 'Heading 2', tag: 'h2', action: () => prependLine('## ') },
+    { label: 'H3', title: 'Heading 3', tag: 'h3', action: () => prependLine('### ') },
     { divider: true },
     { icon: 'fa-solid fa-bold', title: 'Bold', action: () => wrapInline('**', '**', 'bold text') },
     { icon: 'fa-solid fa-italic', title: 'Italic', action: () => wrapInline('*', '*', 'italic text') },
     { divider: true },
-    { icon: "fa-solid fa-align-center", title: 'Align Center', tag: 'center', action: () => wrapInline('[center]\n', '\n[/center]', 'centered text') },
+    { icon: 'fa-solid fa-align-center', title: 'Align Center', tag: 'center', action: () => wrapInline('[center]\n', '\n[/center]', 'centered text') },
     { icon: 'fa-solid fa-eye-slash', title: 'Spoiler', tag: 'spoiler', action: () => wrapInline('[spoiler=Spoiler]', '[/spoiler]', 'hidden text') },
     { icon: 'fa-solid fa-palette', title: 'Color', tag: 'color', action: () => wrapInline('[color=red]', '[/color]', 'colored text') },
     { divider: true },
     { icon: 'fa-solid fa-code', title: 'Inline code', tag: 'code', action: () => wrapInline('`', '`', 'code') },
-    { icon: 'fa-solid fa-file-code', title: 'Code block',  tag: 'code', action: () => wrapInline('```\n', '\n```', 'code') },
+    { icon: 'fa-solid fa-file-code', title: 'Code block', tag: 'code', action: () => wrapInline('```\n', '\n```', 'code') },
     { divider: true },
     { icon: 'fa-solid fa-list-ul', title: 'Bullet list', tag: 'ul', action: () => prependLine('- ') },
     { icon: 'fa-solid fa-list-ol', title: 'Ordered list', tag: 'ol', action: () => prependLine('1. ') },
@@ -194,10 +187,7 @@ const getDropPosition = (e: DragEvent): number => {
 
     const lines = editBuffer.value.split('\n');
     let pos = lines.slice(0, line).reduce((acc, l) => acc + l.length + 1, 0);
-
-    if (line < lines.length) {
-        pos += Math.min(col, lines[line].length);
-    }
+    if (line < lines.length) pos += Math.min(col, lines[line].length);
 
     return Math.min(pos, editBuffer.value.length);
 };
@@ -230,9 +220,7 @@ const uploadImage = async (file: File, position?: number) => {
 
 const handleFileInput = async (e: Event) => {
     const files = Array.from((e.target as HTMLInputElement).files || []);
-    for (const file of files) {
-        await uploadImage(file);
-    }
+    for (const file of files) await uploadImage(file);
     if (fileInputRef.value) fileInputRef.value.value = '';
 };
 
@@ -246,7 +234,6 @@ const handleDrop = async (e: DragEvent) => {
 
     textareaRef.value?.focus();
     let pos = getDropPosition(e);
-
     for (const file of files) {
         await uploadImage(file, pos);
         pos = textareaRef.value?.selectionEnd ?? pos;
@@ -256,7 +243,6 @@ const handleDrop = async (e: DragEvent) => {
 const handlePaste = async (e: ClipboardEvent) => {
     const items = Array.from(e.clipboardData?.items || []);
     const imageItem = items.find(item => item.type.startsWith('image/'));
-
     if (imageItem) {
         e.preventDefault();
         const file = imageItem.getAsFile();
@@ -266,7 +252,14 @@ const handlePaste = async (e: ClipboardEvent) => {
 </script>
 
 <template>
-    <div class="relative">
+    <div
+        class="relative"
+        @dragenter.prevent="isDragging = isEditing && !!$event.dataTransfer?.types.includes('Files')"
+        @dragover.prevent
+        @dragleave.prevent="isDragging = false"
+        @drop="handleDrop"
+    >
+        <!-- Toggle -->
         <div v-if="canEdit" class="absolute top-0 right-0 z-10 p-4">
             <button
                 @click="toggleMode"
@@ -275,42 +268,31 @@ const handlePaste = async (e: ClipboardEvent) => {
                 :title="hasUnsavedChanges ? 'Edit (Unsaved changes)' : isEditing ? 'Preview' : 'Edit'"
             >
                 <i :class="isEditing ? 'fa-solid fa-book' : 'fa-solid fa-pen'" class="text-sm" />
-                <span
-                    v-if="hasUnsavedChanges"
-                    class="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-yellow"
-                />
+                <span v-if="hasUnsavedChanges" class="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-yellow" />
             </button>
         </div>
 
         <div class="p-4" :class="{ 'pr-12': canEdit }">
 
             <!-- View mode -->
-			<div v-if="!isEditing" class="overflow-hidden w-full">
-				<p v-if="isRendering || loading" class="text-sm italic text-gray-500">{{ loadingPlaceholder }}</p>
-				<div
-					v-else-if="modelValue"
-					v-html="renderedMarkdownContent"
-					class="max-w-none markdown-content overflow-y-auto overflow-x-hidden"
-					:style="{ maxHeight }"
-				/>
-				<p v-else class="text-sm italic text-gray-500">{{ placeholder }}</p>
-			</div>
+            <MarkdownViewer
+                v-if="!isEditing"
+                :model-value="modelValue"
+                :loading="loading"
+                :max-height="maxHeight"
+                :placeholder="placeholder"
+                :loading-placeholder="loadingPlaceholder"
+                :sanitize="sanitize"
+                :render-debounce="renderDebounce"
+            />
 
             <!-- Edit mode -->
-            <div
-                v-else
-                class="w-full"
-                @dragenter.prevent="isDragging = !!$event.dataTransfer?.types.includes('Files')"
-                @dragover.prevent
-                @dragleave.prevent="isDragging = false"
-                @drop="handleDrop"
-            >
+            <div v-else class="w-full">
+
                 <!-- Toolbar -->
                 <div class="flex items-center gap-1 mb-2 flex-wrap">
                     <template v-for="(item, i) in toolbarActions" :key="i">
-                        <template v-if="'divider' in item">
-                            <div class="w-px h-4 bg-dark-5 mx-1" />
-                        </template>
+                        <div v-if="'divider' in item" class="w-px h-4 bg-dark-5 mx-1" />
                         <button
                             v-else-if="isTagAllowed('tag' in item ? item.tag : undefined)"
                             @click="item.action"
@@ -347,10 +329,7 @@ const handlePaste = async (e: ClipboardEvent) => {
                     @change="handleFileInput"
                 />
 
-                <div
-                    class="text-xs text-right mb-2"
-                    :class="isOverLimit ? 'text-red-500' : 'text-gray-500'"
-                >
+                <div class="text-xs text-right mb-2" :class="isOverLimit ? 'text-red-500' : 'text-gray-500'">
                     {{ charactersRemaining }} characters remaining
                 </div>
 
@@ -379,86 +358,5 @@ const handlePaste = async (e: ClipboardEvent) => {
 textarea {
     resize: vertical;
     font-family: inherit;
-}
-
-.markdown-content {
-    word-break: break-word;
-    overflow-wrap: break-word;
-}
-
-.markdown-content :deep(p) { margin-bottom: 1rem; }
-
-.markdown-content :deep(a) {
-    @apply text-highlight;
-}
-
-.markdown-content :deep(a:hover) {
-    @apply text-highlight underline;
-}
-
-.markdown-content :deep(ul),
-.markdown-content :deep(ol) {
-    list-style-type: disc;
-    padding-left: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-.markdown-content :deep(ol) { list-style-type: decimal; }
-
-.markdown-content :deep(li) { margin-bottom: 0.15rem; }
-
-.markdown-content :deep(li > ul),
-.markdown-content :deep(li > ol) {
-    margin-bottom: 0;
-    margin-top: 0.15rem;
-}
-
-.markdown-content :deep(h1) { font-size: 1.875rem; }
-.markdown-content :deep(h2) { font-size: 1.5rem; }
-.markdown-content :deep(h3) { font-size: 1.25rem; }
-
-.markdown-content :deep(img) { max-width: 100%; height: auto; }
-
-.markdown-content :deep(pre) {
-    @apply bg-dark-2 p-4 rounded-lg my-2 overflow-x-auto;
-}
-
-.markdown-content :deep(pre) code {
-    @apply bg-dark-2 p-0;
-}
-
-.markdown-content :deep(code) {
-    @apply bg-dark-1 rounded-md text-dark-text font-mono font-bold px-2 py-1;
-}
-
-.markdown-content :deep(blockquote) {
-    border-left: 3px solid;
-    padding-left: 1rem;
-    margin-bottom: 1rem;
-    opacity: 0.8;
-}
-
-.markdown-content :deep(blockquote.blockquote-warning) { border-color: orange; }
-.markdown-content :deep(blockquote.blockquote-tip) { border-color: var(--color-highlight); }
-.markdown-content :deep(blockquote.blockquote-danger) { border-color: red; }
-
-.markdown-content :deep(.footnote-ref) {
-    @apply text-highlight;
-    text-decoration: none;
-    font-size: 0.75rem;
-    vertical-align: super;
-}
-
-.markdown-content :deep(ol li[id^="note-"]) {
-    font-size: 0.875rem;
-    opacity: 0.7;
-}
-
-.markdown-content :deep(details) {
-    @apply bg-dark-1 rounded-md px-4 my-2;
-}
-
-.markdown-content :deep(summary) {
-    @apply cursor-pointer py-2 text-silver hover:text-white transition-colors select-none;
 }
 </style>

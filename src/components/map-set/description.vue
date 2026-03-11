@@ -3,6 +3,10 @@ import { ref, computed } from 'vue';
 import type { APIMapSet } from '~/models/maps/APIMapSet';
 import API from '~/utils/api';
 
+const noDescPlaceholder = "No description provided.";
+const loadingDescPlaceholder = "No description provided.";
+const descMaxHeight = "400px"
+
 const props = defineProps<{
     mapset: APIMapSet;
 }>();
@@ -46,17 +50,26 @@ const handleSave = async (value: string) => {
 <template>
     <div v-if="fetchError" class="error-message">{{ fetchError }}</div>
 
+    <MarkdownViewer
+        v-else-if="!canEdit"
+        :model-value="description"
+        :loading="isFetching"
+        :max-height="descMaxHeight"
+        :placeholder="noDescPlaceholder"
+        :loading-placeholder="loadingDescPlaceholder"
+    />
+
     <MarkdownEditor
         v-else
         v-model="description"
-        :can-edit="canEdit && !isSaving"
+        :can-edit="!isSaving"
         :loading="isFetching || isSaving"
-        :max-characters="4000"
+        :max-characters="api.DescriptionMaxCharLimit"
         :sanitize="true"
-        max-height="400px"
-        placeholder="No description provided."
-		edit-placeholder="Enter description..."
-		loading-placeholder="Loading description..."
+        :max-height="descMaxHeight"
+        :placeholder="noDescPlaceholder"
+        edit-placeholder="Enter description..."
+        :loading-placeholder="loadingDescPlaceholder"
         @save="handleSave"
     />
 </template>

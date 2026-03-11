@@ -29,17 +29,27 @@ export default class Markdown {
     static FootnoteRegex = /\[\^(\d{1,2})\]/g;
     static BlockquoteRegex = /\{: \.(\w+) \}/g;
     static ImageRegex = /!\[([^\]]*)\]\(([^)]+)\)/g;
+    static GithubAlertRegex = /^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\n?/i;
 
     static AllowedImageDomains: string[] = [
         'flux.moe',
         'catbox.moe',
-        'imgur.com'
+        'imgur.com',
+        "singlecolorimage.com"
     ];
 
     static CustomTags: Record<string, { inline?: boolean; render: (inner: string, attr?: string) => string }> = {
         center: { render: (inner) => `<div class="text-center">${inner}</div>` },
         spoiler: { render: (inner, attr) => `<details><summary>${attr || 'Spoiler'}</summary>${inner}</details>` },
         color: { inline: true, render: (inner, attr) => `<span data-color="${attr || 'inherit'}">${inner}</span>` },
+    };
+
+    static GithubAlertIcons: Record<string, string> = {
+        note: 'fa-circle-info',
+        tip: 'fa-lightbulb',
+        important: 'fa-flag',
+        warning: 'fa-triangle-exclamation',
+        caution: 'fa-ban',
     };
 
     static isImageAllowed(url: string): boolean {
@@ -178,7 +188,7 @@ export default class Markdown {
                 return renderList(list);
             },
             link: (link) => {
-                if (filter.isBlocked('a')) return ''; // if we block links I think it would better to just not render them
+                if (filter.isBlocked('a')) return link.raw;
                 
                 if (link.href.startsWith('/')) {
                     return `<NuxtLink to="${link.href}">${link.text}</NuxtLink>`;
@@ -197,13 +207,27 @@ export default class Markdown {
 
                 let content = block.text;
                 let type = 'tip';
-                const matches = [...content.matchAll(Markdown.BlockquoteRegex)];
-                if (matches.length > 0) {
-                    const match = matches[0];
-                    type = match[1];
-                    content = content.replace(match[0], '').trim();
+
+                // github style for codeblocks: [!NOTE], [!WARNING], etc
+                const githubAlertMatch = content.match(Markdown.GithubAlertRegex);
+                if (githubAlertMatch) {
+                    type = githubAlertMatch[1].toLowerCase();
+                    content = content.replace(Markdown.GithubAlertRegex, '').trim();
+                } else {
+                    // normal {: .class }
+                    const matches = [...content.matchAll(Markdown.BlockquoteRegex)];
+                    if (matches.length > 0) {
+                        const match = matches[0];
+                        type = match[1];
+                        content = content.replace(match[0], '').trim();
+                    }
                 }
-                return `<blockquote class="blockquote-${type}">${content}</blockquote>`;
+
+                const label = githubAlertMatch
+                ? `<span class="blockquote-label"><i class="fa-solid ${this.GithubAlertIcons[type]}"></i> ${type.toUpperCase()}</span>`
+                : '';
+
+                return `<blockquote class="blockquote-${type}">${label}${content}</blockquote>`;
             },
             image: (image) => {
                 if (filter.isBlocked('img') || !this.isImageAllowed(image.href)) return '';

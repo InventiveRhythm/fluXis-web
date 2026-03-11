@@ -15,6 +15,8 @@ export default class API {
     static TokenCookie: CookieRef<string | undefined>;
     static CurrentUser: CookieRef<APIUser | undefined>;
 
+    static DescriptionMaxCharLimit = 4000;
+
     static Setup(dev: boolean = false) {
         this.APIUrl = dev ? 'http://localhost:2434' : 'https://fluxis.flux.moe/api';
         this.AssetsUrl = dev ? 'http://localhost:2434/assets' : 'https://assets.flux.moe';
