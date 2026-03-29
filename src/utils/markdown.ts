@@ -40,25 +40,25 @@ export default class Markdown {
         md = md.replaceAll('<', '&lt;');
 
         const config: RendererObject = {
-            heading: (head) => {
+            /* heading: (head) => {
                 if (head.depth == 2 || head.depth == 3)
                     return `<MarkdownHeader text="${head.text.replace(/\"/g, '&quot;')}" :level="${head.depth}"></MarkdownHeader>`;
 
                 return false;
-            },
+            }, */
             link: (link) => {
                 if (link.href.startsWith('/')) {
-                    return `<NuxtLink to="${link.href}">${link.text}</NuxtLink>`;
+                    return `<a href="${link.href}">${link.text}</a>`;
                 }
 
                 return false;
             },
-            code: (code) => {
+            /* code: (code) => {
                 const text = code.text;
                 const lines = text.split('\n');
                 return `<MarkdownCodeBlock lang="${code.lang}"><span>${lines.join('</span><span>')}</span></MarkdownCodeBlock>`;
-            },
-            blockquote: (block) => {
+            }, */
+            /* blockquote: (block) => {
                 let content = block.text;
                 let type = 'tip';
 
@@ -71,8 +71,8 @@ export default class Markdown {
                 }
 
                 return `<MarkdownBlockquote type="${type}">${content}</MarkdownBlockquote>`;
-            },
-            image: (image) => `<MarkdownImage path="${image.href}" alt="${image.text}"></MarkdownImage>`
+            }, */
+            /* image: (image) => `<MarkdownImage path="${image.href}" alt="${image.text}"></MarkdownImage>` */
         };
 
         marked.use({ renderer: config });
