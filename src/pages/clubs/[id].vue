@@ -46,7 +46,7 @@ function CanLeave() {
                         icon="fa-solid fa-user-group"
                         :text="Localize('club.members')"
                     />
-                    <TabControlItem :url="`/clubs/${club.id}/scores`" icon="fa-solid fa-arrow-trend-up" :text="Localize('club.scores')" />
+                    <!-- <TabControlItem :url="`/clubs/${club.id}/scores`" icon="fa-solid fa-arrow-trend-up" :text="Localize('club.scores')" /> -->
                     <TabControlItem :url="`/clubs/${club.id}/claims`" icon="fa-solid fa-star" :text="Localize('club.claims')" />
                 </TabControl>
                 <div class="grid w-full *:col-1 *:row-1">
@@ -63,10 +63,10 @@ function CanLeave() {
                         <i class="fa fa-pencil mr-1"></i>
                         {{ Localize('generic.edit') }}
                     </Button>
-                    <Button v-if="CanLeave()" class="bg-dark-2 px-6 py-2 text-center text-dark-text text-opacity-75 hover:bg-red hover:text-dark-2">
+                    <!-- <Button v-if="CanLeave()" class="bg-dark-2 px-6 py-2 text-center text-dark-text text-opacity-75 hover:bg-red hover:text-dark-2">
                         <i class="fa fa-door-open mr-1"></i>
                         {{ Localize('club.leave') }}
-                    </Button>
+                    </Button> -->
                 </div>
                 <div class="flex flex-col gap-2">
                     <p class="text-2xl">{{ Localize('stats.title') }}</p>

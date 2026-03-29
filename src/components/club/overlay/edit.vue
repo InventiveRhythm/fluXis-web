@@ -11,8 +11,7 @@ const club = ref<APIClub>();
 const loading = ref<boolean>(false);
 const error = ref<APIResponseErrors>();
 
-const nameInput = ref<InstanceType<typeof IconTextbox>>();
-
+const name = ref<string>();
 const colorStart = ref<string>();
 const colorEnd = ref<string>();
 const iconString = ref<string>();
@@ -20,6 +19,7 @@ const bannerString = ref<string>();
 
 function Open(c: APIClub) {
     club.value = c;
+    name.value = c.name;
 
     colorStart.value = c.colors[0].color;
     colorEnd.value = c.colors[1].color;
@@ -31,14 +31,12 @@ function UpdateColor(v: string, end: boolean) {
 }
 
 async function Perform() {
-    const name = nameInput.value?.input?.value;
-
-    if (loading.value || !club.value || !name) return;
+    if (loading.value || !club.value || !name.value) return;
 
     loading.value = true;
 
     const { error: err } = await API.PerformPatch<APIClub>(`/club/${club.value?.id}`, {
-        name: name,
+        name: name.value,
         icon: GetAssetB64(iconString.value),
         banner: GetAssetB64(bannerString.value),
         'color-start': colorStart.value,
@@ -65,7 +63,7 @@ defineExpose({ Open });
 
 <template>
     <Panel title="Edit Club" :open="club != null" :error="error?._request" @close="club = undefined" icon="fa fa-pencil">
-        <IconTextbox ref="nameInput" icon="font" placeholder="Name" maxlength="32" :value="club!.name" />
+        <IconTextbox v-model="name" icon="font" placeholder="Name" maxlength="32" />
         <div class="flex flex-row gap-4" v-if="club">
             <label for="icon" class="overlap-grid group size-32">
                 <img class="size-32 rounded-xl object-cover" :src="iconString || Assets.ClubIcon(club)" alt="club icon" />
