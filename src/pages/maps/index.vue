@@ -19,7 +19,7 @@ async function FetchData(reload = false) {
     const limit = 36;
     const query = search.value?.input?.value || '';
 
-    const { data } = await API.PerformGet<APIMapSet[]>(`/mapsets?q=${query}&limit=${limit}&offset=${mapsets.value.length}`);
+    const { data } = await API.PerformGet<APIMapSet[]>(`/mapsets?q=${encodeURIComponent(query)}&limit=${limit}&offset=${mapsets.value.length}`);
 
     if (data) {
         mapsets.value = mapsets.value.concat(data);
