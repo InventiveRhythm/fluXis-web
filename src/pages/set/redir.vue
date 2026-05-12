@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-    path: '/mapset/:id'
+    path: '/mapsets/:id'
 });
 
 navigateTo(`/set/${useRoute().params.id}`, {

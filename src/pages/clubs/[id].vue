@@ -6,7 +6,7 @@ import Format from '~/utils/formatting';
 
 const editPanel = ref<InstanceType<typeof ClubOverlayEdit>>();
 
-const { data: club, error } = await API.PerformGet<APIClub>(`/club/${useRoute().params.id}`);
+const { data: club, error } = await API.PerformGet<APIClub>(`/clubs/${useRoute().params.id}`);
 
 if (club) {
     useSeoMeta({

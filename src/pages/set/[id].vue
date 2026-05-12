@@ -10,7 +10,7 @@ const current = ref<APIMap>();
 
 const ratepanel = ref<InstanceType<typeof MapRateVoteOverlay>>();
 
-const { data: mapset } = await API.PerformGet<APIMapSet>(`/mapset/${route.params.id}`);
+const { data: mapset } = await API.PerformGet<APIMapSet>(`/mapsets/${route.params.id}`);
 
 if (mapset) {
     mapset.maps.sort((a, b) => a.nps - b.nps);
@@ -38,7 +38,7 @@ function SwitchDifficulty(diff: APIMap) {
 }
 
 function Download() {
-    window.open(`${API.APIUrl}/mapset/${mapset!.id}/download`);
+    window.open(`${API.APIUrl}/mapsets/${mapset!.id}/download`);
 }
 
 async function RefreshRating() {

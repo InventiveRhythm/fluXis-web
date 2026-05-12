@@ -4,7 +4,7 @@ import API from '~/utils/api';
 import Assets from '~/utils/assets';
 import Format from '~/utils/formatting';
 
-const { data: claims } = await API.PerformGet<APIClubClaim[]>(`/club/${useRoute().params.id}/claims`);
+const { data: claims } = await API.PerformGet<APIClubClaim[]>(`/clubs/${useRoute().params.id}/claims`);
 
 if (claims) {
     claims.sort(function (a, b) {

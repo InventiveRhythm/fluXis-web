@@ -7,7 +7,7 @@ const props = defineProps<{
     user: APIUser;
 }>();
 
-const { data: maps } = await API.PerformGet<APIUserMaps>(`/user/${props.user.id}/maps`);
+const { data: maps } = await API.PerformGet<APIUserMaps>(`/users/${props.user.id}/maps`);
 </script>
 
 <template>

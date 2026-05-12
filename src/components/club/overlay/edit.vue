@@ -35,7 +35,7 @@ async function Perform() {
 
     loading.value = true;
 
-    const { error: err } = await API.PerformPatch<APIClub>(`/club/${club.value?.id}`, {
+    const { error: err } = await API.PerformPatch<APIClub>(`/clubs/${club.value?.id}`, {
         name: name.value,
         icon: GetAssetB64(iconString.value),
         banner: GetAssetB64(bannerString.value),

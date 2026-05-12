@@ -7,7 +7,7 @@ const props = defineProps<{
     user: APIUser;
 }>();
 
-const { data: followers } = await API.PerformGet<APIUser[]>(`/user/${props.user.id}/followers`);
+const { data: followers } = await API.PerformGet<APIUser[]>(`/users/${props.user.id}/followers`);
 </script>
 
 <template>
