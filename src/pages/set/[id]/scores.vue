@@ -24,7 +24,7 @@ async function UpdateScores() {
     loading.value = true;
     scores.value = [];
 
-    const { data, error } = await API.PerformGet<APIMapScores>(`/map/${props.map.id}/scores`);
+    const { data, error } = await API.PerformGet<APIMapScores>(`/maps/${props.map.id}/scores`);
     loading.value = false;
     errors.value = error;
 

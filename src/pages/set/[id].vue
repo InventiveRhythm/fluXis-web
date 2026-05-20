@@ -42,7 +42,7 @@ function Download() {
 }
 
 async function RefreshRating() {
-    const { data: rating } = await API.PerformPost<number>(`/map/${current.value?.id}/refresh-rate `, {});
+    const { data: rating } = await API.PerformPost<number>(`/maps/${current.value?.id}/refresh-rate `, {});
     if (!rating) return;
     current.value!.rating = rating;
 }
