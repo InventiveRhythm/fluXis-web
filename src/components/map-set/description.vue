@@ -17,7 +17,7 @@ const isSaving = ref(false);
 const fetchError = ref<string | null>(null);
 
 try {
-    const { data } = await API.PerformGet<string>(`/mapset/${props.mapset.id}/description`);
+    const { data } = await API.PerformGet<string>(`/mapsets/${props.mapset.id}/description`);
     description.value = data ?? '';
 } catch {
     fetchError.value = 'Failed to load description.';
@@ -35,8 +35,8 @@ const handleSave = async (value: string) => {
     isSaving.value = true;
     try {
         await API.PerformPatch<string | null>(
-            `/mapset/${props.mapset.id}/description`,
-            JSON.stringify(value || null)
+            `/mapsets/${props.mapset.id}/description`,
+            {content : value || ""}
         );
         description.value = value;
     } catch {
