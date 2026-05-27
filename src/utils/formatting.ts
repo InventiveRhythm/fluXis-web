@@ -44,6 +44,16 @@ export default class Format {
         });
     }
 
+    static DateTime(str: string): string {
+        return new Date(str).toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+
     static Duration(duration: number): string {
         const hrs = ~~(duration / 3600);
         const mins = ~~((duration % 3600) / 60);
@@ -88,6 +98,27 @@ export default class Format {
         }
 
         return 'just now';
+    }
+
+    static ReadableTimeSpan(str: string) {
+        const regex = /^(?:(\d+)\.)?(\d{2}):(\d{2}):(\d{2})(?:\.(\d+))?$/;
+        const matches = str.match(regex);
+
+        if (!matches) throw new Error('Invalid format');
+
+        const days = parseInt(matches[1] || '0', 10);
+        const hours = parseInt(matches[2], 10);
+        const minutes = parseInt(matches[3], 10);
+        const seconds = parseInt(matches[4], 10);
+
+        let result = '';
+
+        if (days) result += ` ${days} day${days > 1 ? 's' : ''}`;
+        if (hours) result += ` ${hours} hour${hours > 1 ? 's' : ''}`;
+        if (minutes) result += ` ${minutes} minute${minutes > 1 ? 's' : ''}`;
+        if (seconds) result += ` ${seconds} second${seconds > 1 ? 's' : ''}`;
+
+        return result.trim();
     }
 }
 

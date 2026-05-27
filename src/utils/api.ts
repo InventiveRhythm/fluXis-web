@@ -20,7 +20,7 @@ export default class API {
     static Setup(dev: boolean = false) {
         this.APIUrl = dev ? 'http://localhost:2434' : 'https://fluxis.flux.moe/api';
         this.AssetsUrl = dev ? 'http://localhost:2434/assets' : 'https://assets.flux.moe';
-        this.AuthAppID = dev ? 0 : 2;
+        this.AuthAppID = dev ? 0 : 1;
 
         this.TokenCookie = useCookie('token', {
             sameSite: 'lax',

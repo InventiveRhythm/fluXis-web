@@ -23,6 +23,7 @@ if (!API.CurrentUser.value || !Utils.IsModerator(API.CurrentUser.value)) {
                 <ManagementSidebarSeparator />
                 <ManagementSidebarItem link="/management/artists" icon="star" text="Featured Artists" />
                 <ManagementSidebarItem link="/management/users" icon="users" text="Users" />
+                <ManagementSidebarItem link="/management/tasks" icon="list-check" text="Tasks" />
             </div>
             <div class="z-0 h-full max-h-full overflow-y-scroll">
                 <slot></slot>

@@ -14,7 +14,7 @@ const props = defineProps<{
 const { data: scores } = await API.PerformGet<{
     recent_scores: APIScore[];
     best_scores: APIScore[];
-}>(`/user/${props.user.id}/scores`);
+}>(`/users/${props.user.id}/scores`);
 
 if (scores) {
     scores.recent_scores = scores.recent_scores.splice(0, 8);

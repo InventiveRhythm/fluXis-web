@@ -7,7 +7,7 @@ import Assets from '~/utils/assets';
 const route = useRoute();
 const id = route.params.id;
 
-const { data: user, error } = await API.PerformGet<APIUser>(`/user/${id}`);
+const { data: user, error } = await API.PerformGet<APIUser>(`/users/${id}`);
 let any_socials: boolean | undefined = false;
 
 if (user) {

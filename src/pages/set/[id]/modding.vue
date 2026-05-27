@@ -22,7 +22,7 @@ const props = defineProps<{
     mapset: APIMapSet;
 }>();
 
-const { data: actions } = await API.PerformGet<APIModdingAction[]>(`/mapset/${props.mapset.id}/modding`);
+const { data: actions } = await API.PerformGet<APIModdingAction[]>(`/mapsets/${props.mapset.id}/modding`);
 
 function IsLast(action: APIModdingAction) {
     // spacing issue
@@ -47,7 +47,7 @@ function UpdateCommentArea() {
 async function PostComment() {
     if (!comment.value) return;
 
-    const { data, error } = await API.PerformPost<APIModdingAction>(`/mapset/${props.mapset.id}/modding`, {
+    const { data, error } = await API.PerformPost<APIModdingAction>(`/mapsets/${props.mapset.id}/modding`, {
         type: commentType.value,
         content: comment.value.value
     });

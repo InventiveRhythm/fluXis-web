@@ -33,7 +33,7 @@ function Open() {
 }
 
 async function Perform() {
-    var { data, error } = await API.PerformPost<number>(`/map/${props.map.id}/rate`, {
+    var { data, error } = await API.PerformPost<number>(`/maps/${props.map.id}/rate`, {
         base: base.value,
         read: read.value,
         track: track.value,

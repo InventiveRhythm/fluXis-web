@@ -191,7 +191,7 @@ export default class Markdown {
                 if (filter.isBlocked('a')) return link.raw;
                 
                 if (link.href.startsWith('/')) {
-                    return `<NuxtLink to="${link.href}">${link.text}</NuxtLink>`;
+                    return `<a href="${link.href}">${link.text}</a>`;
                 }
 
                 return false;
