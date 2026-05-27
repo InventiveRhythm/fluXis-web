@@ -1,6 +1,7 @@
 ﻿import type APIUser from '../users/APIUser';
 import type { APIMap } from './APIMap';
 import type { APIMapSetStatus } from './APIMapSetStatus';
+import type { APIQueueInfo } from './APIQueueInfo';
 
 export type APIMapSet = {
     id: number;
@@ -18,5 +19,5 @@ export type APIMapSet = {
     ups: number;
     downs: number;
     show_mod_actions: boolean;
-    queue_votes?: boolean[];
+    queue?: APIQueueInfo;
 };

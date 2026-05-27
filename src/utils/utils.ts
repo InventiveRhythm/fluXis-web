@@ -1,4 +1,5 @@
 import { stringifyQuery } from 'vue-router';
+import { APIModdingActionType } from '~/models/maps/APIModdingAction';
 import type APIUser from '~/models/users/APIUser';
 
 export default class Utils {
@@ -64,6 +65,55 @@ export default class Utils {
 
         const names = new Intl.DisplayNames(['en'], { type: 'region' });
         return names.of(code.toUpperCase()) || 'Unknown';
+    }
+
+    static GetActionTypeReadable(type: APIModdingActionType) {
+        switch (type) {
+            case APIModdingActionType.Note:
+                return 'Note';
+            case APIModdingActionType.Reply:
+                return 'Reply';
+            case APIModdingActionType.Approve:
+                return 'Approve';
+            case APIModdingActionType.Deny:
+                return 'Deny';
+            case APIModdingActionType.Submitted:
+                return 'Submitted';
+            case APIModdingActionType.Update:
+                return 'Update';
+        }
+    }
+
+    static GetActionTypeColor(type: APIModdingActionType) {
+        switch (type) {
+            case APIModdingActionType.Note:
+            case APIModdingActionType.Reply:
+                return 'cyan';
+            case APIModdingActionType.Approve:
+                return 'green';
+            case APIModdingActionType.Deny:
+                return 'red';
+            case APIModdingActionType.Submitted:
+                return 'pink';
+            case APIModdingActionType.Update:
+                return 'yellow';
+        }
+    }
+
+    static GetActionTypeIcon(type: APIModdingActionType) {
+        switch (type) {
+            case APIModdingActionType.Note:
+            case APIModdingActionType.Reply:
+                return 'fa-note-sticky';
+            case APIModdingActionType.Approve:
+                return 'fa-check';
+            case APIModdingActionType.Deny:
+                return 'fa-xmark';
+            case APIModdingActionType.Submitted:
+                return 'fa-angles-right';
+            case APIModdingActionType.Update:
+                return 'fa-arrows-rotate';
+        }
     }
 
     static SetMetadata(title: string, description: string, image?: string) {
