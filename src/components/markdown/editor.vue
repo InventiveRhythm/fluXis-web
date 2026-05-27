@@ -334,20 +334,20 @@ const handlePaste = async (e: ClipboardEvent) => {
                 </div>
 
                 <div class="flex gap-2 justify-end">
-                    <button
+                    <Button
                         @click="cancelEdit"
                         :disabled="isDisabled"
-                        class="px-4 py-2 rounded-md hover:opacity-70 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                        class="bg-dark-3 px-3 py-0.5 text-sm"
                     >
                         {{ cancelButtonText }}
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                         @click="handleSave"
                         :disabled="isDisabled || isOverLimit"
-                        class="px-4 py-2 rounded-md hover:opacity-70 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                        class="bg-highlight px-3 py-0.5 text-sm text-dark-2"
                     >
                         {{ isSaving ? 'Saving...' : saveButtonText }}
-                    </button>
+                    </Button>
                 </div>
             </div>
         </div>
