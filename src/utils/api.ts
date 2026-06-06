@@ -15,6 +15,8 @@ export default class API {
     static TokenCookie: CookieRef<string | undefined>;
     static CurrentUser: CookieRef<APIUser | undefined>;
 
+    static DescriptionMaxCharLimit = 4000;
+
     static Setup(dev: boolean = false) {
         this.APIUrl = dev ? 'http://localhost:2434' : 'https://fluxis.flux.moe/api';
         this.AssetsUrl = dev ? 'http://localhost:2434/assets' : 'https://assets.flux.moe';
@@ -96,6 +98,39 @@ export default class API {
         }
 
         this.CurrentUser.value = user;
+    }
+
+    static async UploadToCatbox(file: File): Promise<Result<string, APIResponseErrors>> {
+        try {
+            const formData = new FormData();
+            formData.append('reqtype', 'fileupload');
+            formData.append('fileToUpload', file);
+
+            const { data, error, status } = await useFetch('https://corsproxy.io/?' + encodeURIComponent('https://catbox.moe/user/api.php'), {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (error.value || !data.value) {
+                return { 
+                    data: null, 
+                    error: { 
+                        _request: error.value?.message || 'Upload failed',
+                        _status: status.value
+                    } 
+                };
+            }
+
+            const url = typeof data.value === 'string' ? data.value : String(data.value);
+            return { data: url.trim(), error: null };
+        } catch (ex: any) {
+            return { 
+                data: null, 
+                error: { 
+                    _request: ex?.message || 'Unknown error during catbox upload' 
+                } 
+            };
+        }
     }
 }
 

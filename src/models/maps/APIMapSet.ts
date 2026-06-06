@@ -11,7 +11,6 @@ export type APIMapSet = {
     artist: string;
     source: string;
     tags: string[];
-    description: string;
     flags: number;
     status: APIMapSetStatus;
     submitted: number;
