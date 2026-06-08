@@ -4,7 +4,7 @@ import API from '~/utils/api';
 import Assets from '~/utils/assets';
 
 const mode = useRoute().query.mode;
-const { data: users } = await API.PerformGet<APIUser[]>(`/leaderboards/overall?mode=${mode}`);
+const { data: users } = await API.PerformGet<APIUser[]>(`/leaderboards/users/overall${mode ? `?mode=${mode}` : ''}`);
 </script>
 
 <template>
