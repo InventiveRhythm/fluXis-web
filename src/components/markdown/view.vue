@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { NuxtLink } from '#components';
+
 defineProps<{
     content: string;
 }>();
 </script>
 
 <template>
-    <MDC :value="content" class="md-content"></MDC>
+    <comark class="md-content" :components="{ a: NuxtLink }">{{ markdown.Clean(content) }}</comark>
 </template>
 
 <style lang="scss">

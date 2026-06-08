@@ -11,18 +11,14 @@
     },
     "dependencies": {
         "chroma.ts": "^1.0.10",
-        "marked": "^16.4.2",
-        "nuxt": "^3.21.6",
-        "vue": "^3.5.34",
-        "vue-router": "^4.6.4"
+        "nuxt": "^4.4.7"
     },
     "devDependencies": {
-        "@nuxt/icon": "1.15.0",
-        "@nuxt/image": "1.10.0",
-        "@nuxtjs/mdc": "^0.17.4",
+        "@comark/nuxt": "^0.4.0",
+        "@nuxt/icon": "^2.2.3",
+        "@nuxt/image": "^2.0.0",
         "@nuxtjs/tailwindcss": "^6.14.0",
-        "prettier": "3.6.2",
-        "prettier-plugin-tailwindcss": "0.6.13",
-        "sass-embedded": "^1.99.0"
+        "prettier-plugin-tailwindcss": "^0.8.0",
+        "sass-embedded": "^1.100.0"
     }
 }

@@ -127,7 +127,7 @@ async function PostComment() {
                             <span class="ml-1 text-2xs opacity-80">{{ formatting.Date(action.time) }}</span>
                         </p>
                     </div>
-                    <MDC :value="Markdown.Render(action.content!)" class="comment-content text-sm"></MDC>
+                    <comark class="comment-content text-sm">{{ action.content! }}</comark>
                 </div>
             </template>
             <template v-else-if="action.type == APIModdingActionType.Submitted">
@@ -162,7 +162,7 @@ async function PostComment() {
 
     ul,
     ol {
-        @apply list-disc list-inside;
+        @apply list-inside list-disc;
     }
 }
 </style>

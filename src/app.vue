@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import '~/assets/css/tailwind.css';
 import API from './utils/api';
 
 // API.Setup(import.meta.dev);
