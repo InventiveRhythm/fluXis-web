@@ -7,7 +7,7 @@ export default class Markdown {
     static BlockquoteRegex = /\{: \.(\w+) \}/g;
 
     static Clean(md: string) {
-        return md.replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+        return md.replaceAll('<', '&lt;');
     }
 
     static Parse(md: string): ParsedMarkdown {

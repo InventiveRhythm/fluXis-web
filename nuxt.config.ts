@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
     compatibilityDate: '2026-06-08',
     devtools: { enabled: true },
-    modules: ['@nuxt/icon', '@nuxt/image', '@nuxtjs/tailwindcss', '@comark/nuxt'],
+    modules: ['@nuxt/icon', '@nuxtjs/tailwindcss', '@comark/nuxt'],
     srcDir: 'src',
     app: {
         pageTransition: {

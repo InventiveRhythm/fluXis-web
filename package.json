@@ -11,12 +11,13 @@
     },
     "dependencies": {
         "chroma.ts": "^1.0.10",
-        "nuxt": "^4.4.7"
+        "katex": "^0.17.0",
+        "nuxt": "^4.4.7",
+        "shiki": "^4.2.0"
     },
     "devDependencies": {
         "@comark/nuxt": "^0.4.0",
         "@nuxt/icon": "^2.2.3",
-        "@nuxt/image": "^2.0.0",
         "@nuxtjs/tailwindcss": "^6.14.0",
         "prettier-plugin-tailwindcss": "^0.8.0",
         "sass-embedded": "^1.100.0"

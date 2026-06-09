@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import '~/assets/css/tailwind.css';
+import 'katex/dist/katex.min.css';
 import API from './utils/api';
 
 // API.Setup(import.meta.dev);

@@ -1,13 +1,37 @@
 <script setup lang="ts">
-import { NuxtLink } from '#components';
+import { MarkdownTabGroup, MarkdownTabPanel, NuxtLink } from '#components';
+import highlight from '@comark/nuxt/plugins/highlight';
+import math, { Math } from '@comark/nuxt/plugins/math';
+import security from '@comark/nuxt/plugins/security';
+import csharp from '@shikijs/langs/csharp';
+import lua from '@shikijs/langs/lua';
+import githubDark from '@shikijs/themes/github-dark';
 
 defineProps<{
     content: string;
 }>();
+
+const components: Record<string, any> = {
+    a: NuxtLink,
+    'tab-group': MarkdownTabGroup,
+    'tab-panel': MarkdownTabPanel,
+    math: Math
+};
+
+const plugins: any[] = [
+    security({
+        blockedTags: ['script', 'style', 'iframe']
+    }),
+    math(),
+    highlight({
+        themes: { dark: githubDark, light: githubDark },
+        languages: [csharp, lua]
+    })
+];
 </script>
 
 <template>
-    <comark class="md-content" :components="{ a: NuxtLink }">{{ markdown.Clean(content) }}</comark>
+    <comark class="md-content" :components="components" :plugins="plugins">{{ markdown.Clean(content) }}</comark>
 </template>
 
 <style lang="scss">
