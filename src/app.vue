@@ -4,7 +4,7 @@ import 'katex/dist/katex.min.css';
 import API from './utils/api';
 
 // API.Setup(import.meta.dev);
-API.Setup(false); // <- use this if you don't have a local server (REMEMBER TO REVERT!)
+API.Setup(true); // <- use this if you don't have a local server (REMEMBER TO REVERT!)
 
 if (API.TokenCookie.value) await API.RefreshInfo();
 else API.Logout();
@@ -20,7 +20,7 @@ else API.Logout();
         </NuxtLayout>
     </div>
 
-    <div class="pointer-events-none fixed left-0 top-0 z-50 h-screen w-screen" id="panels"></div>
+    <div class="pointer-events-none fixed left-0 top-0 z-50 h-screen w-full max-w-full" id="panels"></div>
 </template>
 
 <style>
@@ -30,6 +30,25 @@ html {
 
 body {
     @apply bg-dark-1 font-base text-dark-text selection:bg-highlight selection:text-dark-1;
+    overflow-x: hidden;
+    max-width: 100vw;
+}
+
+* {
+    scrollbar-color: transparent;
+}
+
+*::-webkit-scrollbar {
+    width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    @apply bg-dark-3;
+    border-radius: 16px;
 }
 
 .fade-enter-active,
