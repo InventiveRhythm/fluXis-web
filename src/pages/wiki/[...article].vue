@@ -7,6 +7,6 @@ const { data } = await useFetch<string>(`${api.AssetsUrl}/wiki/${path}/en.md`);
 
 <template>
     <div class="w-full text-left">
-        <MarkdownView :content="markdown.Render(data || 'Page not found.\n\n[Return to Home](/wiki)')"></MarkdownView>
+        <MarkdownView :content="data || 'Page not found.\n\n[Return to Home](/wiki)'"></MarkdownView>
     </div>
 </template>

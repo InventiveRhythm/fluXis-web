@@ -1,11 +1,11 @@
-FROM node:23-alpine AS build
-WORKDIR /usr/src/app
+FROM oven/bun:1 AS build
+WORKDIR /app
 COPY . .
-RUN npm i
-RUN npm run build
+RUN bun install
+RUN bun run build
 
-FROM node:23-alpine AS prod
-COPY --from=build /usr/src/app/.output /app
+FROM oven/bun:1 as prod
+COPY --from=build /app/.output /app
 WORKDIR /app
 EXPOSE 3000
-CMD ["node", "server/index.mjs"]
+CMD ["bun", "server/index.mjs"]

@@ -1,12 +1,11 @@
-﻿import type { APIClubClaim } from '../clubs/APIClubClaim';
-import APIUser from '../users/APIUser';
+﻿import APIUser from '../users/APIUser';
 import type { APIMapClaim } from './APIMapClaim';
 import type { APIMapEffectType } from './APIMapEffectType';
 
 export type APIMap = {
     id: number;
     mapset: number;
-    mapper: APIUser;
+    mappers: APIUser[];
     hash: string;
     difficulty: string;
     title: string;

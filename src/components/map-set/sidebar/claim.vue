@@ -15,7 +15,7 @@ defineProps<{
             <LoadingImage class="size-12 rounded-md object-cover" :src="Assets.ClubIcon(claim.club)" />
             <div class="flex flex-1 flex-col gap-1 drop-shadow-text">
                 <p class="line-clamp-1 w-full text-sm leading-none">
-                    <ClubTag class="inline text-xs leading-none" :club="claim.club"></ClubTag>
+                    <ClubTag class="inline text-xs leading-none" :club="claim.club" />
                     {{ claim.club.name }}
                 </p>
                 <p class="text-xs leading-none">

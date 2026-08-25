@@ -69,7 +69,9 @@ async function RefreshRating() {
                     <img :src="`/svg/mode/${map.mode}.svg`" :fill="GetRatingColor(map.nps)" class="size-12" />
                     <div class="flex h-full w-auto flex-col justify-center pr-4 text-left" v-if="current.id == map.id">
                         <p class="min-w-0 text-nowrap text-sm">{{ map.difficulty }}</p>
-                        <p class="text-2xs opacity-80" v-if="mapset.creator.id != map.mapper.id">mapped by {{ map.mapper.username }}</p>
+                        <p class="text-2xs opacity-80" v-if="map.mappers.length != 1 || map.mappers.find((x) => x.id != mapset?.creator.id)">
+                            mapped by {{ map.mappers.map((x) => x.displayname || x.username).join(', ') }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -103,7 +105,9 @@ async function RefreshRating() {
                     >Rate Vote</Button
                 >
                 <Button @click="RefreshRating" class="bg-dark-2 py-2 text-center" v-if="utils.IsDeveloper(API.CurrentUser.value)">Refresh Rating</Button>
-                <MapSetSidebarMapper :mapper="current.mapper" />
+                <div class="flex flex-col gap-2">
+                    <MapSetSidebarMapper :mapper="mapper" v-for="mapper in current?.mappers || []"/>
+                </div>
                 <MapSetSidebarSection title="Voting">
                     <MapSetSidebarVotes :mapset="mapset" />
                 </MapSetSidebarSection>

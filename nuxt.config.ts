@@ -1,8 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    compatibilityDate: '2024-11-01',
+    compatibilityDate: '2026-06-08',
     devtools: { enabled: true },
-    modules: ['@nuxt/icon', '@nuxt/image', '@nuxtjs/tailwindcss', '@nuxtjs/mdc'],
+    modules: ['@nuxt/icon', '@nuxtjs/tailwindcss', '@comark/nuxt'],
     srcDir: 'src',
     app: {
         pageTransition: {
@@ -18,6 +18,11 @@ export default defineNuxtConfig({
             viewport: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no',
             meta: [{ name: 'darkreader', content: 'meow' }],
             script: [{ src: 'https://kit.fontawesome.com/560d9e0b95.js', crossorigin: 'anonymous' }]
+        }
+    },
+    vite: {
+        optimizeDeps: {
+            include: ['@vue/devtools-core', '@vue/devtools-kit']
         }
     },
     experimental: {

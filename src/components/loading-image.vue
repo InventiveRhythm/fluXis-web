@@ -18,20 +18,18 @@ if (import.meta.server && props.low) {
     });
 }
 
-if (import.meta.client) {
-    onMounted(() => {
-        if (img.value) {
-            const i = img.value;
+onMounted(() => {
+    if (img.value) {
+        const i = img.value;
 
-            if (i.complete) {
-                loaded.value = true;
-                return;
-            }
-
-            i.onload = () => (loaded.value = true);
+        if (i.complete) {
+            loaded.value = true;
+            return;
         }
-    });
-}
+
+        i.onload = () => (loaded.value = true);
+    }
+});
 </script>
 
 <template>
